@@ -31,7 +31,8 @@
     "recharts": "^2.12.7",
     "recoil": "^0.7.7",
     "sass": "^1.77.8",
-    "swiper": "^11.1.9"
+    "swiper": "^11.1.9",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "^5.51.15",
