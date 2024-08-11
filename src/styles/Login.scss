@@ -1,0 +1,138 @@
+.login-page {
+     width: 100%;
+     min-height: 100vh;
+     background: white;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     form {
+          width: 100%;
+          max-width: 600px;
+          background-color: #f3f3f3;
+          box-shadow: 0px 1px 3px 0px #0000001A;
+          box-shadow: 0px 1px 2px 0px #0000000F;
+          border-radius: 12px;
+          padding: 80px 36px;
+          gap: 42px;
+          display: flex;
+          position: relative;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+          .logo {
+               margin-bottom: 24px;
+               width: auto;
+               height: 60px;
+               position: absolute;
+               z-index: 1000;
+               left: 24px;
+               top: 24px;
+          }
+          .title-form {
+               width: 100%;
+               display: flex;
+               align-items: center;
+               justify-content: center;
+               flex-direction: column;
+               gap: 8px;
+               h1 {
+                    text-align: center;
+                    font-size: 28px;
+                    font-weight: 600;
+                    text-transform: capitalize;
+                    color: #606060;
+               }
+               p {
+                    color: #505050;
+                    max-width: 400px;
+                    font-weight: 400;
+                    line-height: 24px;
+                    text-align: center;
+               }
+          }
+          .inputs {
+               width: 70%;
+               height: auto;
+               display: flex;
+               align-items: flex-start;
+               justify-content: flex-start;
+               flex-direction: column;
+               gap:24px;
+               .input-field {
+                    width: 100%;
+                    height: auto;
+                    display: flex;
+                    align-items: flex-start;
+                    justify-content: center;
+                    flex-direction: column;
+                    gap: 8px;
+                    label {
+                         color: #505050c8;
+                         font-size: 15px;
+                         padding-left: 8px;
+                    }
+                    .input {
+                         width: 100%;
+                         height: auto;
+                         display: flex;
+                         align-items: center;
+                         justify-content: center;
+                         position: relative;
+
+                         input {
+                              width: 100%;
+                              height: 40px;
+                              border: 2px solid #90909062;
+                              border-radius: 24px;
+                              background-color: white;
+                              padding-left: 55px;
+                              transition: 100ms ease-in-out;
+                              outline: none;
+                              &::placeholder {
+                                   color: #909090;
+                                   font-size: 15px;
+                                   font-weight: 300;
+                              }
+                              &:focus {
+                                   border: 3px solid orange;
+                              }
+                         }
+                         .email {
+                              position: absolute;
+                              z-index: 100;
+                              left: 16px;
+                              font-size: 24px;
+                              color: #404040;
+                         }
+                    }
+               }
+          }
+          .button {
+               width: 100%;
+               height: auto;
+               display: flex;
+               align-items: center;
+               justify-content: center;
+               button[type='submit'] {
+                    width: 100%;
+                    height: 40px;
+                    border: 2px solid transparent;
+                    outline: none;
+                    border-radius: 36px;
+                    background-color: orange;
+                    color: #404040;
+                    font-size: 16px;
+                    transition: background-color 90ms ease-in-out;
+                    cursor: pointer;
+                    &:hover {
+                         background-color: transparent;
+                         color: black;
+                         border: 3px solid orange;
+                    }
+                    &:active {
+                         transform: scale(0.99);
+                    }
+               }
+          }
+     }
+}
