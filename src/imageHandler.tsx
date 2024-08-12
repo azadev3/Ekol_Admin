@@ -14,7 +14,6 @@ export function imageHandler(this: any) {
       formData.append("richImg", file);
 
       try {
-        // Resmi yükle
         const uploadResponse = await axios.post(`${URL}/uploadForEditor`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -23,7 +22,6 @@ export function imageHandler(this: any) {
 
         const savedData = uploadResponse.data.data;
 
-        // URL almak için GET isteği yap
         const urlResponse = await axios.get(`${URL}/getImageUrl`, {
           params: { id: savedData._id },
         });
@@ -32,14 +30,13 @@ export function imageHandler(this: any) {
 
         const quill = this.quill;
         if (quill && imageUrl) {
-          console.log(imageUrl, 'saa')
           const range = quill.getSelection();
           if (range) {
             quill.insertEmbed(range.index, "image", `https://ekol-server.onrender.com${imageUrl}`);
           }
         }
       } catch (error) {
-        console.error("Resim yüklenemedi", error);
+        console.error("Image dont upload :PPP", error);
       }
     }
   };
