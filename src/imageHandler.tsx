@@ -35,7 +35,7 @@ export function imageHandler(this: any) {
           console.log(imageUrl, 'saa')
           const range = quill.getSelection();
           if (range) {
-            quill.insertEmbed(range.index, "image", `http://localhost:3000${imageUrl}`);
+            quill.insertEmbed(range.index, "image", `https://ekol-server.onrender.com${imageUrl}`);
           }
         }
       } catch (error) {
