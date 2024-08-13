@@ -34,7 +34,7 @@ const WhyEcolEdit: React.FC = () => {
           setDescriptionAz(data.description.az || "");
           setDescriptionEn(data.description.en || "");
           setDescriptionRu(data.description.ru || "");
-          setImagePreview(`https://ekol-server.onrender.com${data.icon}` || "");
+          setImagePreview(`https://ekol-server-1.onrender.com${data.icon}` || "");
 
         } catch (error) {
           console.error("Error fetching data:", error);

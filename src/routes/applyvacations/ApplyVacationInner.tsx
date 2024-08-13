@@ -95,7 +95,7 @@ const ApplyVacationInner: React.FC = () => {
             </label>
             <a
               className="show-cv-button"
-              href={innerApply && innerApply.cv ? `https://ekol-server.onrender.com${innerApply.cv}` : "#"}
+              href={innerApply && innerApply.cv ? `https://ekol-server-1.onrender.com${innerApply.cv}` : "#"}
               target="_blank"
               rel="noopener noreferrer">
               {innerApply?.cv ? "CV Formasına Bax" : "CV Tapılmadı"}
@@ -108,7 +108,7 @@ const ApplyVacationInner: React.FC = () => {
             </label>
             <a
               className="show-cv-button"
-              href={innerApply && innerApply.profile ? `https://ekol-server.onrender.com${innerApply.profile}` : "#"}
+              href={innerApply && innerApply.profile ? `https://ekol-server-1.onrender.com${innerApply.profile}` : "#"}
               target="_blank"
               rel="noopener noreferrer">
               {innerApply?.cv ? "Profilə Bax" : "Profil Tapılmadı"}

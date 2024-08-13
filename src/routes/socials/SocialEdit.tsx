@@ -24,7 +24,7 @@ const SocialEdit: React.FC = () => {
           const response = await axios.get(`${URL}/socials/${editid}`);
           const data = response.data;
           setLink(data.link || "");
-          setImagePreview(`https://ekol-server.onrender.com${data.icon}` || "");
+          setImagePreview(`https://ekol-server-1.onrender.com${data.icon}` || "");
         } catch (error) {
           console.error("Error fetching data:", error);
         }

@@ -52,7 +52,7 @@ const ContactEdit: React.FC = () => {
           setTelephoneTitleEn(telephones[0].title.en);
           setTelephoneTitleRu(telephones[0].title.ru);
           setTelephoneValue(telephones[0].value);
-          setTelephoneLogoPreview(`https://ekol-server.onrender.com${telephones[0].logo}` || "");
+          setTelephoneLogoPreview(`https://ekol-server-1.onrender.com${telephones[0].logo}` || "");
         } else {
           setTelephoneTitleAz("");
           setTelephoneTitleEn("");
@@ -65,19 +65,19 @@ const ContactEdit: React.FC = () => {
         setFaksTitleEn(contact.faks.title.en);
         setFaksTitleRu(contact.faks.title.ru);
         setFaksValue(contact.faks.value);
-        setFaksLogoPreview(`https://ekol-server.onrender.com${contact.faks.logo}` || "");
+        setFaksLogoPreview(`https://ekol-server-1.onrender.com${contact.faks.logo}` || "");
 
         setLocationTitleAz(contact.location.title.az);
         setLocationTitleEn(contact.location.title.en);
         setLocationTitleRu(contact.location.title.ru);
         setLocationValue(contact.location.title.value);
-        setLocationLogoPreview(`https://ekol-server.onrender.com${contact.location.logo}` || "");
+        setLocationLogoPreview(`https://ekol-server-1.onrender.com${contact.location.logo}` || "");
 
         setEmailTitleAz(contact.email.title.az);
         setEmailTitleEn(contact.email.title.en);
         setEmailTitleRu(contact.email.title.ru);
         setEmailValue(contact.email.value);
-        setEmailLogoPreview(`https://ekol-server.onrender.com${contact.email.logo}` || "");
+        setEmailLogoPreview(`https://ekol-server-1.onrender.com${contact.email.logo}` || "");
       } catch (error) {
         console.error(error);
       }
