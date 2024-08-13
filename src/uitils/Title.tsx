@@ -15,6 +15,7 @@ const Title: React.FC<props> = (props) => {
   const ifLocationApplyVacationsInner = useMatch(`/applyvacations/:innerid`);
   const ifLocationAppeals = location.pathname === "/appeals";
   const ifLocationInnerAppeals = useMatch(`/appeals/:inneridappeals`);
+  const ifLocationEmails = location.pathname === "/emails";
 
   return (
     <div className="title">
@@ -22,7 +23,7 @@ const Title: React.FC<props> = (props) => {
         <h1>{props.title}</h1>
         <p>{props.description}</p>
       </section>
-      {!isTrue && !ifLocationApplyVacations && !ifLocationApplyVacationsInner && !ifLocationAppeals && !ifLocationInnerAppeals && (
+      {!isTrue && !ifLocationApplyVacations && !ifLocationApplyVacationsInner && !ifLocationAppeals && !ifLocationInnerAppeals && !ifLocationEmails && (
         <Link to={props?.to} className="add-data-btn">
           <IoAdd className="addicon" />
           <span>Əlavə et</span>

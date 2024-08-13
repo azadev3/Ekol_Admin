@@ -102,6 +102,7 @@ import Overview from "./Overview";
 import { IoMoon } from "react-icons/io5";
 import { DarkModeState } from "../App";
 import { IoSunnyOutline } from "react-icons/io5";
+import EmailsShow from "../routes/emails/EmailsShow";
 
 const Content: React.FC = () => {
   const toggleSidebar = useRecoilValue(ToggleSidebarState);
@@ -263,6 +264,8 @@ const Content: React.FC = () => {
         <Route path="/videos" element={<VideosShow />} />
         <Route path="/videos/create" element={<VideosCreate />} />
         <Route path="/videos/:editid" element={<VideosEdit />} />
+        {/* VIDEOS (VIDEOS PAGE) */}
+        <Route path="/emails" element={<EmailsShow />} />
       </Routes>
     </main>
   );

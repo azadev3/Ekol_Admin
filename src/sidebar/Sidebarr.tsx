@@ -6,7 +6,7 @@ import { PiCaretLeftFill, PiNewspaperClipping } from "react-icons/pi";
 import { atom, useRecoilState } from "recoil";
 import { SiApacherocketmq } from "react-icons/si";
 import { BiPulse } from "react-icons/bi";
-import { MdOutlineMiscellaneousServices, MdOutlineTranslate } from "react-icons/md";
+import { MdEmail, MdOutlineMiscellaneousServices, MdOutlineTranslate } from "react-icons/md";
 import { BsTelephoneForward } from "react-icons/bs";
 import { LuShare2 } from "react-icons/lu";
 import { IoLogoElectron, IoImages } from "react-icons/io5";
@@ -138,6 +138,7 @@ const Sidebarr: React.FC = () => {
           { title: "Müraciətlər", to: "/appeals" },
         ]}
       />
+      <SidebarLinkWithDropdown to="/emails" linkTitle="E-maillər" linkIcon={<MdEmail />} />
     </aside>
   );
 };
