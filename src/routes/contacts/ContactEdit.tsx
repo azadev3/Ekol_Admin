@@ -1,6 +1,6 @@
 import React, { useState, useEffect, ChangeEvent } from "react";
 import Title from "../../uitils/Title";
-import { TextField, Button, Snackbar, Alert } from "@mui/material";
+import { TextField, Button, Snackbar, Alert, Typography, Box } from "@mui/material";
 import axios from "axios";
 import { URL } from "../../Base";
 import { useNavigate, useParams } from "react-router-dom";
@@ -17,28 +17,28 @@ const ContactEdit: React.FC = () => {
   const [telephoneTitleRu, setTelephoneTitleRu] = useState("");
   const [telephoneValue, setTelephoneValue] = useState("");
   const [telephoneLogo, setTelephoneLogo] = useState<File | null>(null);
-  const [_, setTelephoneLogoPreview] = useState<string>("");
+  const [telLogoPreview, setTelephoneLogoPreview] = useState<string>("");
 
   const [faksTitleAz, setFaksTitleAz] = useState("");
   const [faksTitleEn, setFaksTitleEn] = useState("");
   const [faksTitleRu, setFaksTitleRu] = useState("");
   const [faksValue, setFaksValue] = useState("");
   const [faksLogo, setFaksLogo] = useState<File | null>(null);
-  const [__, setFaksLogoPreview] = useState<string>("");
+  const [faksLogoPreview, setFaksLogoPreview] = useState<string>("");
 
   const [locationTitleAz, setLocationTitleAz] = useState("");
   const [locationTitleEn, setLocationTitleEn] = useState("");
   const [locationTitleRu, setLocationTitleRu] = useState("");
   const [locationValue, setLocationValue] = useState("");
   const [locationLogo, setLocationLogo] = useState<File | null>(null);
-  const [___, setLocationLogoPreview] = useState<string>("");
+  const [locationLogoPreview, setLocationLogoPreview] = useState<string>("");
 
   const [emailTitleAz, setEmailTitleAz] = useState("");
   const [emailTitleEn, setEmailTitleEn] = useState("");
   const [emailTitleRu, setEmailTitleRu] = useState("");
   const [emailValue, setEmailValue] = useState("");
   const [emailLogo, setEmailLogo] = useState<File | null>(null);
-  const [____, setEmailLogoPreview] = useState<string>("");
+  const [emailLogoPreview, setEmailLogoPreview] = useState<string>("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -52,27 +52,32 @@ const ContactEdit: React.FC = () => {
           setTelephoneTitleEn(telephones[0].title.en);
           setTelephoneTitleRu(telephones[0].title.ru);
           setTelephoneValue(telephones[0].value);
+          setTelephoneLogoPreview(`https://ekol-server.onrender.com${telephones[0].logo}` || "");
         } else {
           setTelephoneTitleAz("");
           setTelephoneTitleEn("");
           setTelephoneTitleRu("");
           setTelephoneValue("");
+          setTelephoneLogoPreview("");
         }
 
         setFaksTitleAz(contact.faks.title.az);
         setFaksTitleEn(contact.faks.title.en);
         setFaksTitleRu(contact.faks.title.ru);
         setFaksValue(contact.faks.value);
+        setFaksLogoPreview(`https://ekol-server.onrender.com${contact.faks.logo}` || "");
 
         setLocationTitleAz(contact.location.title.az);
         setLocationTitleEn(contact.location.title.en);
         setLocationTitleRu(contact.location.title.ru);
         setLocationValue(contact.location.title.value);
+        setLocationLogoPreview(`https://ekol-server.onrender.com${contact.location.logo}` || "");
 
         setEmailTitleAz(contact.email.title.az);
         setEmailTitleEn(contact.email.title.en);
         setEmailTitleRu(contact.email.title.ru);
         setEmailValue(contact.email.value);
+        setEmailLogoPreview(`https://ekol-server.onrender.com${contact.email.logo}` || "");
       } catch (error) {
         console.error(error);
       }
@@ -194,6 +199,13 @@ const ContactEdit: React.FC = () => {
           onChange={(e) => setTelephoneValue(e.target.value)}
           name="telephone_value"
         />
+        {telLogoPreview && (
+          <Box mt={2}>
+            <Typography variant="subtitle1">Şəkil:</Typography>
+            <img src={telLogoPreview} alt="Preview" style={{ width: "40%", maxHeight: "80px", objectFit: "cover" }} />
+          </Box>
+        )}
+
         <input type="file" accept="image/*" onChange={handleImageChange(setTelephoneLogo, setTelephoneLogoPreview)} />
 
         {/* Faks */}
@@ -237,6 +249,14 @@ const ContactEdit: React.FC = () => {
           onChange={(e) => setFaksValue(e.target.value)}
           name="faks_value"
         />
+
+        {faksLogoPreview && (
+          <Box mt={2}>
+            <Typography variant="subtitle1">Şəkil:</Typography>
+            <img src={faksLogoPreview} alt="Preview" style={{ width: "40%", maxHeight: "80px", objectFit: "cover" }} />
+          </Box>
+        )}
+
         <input type="file" accept="image/*" onChange={handleImageChange(setFaksLogo, setFaksLogoPreview)} />
 
         {/* Location */}
@@ -280,6 +300,17 @@ const ContactEdit: React.FC = () => {
           onChange={(e) => setLocationValue(e.target.value)}
           name="location_value"
         />
+
+        {locationLogoPreview && (
+          <Box mt={2}>
+            <Typography variant="subtitle1">Şəkil:</Typography>
+            <img
+              src={locationLogoPreview}
+              alt="Preview"
+              style={{ width: "40%", maxHeight: "80px", objectFit: "cover" }}
+            />
+          </Box>
+        )}
         <input type="file" accept="image/*" onChange={handleImageChange(setLocationLogo, setLocationLogoPreview)} />
         {/* Email */}
         <TextField
@@ -322,6 +353,12 @@ const ContactEdit: React.FC = () => {
           onChange={(e) => setEmailValue(e.target.value)}
           name="email_value"
         />
+        {emailLogoPreview && (
+          <Box mt={2}>
+            <Typography variant="subtitle1">Şəkil:</Typography>
+            <img src={emailLogoPreview} alt="Preview" style={{ width: "40%", maxHeight: "80px", objectFit: "cover" }} />
+          </Box>
+        )}
         <input type="file" accept="image/*" onChange={handleImageChange(setEmailLogo, setEmailLogoPreview)} />
 
         <Button type="submit" variant="contained" color="primary" style={{ marginTop: "16px" }}>

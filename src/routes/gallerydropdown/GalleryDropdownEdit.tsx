@@ -29,6 +29,7 @@ const GalleryDropdownEdit: React.FC = () => {
           setTitleAz(data.title.az || "");
           setTitleEn(data.title.en || "");
           setTitleRu(data.title.ru || "");
+          setImagePreview(`https://ekol-server.onrender.com${data.backgroundImage}` || "");
         } catch (error) {
           console.error("Error fetching data:", error);
         }

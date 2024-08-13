@@ -13,6 +13,7 @@ const VideosEdit: React.FC = () => {
   const [snackbarMessage, setSnackbarMessage] = useState("");
 
   const [video, setVideo] = useState<string>("");
+  const [videoPreview, setVideoPreview] = useState<string>("");
 
   // Fetch data
   useEffect(() => {
@@ -22,6 +23,8 @@ const VideosEdit: React.FC = () => {
           const response = await axios.get(`${URL}/videos/${editid}`);
           const data = response.data;
           setVideo(data.video || "");
+          setVideoPreview(data.video || "");
+          
         } catch (error) {
           console.error("Error fetching data:", error);
         }
@@ -76,6 +79,12 @@ const VideosEdit: React.FC = () => {
           onChange={(e: ChangeEvent<HTMLInputElement>) => setVideo(e.target.value)}
           name="video"
         />
+
+        <div>
+        {videoPreview && (
+          <iframe width={600} height={300} src={videoPreview}></iframe>
+        )}
+        </div>
 
         <Button type="submit" variant="contained" color="success" style={{ marginTop: "16px", marginLeft: "24px" }}>
           Düzəliş et

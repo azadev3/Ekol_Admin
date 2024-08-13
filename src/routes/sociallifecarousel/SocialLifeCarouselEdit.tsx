@@ -28,6 +28,7 @@ const SocialLifeCarouselEdit: React.FC = () => {
           setTitleAz(data.title.az || "");
           setTitleEn(data.title.en || "");
           setTitleRu(data.title.ru || "");
+          setImagePreview(`https://ekol-server.onrender.com${data.image}` || "");
         } catch (error) {
           console.error("Error fetching data:", error);
         }

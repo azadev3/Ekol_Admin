@@ -22,6 +22,7 @@ const LogoEdit: React.FC = () => {
         try {
           const response = await axios.get(`${URL}/logo/${editid}`);
           const data = response.data;
+          setImagePreview(`https://ekol-server.onrender.com${data.logo}` || "");
           console.log(data, "salam");
         } catch (error) {
           console.error("Error fetching data:", error);
