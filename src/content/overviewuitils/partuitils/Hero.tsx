@@ -239,8 +239,22 @@ const Hero: React.FC = () => {
     <section className="part">
       <div className="wrapper-contain">
         <Swiper
-          slidesPerView={3}
-          spaceBetween={30}
+          breakpoints={{
+            268: {
+              spaceBetween: 12,
+              slidesPerView: 1.3,
+            },
+            468: {
+              slidesPerView: 1.7,
+            },
+            768: {
+              slidesPerView: 2.2,
+            },
+            968: {
+              slidesPerView: 3,
+              spaceBetween: 30,
+            }
+          }}
           pagination={{
             dynamicBullets: true,
           }}

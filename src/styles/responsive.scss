@@ -1,0 +1,285 @@
+@media only screen and (max-width: 1300px) {
+     .sidebar {
+          width: 16%;
+          padding: 16px 6px 30px 6px;
+     }
+     .sidebar .link-area .dropdown-sidebar-item, .sidebar .link-area .dropdown-sidebar-item-inner {
+          padding: 5px 6px;
+     }
+     .sidebar .overview-homepage {
+          padding: 5px 6px;
+     }
+     .sidebar .link-area .dropdown-sidebar-item .left-title .linktitle, .sidebar .link-area .dropdown-sidebar-item-inner .left-title .linktitle {
+          font-size: 11px;
+     }
+     .sidebar .link-area .dropdown-sidebar-item .left-title .icon, .sidebar .link-area .dropdown-sidebar-item-inner .left-title .icon {
+          font-size: 16px;
+     }
+     .sidebar .overview-homepage .pie {
+          font-size: 16px;
+     }
+     .sidebar .top-area img {
+          height: 30px;
+     }
+     .sidebar .top-area .toggle-sidebar-icon {
+          font-size: 20px;
+     }
+     .sidebar .top-area {
+          padding: 0px 8px 12px 8px;
+     }
+     .sidebar .link-area .dropdown-sidebar-item .caret, .sidebar .link-area .dropdown-sidebar-item-inner .caret {
+          font-size: 13px;
+     }
+     .content .header {
+          padding: 8px 12px;
+     }
+     .content {
+          width: 84%;
+          padding: 12px;
+     }
+     .overview .other-overviews {
+          margin-top: 24px;
+     }
+     .overview .other-overviews span {
+          font-size: 18px;
+     }
+     .overview .other-overviews p {
+          font-size: 12px;
+     }
+     .overview .other-overviews::before, .overview .other-overviews::after {
+          display: none !important;
+     }
+     .recharts-legend-wrapper {
+          display: none !important;
+     }
+     .recharts-text {
+          font-size: 11px !important;
+     }
+     .content .header .left-logo .project-name {
+          font-size: 18px;
+     }
+     .content .header .left-logo .right {
+          font-size: 18px;
+     }
+     .content .header .right-user {
+          gap: 10px;
+     }
+     .content .header .right-user .name-and-surname span {
+          font-size: 12px;
+     }
+     .overview .parts-for-apis .part .wrapper-contain .swiper-slide {
+          padding-left: 12px;
+          padding-right: 12px;
+          max-height: 300px;
+          min-height: 300px;
+     }
+     .overview .parts-for-apis .part .wrapper-contain .swiper-slide .contain .title h2 {
+          font-size: 12px;
+     }
+     .overview .parts-for-apis .part .wrapper-contain .swiper-slide .contain .title p {
+          font-size: 11px;
+     }
+     .overview .parts-for-apis .part .wrapper-contain .swiper-slide .contain .title {
+          gap: 4px;
+     }
+     .overview .parts-for-apis .part .wrapper-contain .swiper-slide .contain .button a {
+          padding: 4px 12px;
+          font-size: 14px;
+     }
+     .overview .parts-for-apis .part .wrapper-contain .swiper-slide .status {
+          font-size: 12px;
+          strong {
+               font-size: 12px;
+          }
+     }
+     .swiper-horizontal > .swiper-pagination-bullets.swiper-pagination-bullets-dynamic, .swiper-pagination-horizontal.swiper-pagination-bullets.swiper-pagination-bullets-dynamic {
+          display: none;
+     }
+     .overview .parts-for-apis .part .wrapper-contain {
+          height: auto;
+     }
+     .overview .chart-component {
+          height: 200px;
+     }
+     .sidebar .link-area .dropdown-sidebar-item, .sidebar .link-area .dropdown-sidebar-item-inner {
+          font-size: 9px;
+     }
+     .sidebar.collapsed .top-area .collapsedicon {
+          min-width: 18px;
+          height: 18px;
+          padding: 1.5px;
+     }
+     .sidebar .overview-homepage span {
+          font-size: 10px;
+     }
+}
+
+@media only screen and (max-width: 768px) {
+     .mobile-sidebar {
+          position: fixed;
+          width: 50%;
+          height: 100vh;
+          z-index: 1000;
+          box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.364);
+     }
+     .sidebar .top-area {
+          justify-content: space-between; 
+          width: 100%;
+     }
+     .content {
+          width: 100%;
+     }
+     .overview .chart-component {
+          padding: 0;
+     }
+     .sidebar.collapsed {
+          width: 12%;
+     }
+     .content .header .right-user .profile {
+          display: none;
+     }
+     .content .header .right-user .name-and-surname span {
+          font-size: 10px;
+     }
+     .content .header .right-user {
+          gap: 2px;
+     }
+     .content .header {
+          padding: 4px 6px;
+     }
+     .content .header .left-logo {
+          gap: 4px;
+     }
+     .content .header .left-logo .project-name {
+          font-size: 12px;
+     }
+     .content .header .left-logo .right {
+          font-size: 14px;
+     }
+
+     .sidebar .link-area .dropdown-sidebar-item, .sidebar .link-area .dropdown-sidebar-item-inner {
+          padding: 3px 2px;
+     }
+     .sidebar .link-area .dropdown-sidebar-item .left-title .icon, .sidebar .link-area .dropdown-sidebar-item-inner .left-title .icon {
+          font-size: 12px;
+     }
+     .sidebar .top-area img {
+          height: 21px;
+     }
+     .overview .other-overviews span {
+          font-size: 14px;
+     }
+     .overview .other-overviews {
+          margin-top: 12px;
+     }
+     .overview .parts-for-apis {
+          margin-top: 12px;
+     }
+     .overview .parts-for-apis .part .wrapper-contain .swiper-slide .status {
+          padding: 2px 8px;
+          font-size: 8px;
+          strong {
+               font-size: 8px;
+          }
+     }
+     .overview .parts-for-apis .part .wrapper-contain .swiper-slide .contain .title p {
+          line-height: unset;
+     }
+     .overview .parts-for-apis .part .wrapper-contain .swiper-slide {
+          min-height: 250px;
+          max-height: 250px;
+     }
+     
+     .overview .other-overviews {
+          gap: 2px;
+     }
+     .overview .other-overviews p {
+          font-size: 10px;
+     }
+     .overview .parts-for-apis .part .wrapper-contain .swiper-slide .contain .button a {
+          font-size: 12px;
+     }
+     .sidebar.collapsed .top-area {
+          height: 36px;
+     }
+     .content .show-component .title .add-data-btn {
+          padding: 8px 12px;
+          gap: 6px;
+     }
+     .content .show-component .title .add-data-btn .addicon {
+          font-size: 12px;
+     }
+     .content .show-component .title .add-data-btn span {
+          font-size: 11px;
+     }
+     .content .show-component .title .texts p {
+          font-size: 10px;
+     }
+     .content .show-component .title .texts h1 {
+          font-size: 12px;
+     }
+     .content .show-component .title .texts {
+          gap: 1px;
+     }
+     .css-t89xny-MuiDataGrid-columnHeaderTitle {
+          font-size: 12px;
+     }
+     .content .buttons-grid .edit {
+          font-size: 12px;
+          padding: 6px 12px;
+     }
+     .content .buttons-grid .delete {
+          padding: 6px 12px;
+          font-size: 12px;
+     }
+     .css-jmcofg-MuiDataGrid-root .MuiDataGrid-cell--textLeft {
+          font-size: 10px;
+     }
+     .content .component-create .title .texts h1, .content .component-edit .title .texts h1 {
+          font-size: 12px;
+     }
+     .content .component-create .title .texts p, .content .component-edit .title .texts p {
+          font-size: 11px;
+     }
+     .content .component-create .title .add-data-btn, .content .component-edit .title .add-data-btn {
+          padding: 6px 12px;
+     }
+     .content .component-create .title .add-data-btn span, .content .component-edit .title .add-data-btn span {
+          font-size: 12px;
+     }
+     .content .component-create .title .add-data-btn .addicon, .content .component-edit .title .add-data-btn .addicon {
+          font-size: 12px;
+     }
+     .css-19hdl7d-MuiInputBase-input-MuiOutlinedInput-input {
+          height: 21px !important;
+          font-size: 12px !important;
+     }
+     .css-ke5b6m-MuiButtonBase-root-MuiButton-root {
+          margin-left: 0 !important;
+     }
+     .css-sghohy-MuiButtonBase-root-MuiButton-root {
+          font-size: 10px !important;
+     }
+}
+
+@media only screen and (max-width: 468px) {
+     .mobile-sidebar {
+          width: 80%;
+          .top-area {
+               justify-content: space-between !important;
+          }
+     }
+     .sidebar.collapsed .top-area {
+          justify-content: center !important;
+     }
+     .sidebar .link-area .dropdown-sidebar-item .caret, .sidebar .link-area .dropdown-sidebar-item-inner .caret {
+          font-size: 10px;
+     }
+     .content .header .right-user .mode {
+          width: 18px;
+          height: 18px;
+     }
+     .content .header .right-user {
+          gap: 12px;
+     }
+}

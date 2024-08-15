@@ -95,7 +95,7 @@ import VideosShow from "../routes/videos/VideosShow";
 import VideosCreate from "../routes/videos/VideosCreate";
 import VideosEdit from "../routes/videos/VideosEdit";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { ToggleSidebarState } from "../sidebar/Sidebarr";
+import { ToggleSidebarState } from "../sidebar/Sidebar";
 import { FaRegHandPointRight } from "react-icons/fa";
 import { FaRegUser } from "react-icons/fa6";
 import Overview from "./Overview";

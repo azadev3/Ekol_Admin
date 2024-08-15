@@ -3,7 +3,7 @@ import "./styles/global.scss";
 import "./styles/Content.scss";
 import "./styles/Sidebar.scss";
 import Content from "./content/Content";
-import Sidebarr from "./sidebar/Sidebarr";
+import Sidebarr from "./sidebar/Sidebar";
 import Login from "./Login";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { atom, useRecoilState } from "recoil";

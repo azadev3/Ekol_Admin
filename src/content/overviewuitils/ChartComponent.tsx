@@ -1,7 +1,7 @@
 import React from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { useRecoilValue } from "recoil";
-import { SidebarLinkLengthState } from "../../sidebar/Sidebarr";
+import { SidebarLinkLengthState } from "../../sidebar/Sidebar";
 import axios from "axios";
 import { URL } from "../../Base";
 

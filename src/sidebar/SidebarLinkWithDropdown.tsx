@@ -2,7 +2,7 @@ import React from "react";
 import { FaAngleDown } from "react-icons/fa6";
 import { NavLink, useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { ToggleSidebarState, TooltipForLinkState } from "./Sidebarr";
+import { ToggleSidebarState, TooltipForLinkState } from "./Sidebar";
 import { IoMdInformationCircleOutline } from "react-icons/io";
 
 type dropdownItemType = {

@@ -1,55 +1,169 @@
 import React from "react";
-import SidebarLink from "./SidebarLink";
+import SidebarLinkWithDropdown from "./SidebarLinkWithDropdown";
+import { NavLink } from "react-router-dom";
+import { HiChartPie } from "react-icons/hi";
+import { PiCaretLeftFill, PiNewspaperClipping } from "react-icons/pi";
+import { atom, useRecoilState } from "recoil";
+import { SiApacherocketmq } from "react-icons/si";
+import { BiPulse } from "react-icons/bi";
+import { MdEmail, MdOutlineMiscellaneousServices, MdOutlineTranslate } from "react-icons/md";
+import { BsTelephoneForward } from "react-icons/bs";
+import { LuShare2 } from "react-icons/lu";
+import { IoLogoElectron, IoImages } from "react-icons/io5";
+import { GoInfo } from "react-icons/go";
+import { AiOutlineRise } from "react-icons/ai";
+import { GiMovementSensor, GiReceiveMoney } from "react-icons/gi";
 
-const Sidebar: React.FC = () => {
+export const SidebarLinkLengthState = atom<string>({
+  key: "lengthStateKeySidebarLink",
+  default: "",
+});
+
+export const ToggleSidebarState = atom<boolean>({
+  key: "togglesideStateKey",
+  default: false,
+});
+
+export const TooltipForLinkState = atom<{ [key: string]: boolean }>({
+  key: "forLinktooltipKey",
+  default: {},
+});
+
+const Sidebarr: React.FC = () => {
+  const [toggleSidebar, setToggleSidebar] = useRecoilState(ToggleSidebarState);
+
+  const [mobileSidebar, setMobileSidebar] = React.useState<boolean>(false);
+
+  //give the sidebar link length values
+  const sidebarRef = React.useRef<HTMLDivElement | null>(null);
+  const [_, setLinkLength] = useRecoilState(SidebarLinkLengthState);
+
+  React.useEffect(() => {
+    if (sidebarRef && sidebarRef.current) {
+      const sidebarLinks = sidebarRef.current.querySelectorAll(".link-area");
+      setLinkLength(sidebarLinks.length.toString());
+    }
+
+    const controlMobilesidebar = () => {
+      if(window.innerWidth <= 768) {
+        setMobileSidebar(true);
+      } else {
+        setMobileSidebar(false);
+      }
+    }
+
+    controlMobilesidebar();
+
+    window.addEventListener("resize", controlMobilesidebar);
+    return () => window.removeEventListener("resize", controlMobilesidebar)
+  }, []);
+
+
+  React.useEffect(() => {
+    if(!toggleSidebar) {
+    setToggleSidebar(true);
+
+    }
+  }, [])
+
   return (
-    <aside className="sidebar">
-      <section className="head">
-        <div className="logo">
-          <img src="/166.svg" alt="166Tech" title="166Tech" />
-        </div>
-      </section>
-
-      <nav className="navbar">
-        <SidebarLink to="/hero" title="Hero" className="sidebar-link" />
-        <SidebarLink to="/ourworks" title="Gördüyümüz İşlər" className="sidebar-link" />
-        <SidebarLink to="/statistics" title="Statistikalar" className="sidebar-link" />
-        <SidebarLink to="/services" title="Xidmətlər" className="sidebar-link" />
-        <SidebarLink to="/blog" title="Bloqlar" className="sidebar-link" />
-        <SidebarLink to="/contact" title="Əlaqə" className="sidebar-link" />
-        <SidebarLink to="/socials" title="Sosial Medialar" className="sidebar-link" />
-        <SidebarLink to="/logo" title="Loqo" className="sidebar-link" />
-        <SidebarLink to="/translates" title="Tərcümələr" className="sidebar-link" />
-        <SidebarLink to="/whoarewe" title="Biz kimik?" className="sidebar-link" />
-        <SidebarLink to="/management" title="Rəhbərlik" className="sidebar-link" />
-        <SidebarLink to="/departments" title="Strukturlar (Department)" className="sidebar-link" />
-        <SidebarLink to="/lisanse" title="Lisanslar" className="sidebar-link" />
-        <SidebarLink to="/partners" title="Partnyorlar" className="sidebar-link" />
-        <SidebarLink to="/gallerydropdown" title="Qalereya Səhifəsi" className="sidebar-link" />
-        <SidebarLink to="/imagespage" title="Qalereya Səhifəsi - Şəkillər və Kateqoriyalar" className="sidebar-link" />
-        <SidebarLink to="/ourworksinner" title="Gördüyümüz İşlər (Daxili)" className="sidebar-link" />
-        <SidebarLink
-          to="/careerOpportunitiesBackground"
-          title="Karyera İmkanları - Arxa fon və Başlıq"
-          className="sidebar-link"
+    <aside className={`sidebar ${toggleSidebar ? "collapsed" : mobileSidebar ? "mobile-sidebar" : ""}`} ref={sidebarRef}>
+      <section className="top-area">
+        <img src="/166.svg" alt="" />
+        <PiCaretLeftFill
+          className={`toggle-sidebar-icon ${toggleSidebar ? "collapsedicon" : ""}`}
+          onClick={() => {
+            setToggleSidebar((prevSidebar) => !prevSidebar);
+          }}
         />
-        <SidebarLink to="/whyecol" title="Karyera İmkanları - Niyə Ekol?" className="sidebar-link" />
-        <SidebarLink to="/recruitmentprocess" title="Karyera İmkanları - İşə qəbul prosesi" className="sidebar-link" />
-        <SidebarLink to="/vacations" title="Vakansiyalar" className="sidebar-link" />
-        <SidebarLink to="/applyvacations" title="Vakansiyaya Müraciətlər" className="sidebar-link" />
-        <SidebarLink to="/equipments" title="Avadanlıqlar" className="sidebar-link" />
-        <SidebarLink to="/servicespage" title="Xidmətlər (Fəaliyyət)" className="sidebar-link" />
-        <SidebarLink to="/sociallifecarousel" title="Sosial Həyat (Karusel hissə)" className="sidebar-link" />
-        <SidebarLink to="/sociallife" title="Sosial Həyat" className="sidebar-link" />
-        <SidebarLink to="/purchase" title="Satınalmalar" className="sidebar-link" />
-        <SidebarLink to="/certificates" title="Sertifikatlar" className="sidebar-link" />
-        <SidebarLink to="/lisansepage" title="Lisenziyalar" className="sidebar-link" />
-        <SidebarLink to="/location" title="Ünvanlar (Əlaqə səhifəsi)" className="sidebar-link" />
-        <SidebarLink to="/appeals" title="Müraciətlər (Əlaqə səhifəsi)" className="sidebar-link" />
-        <SidebarLink to="/videos" title="Videolar (Qalereya səhifəsi)" className="sidebar-link" />
-      </nav>
+      </section>
+      <NavLink to="/" className="overview-homepage">
+        <HiChartPie className="pie" />
+        <span>Əsas</span>
+      </NavLink>
+      {/* links */}
+      <SidebarLinkWithDropdown to="/hero" linkTitle="Hero" linkIcon={<SiApacherocketmq />} />
+      <SidebarLinkWithDropdown to="/statistics" linkTitle="Statistikalar" linkIcon={<BiPulse />} />
+      <SidebarLinkWithDropdown
+        to=""
+        linkIcon={<MdOutlineMiscellaneousServices />}
+        linkTitle="Xidmətlər"
+        isDropdown={true}
+        dropdownItem={[
+          { title: "Xidmətlər (Ana səhifə)", to: "/services" },
+          { title: "Xidmətlər (daxili)", to: "/servicespage" },
+        ]}
+      />
+      <SidebarLinkWithDropdown to="/blog" linkTitle="Bloqlar" linkIcon={<PiNewspaperClipping />} />
+      <SidebarLinkWithDropdown to="/contact" linkTitle="Əlaqə" linkIcon={<BsTelephoneForward />} />
+      <SidebarLinkWithDropdown to="/socials" linkTitle="Sosial Medialar" linkIcon={<LuShare2 />} />
+      <SidebarLinkWithDropdown to="/logo" linkTitle="Loqo" linkIcon={<IoLogoElectron />} />
+      <SidebarLinkWithDropdown to="/translates" linkTitle="Tərcümələr" linkIcon={<MdOutlineTranslate />} />
+      <SidebarLinkWithDropdown
+        to=""
+        linkTitle="Haqqımızda"
+        isDropdown={true}
+        linkIcon={<GoInfo />}
+        dropdownItem={[
+          { title: "Biz kimik?", to: "/whoarewe" },
+          { title: "Rəhbərlik", to: "/management" },
+          { title: "Struktur", to: "/departments" },
+          { title: "Lisenziyalar", to: "/lisansepage" },
+          { title: "Partnyorlar", to: "/partners" },
+          { title: "Sertifikatlar", to: "/certificates" },
+          { title: "Gördüyümüz işlər (Ana səhifə)", to: "/ourworks" },
+          { title: "Gördüyümüz işlər (Daxili)", to: "/ourworksinner" },
+        ]}
+      />
+      <SidebarLinkWithDropdown
+        to=""
+        linkIcon={<AiOutlineRise />}
+        linkTitle="Karyera İmkanları"
+        isDropdown={true}
+        dropdownItem={[
+          { title: "Arxa fon və Başlıq", to: "/careerOpportunitiesBackground" },
+          { title: "İşə Qəbul Prosesi", to: "/recruitmentprocess" },
+          { title: "Niyə Ekol?", to: "/whyecol" },
+          { title: "Vakansiyalar", to: "/vacations" },
+          { title: "Vakansiya Müraciətləri", to: "/applyvacations" },
+        ]}
+      />
+      <SidebarLinkWithDropdown
+        to=""
+        linkTitle="Qalereya"
+        linkIcon={<IoImages />}
+        isDropdown={true}
+        dropdownItem={[
+          { title: "Əsas səhifə", to: "/gallerydropdown" },
+          { title: "Şəkillər və Kateqoriyalar", to: "/imagespage" },
+          { title: "Videolar", to: "/videos" },
+        ]}
+      />
+      <SidebarLinkWithDropdown
+        to=""
+        linkIcon={<GiMovementSensor />}
+        linkTitle="Fəaliyyət"
+        isDropdown={true}
+        dropdownItem={[
+          { title: "Avadanlıqlar", to: "/equipments" },
+          { title: "Sosial Həyat", to: "/sociallife" },
+          { title: "Sosial Həyat (Karusel)", to: "/sociallifecarousel" },
+        ]}
+      />
+      <SidebarLinkWithDropdown to="/purchase" linkTitle="Satınalmalar" linkIcon={<GiReceiveMoney />} />
+      <SidebarLinkWithDropdown
+        to=""
+        linkIcon={<BsTelephoneForward />}
+        linkTitle="Əlaqə Səhifəsi"
+        isDropdown={true}
+        dropdownItem={[
+          { title: "Ünvanlar", to: "/location" },
+          { title: "Müraciətlər", to: "/appeals" },
+        ]}
+      />
+      <SidebarLinkWithDropdown to="/emails" linkTitle="E-maillər" linkIcon={<MdEmail />} />
     </aside>
   );
 };
 
-export default Sidebar;
+export default Sidebarr;
