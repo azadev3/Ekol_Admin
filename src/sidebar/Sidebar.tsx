@@ -90,7 +90,6 @@ const Sidebarr: React.FC = () => {
         linkTitle="Xidmətlər"
         isDropdown={true}
         dropdownItem={[
-          { title: "Xidmətlər (Ana səhifə)", to: "/services" },
           { title: "Xidmətlər (daxili)", to: "/servicespage" },
         ]}
       />
