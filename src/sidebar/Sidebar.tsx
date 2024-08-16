@@ -83,6 +83,7 @@ const Sidebarr: React.FC = () => {
       </NavLink>
       {/* links */}
       <SidebarLinkWithDropdown to="/hero" linkTitle="Hero" linkIcon={<SiApacherocketmq />} />
+      <SidebarLinkWithDropdown to="/ourworks" linkTitle="Gördüyümüz işlər (Ana səhifə)" linkIcon={<PiNewspaperClipping />} />
       <SidebarLinkWithDropdown to="/statistics" linkTitle="Statistikalar" linkIcon={<BiPulse />} />
       <SidebarLinkWithDropdown
         to=""
@@ -110,7 +111,6 @@ const Sidebarr: React.FC = () => {
           { title: "Lisenziyalar", to: "/lisansepage" },
           { title: "Partnyorlar", to: "/partners" },
           { title: "Sertifikatlar", to: "/certificates" },
-          { title: "Gördüyümüz işlər (Ana səhifə)", to: "/ourworks" },
           { title: "Gördüyümüz işlər (Daxili)", to: "/ourworksinner" },
         ]}
       />
