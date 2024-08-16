@@ -46,6 +46,9 @@ const EmailsShow: React.FC = () => {
                   justifyContent: "flex-start",
                   flexDirection: "column",
                   gap: "12px",
+                  backgroundColor: "#FAFAFA",
+                  width: "100%",
+                  padding: "16px 12px"
                 }}>
                 <div
                   className="list"
