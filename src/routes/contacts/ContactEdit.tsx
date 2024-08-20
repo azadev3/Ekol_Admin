@@ -17,28 +17,24 @@ const ContactEdit: React.FC = () => {
   const [telephoneTitleRu, setTelephoneTitleRu] = useState("");
   const [telephoneValue, setTelephoneValue] = useState("");
   const [telephoneLogo, setTelephoneLogo] = useState<File | null>(null);
-  const [telLogoPreview, setTelephoneLogoPreview] = useState<string>("");
 
   const [faksTitleAz, setFaksTitleAz] = useState("");
   const [faksTitleEn, setFaksTitleEn] = useState("");
   const [faksTitleRu, setFaksTitleRu] = useState("");
   const [faksValue, setFaksValue] = useState("");
   const [faksLogo, setFaksLogo] = useState<File | null>(null);
-  const [faksLogoPreview, setFaksLogoPreview] = useState<string>("");
 
   const [locationTitleAz, setLocationTitleAz] = useState("");
   const [locationTitleEn, setLocationTitleEn] = useState("");
   const [locationTitleRu, setLocationTitleRu] = useState("");
   const [locationValue, setLocationValue] = useState("");
   const [locationLogo, setLocationLogo] = useState<File | null>(null);
-  const [locationLogoPreview, setLocationLogoPreview] = useState<string>("");
 
   const [emailTitleAz, setEmailTitleAz] = useState("");
   const [emailTitleEn, setEmailTitleEn] = useState("");
   const [emailTitleRu, setEmailTitleRu] = useState("");
   const [emailValue, setEmailValue] = useState("");
   const [emailLogo, setEmailLogo] = useState<File | null>(null);
-  const [emailLogoPreview, setEmailLogoPreview] = useState<string>("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -52,32 +48,22 @@ const ContactEdit: React.FC = () => {
           setTelephoneTitleEn(telephones[0].title.en);
           setTelephoneTitleRu(telephones[0].title.ru);
           setTelephoneValue(telephones[0].value);
-          setTelephoneLogoPreview(`https://ekol-server-1.onrender.com${telephones[0].logo}` || "");
-        } else {
-          setTelephoneTitleAz("");
-          setTelephoneTitleEn("");
-          setTelephoneTitleRu("");
-          setTelephoneValue("");
-          setTelephoneLogoPreview("");
         }
 
         setFaksTitleAz(contact.faks.title.az);
         setFaksTitleEn(contact.faks.title.en);
         setFaksTitleRu(contact.faks.title.ru);
         setFaksValue(contact.faks.value);
-        setFaksLogoPreview(`https://ekol-server-1.onrender.com${contact.faks.logo}` || "");
 
         setLocationTitleAz(contact.location.title.az);
         setLocationTitleEn(contact.location.title.en);
         setLocationTitleRu(contact.location.title.ru);
         setLocationValue(contact.location.title.value);
-        setLocationLogoPreview(`https://ekol-server-1.onrender.com${contact.location.logo}` || "");
 
         setEmailTitleAz(contact.email.title.az);
         setEmailTitleEn(contact.email.title.en);
         setEmailTitleRu(contact.email.title.ru);
         setEmailValue(contact.email.value);
-        setEmailLogoPreview(`https://ekol-server-1.onrender.com${contact.email.logo}` || "");
       } catch (error) {
         console.error(error);
       }
@@ -137,19 +123,10 @@ const ContactEdit: React.FC = () => {
   };
 
   const handleImageChange =
-    (
-      setLogo: React.Dispatch<React.SetStateAction<File | null>>,
-      setLogoPreview: React.Dispatch<React.SetStateAction<string>>
-    ) =>
+    (setLogo: React.Dispatch<React.SetStateAction<File | null>>) =>
     (event: ChangeEvent<HTMLInputElement>) => {
       if (event.target.files && event.target.files[0]) {
-        const file = event.target.files[0];
-        setLogo(file);
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          setLogoPreview(reader.result as string);
-        };
-        reader.readAsDataURL(file);
+        setLogo(event.target.files[0]);
       }
     };
 
@@ -199,14 +176,7 @@ const ContactEdit: React.FC = () => {
           onChange={(e) => setTelephoneValue(e.target.value)}
           name="telephone_value"
         />
-        {telLogoPreview && (
-          <Box mt={2}>
-            <Typography variant="subtitle1">Şəkil:</Typography>
-            <img src={telLogoPreview} alt="Preview" style={{ width: "40%", maxHeight: "80px", objectFit: "cover" }} />
-          </Box>
-        )}
-
-        <input type="file" accept="image/*" onChange={handleImageChange(setTelephoneLogo, setTelephoneLogoPreview)} />
+        <input type="file" name="telephone_logo" accept="image/*" onChange={handleImageChange(setTelephoneLogo)} />
 
         {/* Faks */}
         <TextField
@@ -249,15 +219,7 @@ const ContactEdit: React.FC = () => {
           onChange={(e) => setFaksValue(e.target.value)}
           name="faks_value"
         />
-
-        {faksLogoPreview && (
-          <Box mt={2}>
-            <Typography variant="subtitle1">Şəkil:</Typography>
-            <img src={faksLogoPreview} alt="Preview" style={{ width: "40%", maxHeight: "80px", objectFit: "cover" }} />
-          </Box>
-        )}
-
-        <input type="file" accept="image/*" onChange={handleImageChange(setFaksLogo, setFaksLogoPreview)} />
+        <input type="file" name="faks_logo" accept="image/*" onChange={handleImageChange(setFaksLogo)} />
 
         {/* Location */}
         <TextField
@@ -300,18 +262,8 @@ const ContactEdit: React.FC = () => {
           onChange={(e) => setLocationValue(e.target.value)}
           name="location_value"
         />
+        <input type="file" name="location_logo" accept="image/*" onChange={handleImageChange(setLocationLogo)} />
 
-        {locationLogoPreview && (
-          <Box mt={2}>
-            <Typography variant="subtitle1">Şəkil:</Typography>
-            <img
-              src={locationLogoPreview}
-              alt="Preview"
-              style={{ width: "40%", maxHeight: "80px", objectFit: "cover" }}
-            />
-          </Box>
-        )}
-        <input type="file" accept="image/*" onChange={handleImageChange(setLocationLogo, setLocationLogoPreview)} />
         {/* Email */}
         <TextField
           required
@@ -353,21 +305,22 @@ const ContactEdit: React.FC = () => {
           onChange={(e) => setEmailValue(e.target.value)}
           name="email_value"
         />
-        {emailLogoPreview && (
-          <Box mt={2}>
-            <Typography variant="subtitle1">Şəkil:</Typography>
-            <img src={emailLogoPreview} alt="Preview" style={{ width: "40%", maxHeight: "80px", objectFit: "cover" }} />
-          </Box>
-        )}
-        <input type="file" accept="image/*" onChange={handleImageChange(setEmailLogo, setEmailLogoPreview)} />
+        <input type="file" accept="image/*" name="email_logo" onChange={handleImageChange(setEmailLogo)} />
 
-        <Button type="submit" variant="contained" color="primary" style={{ marginTop: "16px" }}>
-          Submit
-        </Button>
+        <Box mt={2} mb={2}>
+          <Button type="submit" variant="contained" color="primary">
+            Yadda saxla
+          </Button>
+        </Box>
       </form>
 
-      <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleSnackbarClose}>
-        <Alert onClose={handleSnackbarClose} severity="success" sx={{ width: "100%" }}>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+        message={snackbarMessage}
+      >
+        <Alert onClose={handleSnackbarClose} severity={snackbarMessage.includes("Uğurlu") ? "success" : "error"}>
           {snackbarMessage}
         </Alert>
       </Snackbar>
