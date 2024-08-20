@@ -94,17 +94,22 @@ const ContactCreate: React.FC = () => {
     setOpenSnackbar(false);
   };
 
-  const handleImageChange = (setImage: React.Dispatch<React.SetStateAction<File | null>>, setImagePreview: React.Dispatch<React.SetStateAction<string>>) => (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files[0]) {
-      const file = event.target.files[0];
-      setImage(file);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+  const handleImageChange =
+    (
+      setImage: React.Dispatch<React.SetStateAction<File | null>>,
+      setImagePreview: React.Dispatch<React.SetStateAction<string>>
+    ) =>
+    (event: ChangeEvent<HTMLInputElement>) => {
+      if (event.target.files && event.target.files[0]) {
+        const file = event.target.files[0];
+        setImage(file);
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setImagePreview(reader.result as string);
+        };
+        reader.readAsDataURL(file);
+      }
+    };
 
   return (
     <div className="component-create">
@@ -112,11 +117,47 @@ const ContactCreate: React.FC = () => {
 
       <form noValidate autoComplete="off" onSubmit={handleSubmit} style={{ marginTop: "16px" }}>
         {/* Telefon */}
-        <TextField required label="Telefon Başlıq(AZ)" variant="outlined" fullWidth margin="normal" value={telephoneTitleAz} onChange={(e) => setTelephoneTitleAz(e.target.value)} name="telephone_title_az" />
-        <TextField required label="Telefon Başlıq(EN)" variant="outlined" fullWidth margin="normal" value={telephoneTitleEn} onChange={(e) => setTelephoneTitleEn(e.target.value)} name="telephone_title_en" />
-        <TextField required label="Telefon Başlıq(RU)" variant="outlined" fullWidth margin="normal" value={telephoneTitleRu} onChange={(e) => setTelephoneTitleRu(e.target.value)} name="telephone_title_ru" />
-        <TextField required label="Telefon Dəyəri" variant="outlined" fullWidth margin="normal" value={telephoneValue} onChange={(e) => setTelephoneValue(e.target.value)} name="telephone_value" />
-        <input type="file" accept="image/*" onChange={handleImageChange(setTelephoneLogo, setTelephoneLogoPreview)} />
+        <TextField
+          required
+          label="Telefon Başlıq(AZ)"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={telephoneTitleAz}
+          onChange={(e) => setTelephoneTitleAz(e.target.value)}
+          name="telephone_title_az"
+        />
+        <TextField
+          required
+          label="Telefon Başlıq(EN)"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={telephoneTitleEn}
+          onChange={(e) => setTelephoneTitleEn(e.target.value)}
+          name="telephone_title_en"
+        />
+        <TextField
+          required
+          label="Telefon Başlıq(RU)"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={telephoneTitleRu}
+          onChange={(e) => setTelephoneTitleRu(e.target.value)}
+          name="telephone_title_ru"
+        />
+        <TextField
+          required
+          label="Telefon Dəyəri"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={telephoneValue}
+          onChange={(e) => setTelephoneValue(e.target.value)}
+          name="telephone_value"
+        />
+        <input type="file" accept="image/*" name="telephone_logo" onChange={handleImageChange(setTelephoneLogo, setTelephoneLogoPreview)} />
         {telephoneLogoPreview && (
           <Box mt={2}>
             <Typography>Telefon Logo Preview:</Typography>
@@ -125,11 +166,47 @@ const ContactCreate: React.FC = () => {
         )}
 
         {/* Faks */}
-        <TextField required label="Faks Başlıq(AZ)" variant="outlined" fullWidth margin="normal" value={faksTitleAz} onChange={(e) => setFaksTitleAz(e.target.value)} name="faks_title_az" />
-        <TextField required label="Faks Başlıq(EN)" variant="outlined" fullWidth margin="normal" value={faksTitleEn} onChange={(e) => setFaksTitleEn(e.target.value)} name="faks_title_en" />
-        <TextField required label="Faks Başlıq(RU)" variant="outlined" fullWidth margin="normal" value={faksTitleRu} onChange={(e) => setFaksTitleRu(e.target.value)} name="faks_title_ru" />
-        <TextField required label="Faks Dəyəri" variant="outlined" fullWidth margin="normal" value={faksValue} onChange={(e) => setFaksValue(e.target.value)} name="faks_value" />
-        <input type="file" accept="image/*" onChange={handleImageChange(setFaksLogo, setFaksLogoPreview)} />
+        <TextField
+          required
+          label="Faks Başlıq(AZ)"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={faksTitleAz}
+          onChange={(e) => setFaksTitleAz(e.target.value)}
+          name="faks_title_az"
+        />
+        <TextField
+          required
+          label="Faks Başlıq(EN)"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={faksTitleEn}
+          onChange={(e) => setFaksTitleEn(e.target.value)}
+          name="faks_title_en"
+        />
+        <TextField
+          required
+          label="Faks Başlıq(RU)"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={faksTitleRu}
+          onChange={(e) => setFaksTitleRu(e.target.value)}
+          name="faks_title_ru"
+        />
+        <TextField
+          required
+          label="Faks Dəyəri"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={faksValue}
+          onChange={(e) => setFaksValue(e.target.value)}
+          name="faks_value"
+        />
+        <input type="file" accept="image/*" name="faks_logo" onChange={handleImageChange(setFaksLogo, setFaksLogoPreview)} />
         {faksLogoPreview && (
           <Box mt={2}>
             <Typography>Faks Logo Preview:</Typography>
@@ -138,11 +215,47 @@ const ContactCreate: React.FC = () => {
         )}
 
         {/* Location */}
-        <TextField required label="Location Başlıq(AZ)" variant="outlined" fullWidth margin="normal" value={locationTitleAz} onChange={(e) => setLocationTitleAz(e.target.value)} name="location_title_az" />
-        <TextField required label="Location Başlıq(EN)" variant="outlined" fullWidth margin="normal" value={locationTitleEn} onChange={(e) => setLocationTitleEn(e.target.value)} name="location_title_en" />
-        <TextField required label="Location Başlıq(RU)" variant="outlined" fullWidth margin="normal" value={locationTitleRu} onChange={(e) => setLocationTitleRu(e.target.value)} name="location_title_ru" />
-        <TextField required label="Location Dəyəri" variant="outlined" fullWidth margin="normal" value={locationValue} onChange={(e) => setLocationValue(e.target.value)} name="location_value" />
-        <input type="file" accept="image/*" onChange={handleImageChange(setLocationLogo, setLocationLogoPreview)} />
+        <TextField
+          required
+          label="Location Başlıq(AZ)"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={locationTitleAz}
+          onChange={(e) => setLocationTitleAz(e.target.value)}
+          name="location_title_az"
+        />
+        <TextField
+          required
+          label="Location Başlıq(EN)"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={locationTitleEn}
+          onChange={(e) => setLocationTitleEn(e.target.value)}
+          name="location_title_en"
+        />
+        <TextField
+          required
+          label="Location Başlıq(RU)"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={locationTitleRu}
+          onChange={(e) => setLocationTitleRu(e.target.value)}
+          name="location_title_ru"
+        />
+        <TextField
+          required
+          label="Location Dəyəri"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={locationValue}
+          onChange={(e) => setLocationValue(e.target.value)}
+          name="location_value"
+        />
+        <input type="file" accept="image/*" name="location_logo" onChange={handleImageChange(setLocationLogo, setLocationLogoPreview)} />
         {locationLogoPreview && (
           <Box mt={2}>
             <Typography>Location Logo Preview:</Typography>
@@ -151,11 +264,47 @@ const ContactCreate: React.FC = () => {
         )}
 
         {/* Email */}
-        <TextField required label="Email Başlıq(AZ)" variant="outlined" fullWidth margin="normal" value={emailTitleAz} onChange={(e) => setEmailTitleAz(e.target.value)} name="email_title_az" />
-        <TextField required label="Email Başlıq(EN)" variant="outlined" fullWidth margin="normal" value={emailTitleEn} onChange={(e) => setEmailTitleEn(e.target.value)} name="email_title_en" />
-        <TextField required label="Email Başlıq(RU)" variant="outlined" fullWidth margin="normal" value={emailTitleRu} onChange={(e) => setEmailTitleRu(e.target.value)} name="email_title_ru" />
-        <TextField required label="Email Dəyəri" variant="outlined" fullWidth margin="normal" value={emailValue} onChange={(e) => setEmailValue(e.target.value)} name="email_value" />
-        <input type="file" accept="image/*" onChange={handleImageChange(setEmailLogo, setEmailLogoPreview)} />
+        <TextField
+          required
+          label="Email Başlıq(AZ)"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={emailTitleAz}
+          onChange={(e) => setEmailTitleAz(e.target.value)}
+          name="email_title_az"
+        />
+        <TextField
+          required
+          label="Email Başlıq(EN)"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={emailTitleEn}
+          onChange={(e) => setEmailTitleEn(e.target.value)}
+          name="email_title_en"
+        />
+        <TextField
+          required
+          label="Email Başlıq(RU)"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={emailTitleRu}
+          onChange={(e) => setEmailTitleRu(e.target.value)}
+          name="email_title_ru"
+        />
+        <TextField
+          required
+          label="Email Dəyəri"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={emailValue}
+          onChange={(e) => setEmailValue(e.target.value)}
+          name="email_value"
+        />
+        <input type="file" accept="image/*" name="email_logo" onChange={handleImageChange(setEmailLogo, setEmailLogoPreview)} />
         {emailLogoPreview && (
           <Box mt={2}>
             <Typography>Email Logo Preview:</Typography>
