@@ -8,7 +8,7 @@ import { LoadingState } from "../hero/HeroShow";
 import { useRecoilState } from "recoil";
 import Loader from "../../Loader";
 
-const BlogShow: React.FC = () => {
+const NewBlogShow: React.FC = () => {
   const [loading, setLoading] = useRecoilState(LoadingState);
 
   const [rows, setRows] = useState<any[]>([]);
@@ -31,7 +31,7 @@ const BlogShow: React.FC = () => {
         <div className="buttons-grid">
           <button
             className="edit"
-            onClick={() => navigate(`/blog/${params.row.id}`)} // Navigating to the edit page with the row's id
+            onClick={() => navigate(`/newblogs/${params.row.id}`)} // Navigating to the edit page with the row's id
           >
             Düzəliş
           </button>
@@ -49,7 +49,7 @@ const BlogShow: React.FC = () => {
   // DELETE
   const handleDelete = async (id: any) => {
     try {
-      const deleteitem = await axios.delete(`${URL}/blog/${id}`);
+      const deleteitem = await axios.delete(`${URL}/newblogs/${id}`);
       if (deleteitem.data) {
         console.log(deleteitem.data);
         window.location.reload();
@@ -66,7 +66,7 @@ const BlogShow: React.FC = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`${URL}/blog`);
+        const response = await axios.get(`${URL}/newblogs`);
         const rowsWithId = response.data.map((item: any) => ({
           id: item._id,
           title_az: item.title?.az || "",
@@ -96,7 +96,7 @@ const BlogShow: React.FC = () => {
         <Loader />
       ) : (
         <React.Fragment>
-          <Title description="Əlavə et, dəyişdir, sil." title="Xəbərlər" to="/blog/create" />
+          <Title description="Əlavə et, dəyişdir, sil." title="Bloqlar" to="/newblogs/create" />
           <div style={{ height: "100%", width: "100%", marginTop: "24px" }}>
             <DataGrid columns={columns} rows={rows} />
           </div>
@@ -106,4 +106,4 @@ const BlogShow: React.FC = () => {
   );
 };
 
-export default BlogShow;
+export default NewBlogShow;

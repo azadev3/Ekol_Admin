@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; 
 
-const BlogCreate: React.FC = () => {
+const NewBlogCreate: React.FC = () => {
   const modules = {
     toolbar: [
       [{ header: "1" }, { header: "2" }, { font: [] }],
@@ -62,13 +62,13 @@ const BlogCreate: React.FC = () => {
     }
 
     try {
-      const response = await axios.post(`${URL}/blog`, formData, {
+      const response = await axios.post(`${URL}/newblogs`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
       if (response.data || response.status === 200) {
-        navigate("/blog");
+        navigate("/newblogs");
       }
       setSnackbarMessage("UĞURLU!.");
       setOpenSnackbar(true);
@@ -103,7 +103,7 @@ const BlogCreate: React.FC = () => {
 
   return (
     <div className="component-create">
-      <Title description="Əlavə et" title="Xəbərlər" to="" />
+      <Title description="Əlavə et" title="Bloqlar" to="" />
 
       <form noValidate autoComplete="off" style={{ marginTop: "16px" }}>
         <TextField
@@ -198,4 +198,4 @@ const BlogCreate: React.FC = () => {
   );
 };
 
-export default BlogCreate;
+export default NewBlogCreate;

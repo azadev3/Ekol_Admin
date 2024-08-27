@@ -122,7 +122,7 @@ const BlogEdit: React.FC = () => {
 
   return (
     <div className="component-edit">
-      <Title description="Dəyişiklik et" title="Bloqlar" to="" />
+      <Title description="Dəyişiklik et" title="Xəbərlər" to="" />
 
       <form noValidate autoComplete="off" onSubmit={handleSubmit} style={{ marginTop: "16px" }}>
         <TextField

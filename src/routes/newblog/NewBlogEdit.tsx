@@ -1,13 +1,13 @@
-import React, { ChangeEvent, useState } from "react";
-import Title from "../../uitils/Title";
+import React, { useEffect, useState, ChangeEvent } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { TextField, Button, Snackbar, Alert, Typography, Box } from "@mui/material";
 import axios from "axios";
 import { URL } from "../../Base";
-import { useNavigate } from "react-router-dom";
+import Title from "../../uitils/Title";
 import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css"; 
+import "react-quill/dist/quill.snow.css";
 
-const BlogCreate: React.FC = () => {
+const NewBlogEdit: React.FC = () => {
   const modules = {
     toolbar: [
       [{ header: "1" }, { header: "2" }, { font: [] }],
@@ -32,11 +32,11 @@ const BlogCreate: React.FC = () => {
     "align",
     "clean",
   ];
-
+  const { editid } = useParams();
   const navigate = useNavigate();
 
-  const [openSnackbar, setOpenSnackbar] = React.useState(false);
-  const [snackbarMessage, setSnackbarMessage] = React.useState("");
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
 
   const [title_az, setTitleAz] = useState("");
   const [title_en, setTitleEn] = useState("");
@@ -47,8 +47,34 @@ const BlogCreate: React.FC = () => {
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string>("");
 
+  // Fetch data
+  useEffect(() => {
+    if (editid) {
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(`${URL}/newblogs/${editid}`);
+          const data = response.data;
+          console.log(data, "salam");
+          setTitleAz(data.title.az || "");
+          setTitleEn(data.title.en || "");
+          setTitleRu(data.title.ru || "");
+          setDescriptionAz(data.description.az || "");
+          setDescriptionEn(data.description.en || "");
+          setDescriptionRu(data.description.ru || "");
+          setImagePreview(`https://ekol-server-1.onrender.com${data.image}` || "");
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      };
+      fetchData();
+    }
+  }, [editid]);
+
+  // UPDATE
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!editid) return;
 
     const formData = new FormData();
     formData.append("title_az", title_az);
@@ -62,26 +88,19 @@ const BlogCreate: React.FC = () => {
     }
 
     try {
-      const response = await axios.post(`${URL}/blog`, formData, {
+      const response = await axios.put(`${URL}/newblogs/${editid}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-      if (response.data || response.status === 200) {
-        navigate("/blog");
-      }
-      setSnackbarMessage("UĞURLU!.");
+      console.log(response.data);
+      setSnackbarMessage("Düzəliş uğurludur!");
       setOpenSnackbar(true);
+      navigate("/newblogs");
     } catch (error) {
       console.error(error);
-      setSnackbarMessage("GÖZLƏNİLMƏZ XƏTA...");
+      setSnackbarMessage("Düzəlişdə bir xəta oldu yenidən yoxlayın");
       setOpenSnackbar(true);
-    }
-
-    if (!title_az || !title_en || !title_ru || !description_az || !description_en || !description_ru || !image) {
-      setSnackbarMessage("Bütün xanaları doldurun.");
-      setOpenSnackbar(true);
-      return;
     }
   };
 
@@ -102,10 +121,10 @@ const BlogCreate: React.FC = () => {
   };
 
   return (
-    <div className="component-create">
-      <Title description="Əlavə et" title="Xəbərlər" to="" />
+    <div className="component-edit">
+      <Title description="Dəyişiklik et" title="Bloqlar" to="" />
 
-      <form noValidate autoComplete="off" style={{ marginTop: "16px" }}>
+      <form noValidate autoComplete="off" onSubmit={handleSubmit} style={{ marginTop: "16px" }}>
         <TextField
           required
           label="Başlıq(AZ)"
@@ -174,17 +193,13 @@ const BlogCreate: React.FC = () => {
 
         {imagePreview && (
           <Box mt={2}>
-            <Typography variant="subtitle1">Resim Önizlemesi:</Typography>
+            <Typography variant="subtitle1">Şəkil:</Typography>
             <img src={imagePreview} alt="Preview" style={{ width: "80%", maxHeight: "400px", objectFit: "cover" }} />
           </Box>
         )}
 
-        <Button
-          variant="contained"
-          color="success"
-          onClick={handleSubmit}
-          style={{ marginTop: "16px", marginLeft: "24px" }}>
-          Göndər
+        <Button type="submit" variant="contained" color="success" style={{ marginTop: "16px", marginLeft: "24px" }}>
+          Düzəliş et
         </Button>
       </form>
 
@@ -198,4 +213,4 @@ const BlogCreate: React.FC = () => {
   );
 };
 
-export default BlogCreate;
+export default NewBlogEdit;

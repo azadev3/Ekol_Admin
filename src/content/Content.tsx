@@ -103,6 +103,9 @@ import { IoMoon } from "react-icons/io5";
 import { DarkModeState } from "../App";
 import { IoSunnyOutline } from "react-icons/io5";
 import EmailsShow from "../routes/emails/EmailsShow";
+import NewBlogShow from "../routes/newblog/NewBlogShow";
+import NewBlogCreate from "../routes/newblog/NewBlogCreate";
+import NewBlogEdit from "../routes/newblog/NewBlogEdit";
 
 const Content: React.FC = () => {
   const toggleSidebar = useRecoilValue(ToggleSidebarState);
@@ -154,10 +157,14 @@ const Content: React.FC = () => {
         <Route path="/services" element={<ServicesShow />} />
         <Route path="/services/create" element={<ServicesCreate />} />
         <Route path="/services/:editid" element={<ServicesEdit />} />
-        {/* BLOGS */}
+        {/* XEBERLER (NEWS) */}
         <Route path="/blog" element={<BlogShow />} />
         <Route path="/blog/create" element={<BlogCreate />} />
         <Route path="/blog/:editid" element={<BlogEdit />} />
+        {/* NEW BLOGS (BLOQLAR) */}
+        <Route path="/newblogs" element={<NewBlogShow />} />
+        <Route path="/newblogs/create" element={<NewBlogCreate />} />
+        <Route path="/newblogs/:editid" element={<NewBlogEdit />} />
         {/* CONTACT */}
         <Route path="/contact" element={<ContactShow />} />
         <Route path="/contact/create" element={<ContactCreate />} />
