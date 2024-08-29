@@ -158,7 +158,7 @@ const Sidebarr: React.FC = () => {
         isDropdown={true}
         dropdownItem={[
           { title: "Satınalma Elanları", to: "/purchaseannouncement" },
-          { title: "Satınalma Qaydaları", to: "" },
+          { title: "Satınalma Qaydaları", to: "/purchaserules" },
         ]}
       />
       <SidebarLinkWithDropdown
