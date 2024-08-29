@@ -22,7 +22,7 @@ const PurchRuleShow: React.FC = () => {
     { field: "title_en", headerName: "Title EN", width: 100 },
     { field: "title_ru", headerName: "Title RU", width: 100 },
     { field: "pdf", headerName: "PDF FAYL", width: 250 },
-    { field: "createdAt", headerName: "Yaradılma Tarixi", width: 60 },
+    { field: "createdAt", headerName: "Yaradılma Tarixi", width: 100 },
     {
       field: "actions",
       headerName: "Actions",
