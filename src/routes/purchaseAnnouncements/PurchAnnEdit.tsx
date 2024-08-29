@@ -225,9 +225,9 @@ const PurchAnnEdit: React.FC = () => {
           Aşağıdakılardan birini işarələyin*
         </Typography>
         <RadioGroup value={selectedStatus} onChange={(e) => setSelectedStatus(e.target.value)}>
-          <FormControlLabel value={selectedStatus} control={<Radio />} label="Yeni ?" />
-          <FormControlLabel value={selectedStatus} control={<Radio />} label="Aktual ?" />
-          <FormControlLabel value={selectedStatus} control={<Radio />} label="Bitmiş ?" />
+          <FormControlLabel value="new" control={<Radio />} label="Yeni ?" />
+          <FormControlLabel value="current" control={<Radio />} label="Aktual ?" />
+          <FormControlLabel value="ended" control={<Radio />} label="Bitmiş ?" />
         </RadioGroup>
 
         {/* upload PDF area */}
