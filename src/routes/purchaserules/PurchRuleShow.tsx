@@ -18,11 +18,11 @@ const PurchRuleShow: React.FC = () => {
 
   // COLUMNS
   const columns: GridColDef[] = [
-    { field: "title_az", headerName: "Title AZ", width: 100 },
-    { field: "title_en", headerName: "Title EN", width: 100 },
-    { field: "title_ru", headerName: "Title RU", width: 100 },
-    { field: "pdf", headerName: "PDF FAYL", width: 250 },
-    { field: "createdAt", headerName: "Yaradılma Tarixi", width: 100 },
+    { field: "title_az", headerName: "Title AZ", width: 200 },
+    { field: "title_en", headerName: "Title EN", width: 200 },
+    { field: "title_ru", headerName: "Title RU", width: 200 },
+    { field: "pdf", headerName: "PDF FAYL", width: 200 },
+    { field: "createdAt", headerName: "Yaradılma Tarixi", width: 200 },
     {
       field: "actions",
       headerName: "Actions",
