@@ -150,7 +150,17 @@ const Sidebarr: React.FC = () => {
           { title: "Sosial Həyat (Karusel)", to: "/sociallifecarousel" },
         ]}
       />
-      <SidebarLinkWithDropdown to="/purchase" linkTitle="Satınalmalar" linkIcon={<GiReceiveMoney />} />
+      {/* <SidebarLinkWithDropdown to="/purchase" linkTitle="Satınalmalar" linkIcon={<GiReceiveMoney />} /> */}
+      <SidebarLinkWithDropdown
+        to=""
+        linkIcon={<GiReceiveMoney />}
+        linkTitle="Satınalmalar"
+        isDropdown={true}
+        dropdownItem={[
+          { title: "Satınalma Elanları", to: "/purchaseannouncement" },
+          { title: "Satınalma Qaydaları", to: "" },
+        ]}
+      />
       <SidebarLinkWithDropdown
         to=""
         linkIcon={<BsTelephoneForward />}
