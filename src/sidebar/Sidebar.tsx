@@ -45,29 +45,29 @@ const Sidebarr: React.FC = () => {
     }
 
     const controlMobilesidebar = () => {
-      if(window.innerWidth <= 768) {
+      if (window.innerWidth <= 768) {
         setMobileSidebar(true);
       } else {
         setMobileSidebar(false);
       }
-    }
+    };
 
     controlMobilesidebar();
 
     window.addEventListener("resize", controlMobilesidebar);
-    return () => window.removeEventListener("resize", controlMobilesidebar)
+    return () => window.removeEventListener("resize", controlMobilesidebar);
   }, []);
 
-
   React.useEffect(() => {
-    if(!toggleSidebar) {
-    setToggleSidebar(true);
-
+    if (!toggleSidebar) {
+      setToggleSidebar(true);
     }
-  }, [])
+  }, []);
 
   return (
-    <aside className={`sidebar ${toggleSidebar ? "collapsed" : mobileSidebar ? "mobile-sidebar" : ""}`} ref={sidebarRef}>
+    <aside
+      className={`sidebar ${toggleSidebar ? "collapsed" : mobileSidebar ? "mobile-sidebar" : ""}`}
+      ref={sidebarRef}>
       <section className="top-area">
         <img src="/166.svg" alt="" />
         <PiCaretLeftFill
@@ -83,16 +83,18 @@ const Sidebarr: React.FC = () => {
       </NavLink>
       {/* links */}
       <SidebarLinkWithDropdown to="/hero" linkTitle="Hero" linkIcon={<SiApacherocketmq />} />
-      <SidebarLinkWithDropdown to="/ourworks" linkTitle="Gördüyümüz işlər (Ana səhifə)" linkIcon={<PiNewspaperClipping />} />
+      <SidebarLinkWithDropdown
+        to="/ourworks"
+        linkTitle="Gördüyümüz işlər (Ana səhifə)"
+        linkIcon={<PiNewspaperClipping />}
+      />
       <SidebarLinkWithDropdown to="/statistics" linkTitle="Statistikalar" linkIcon={<BiPulse />} />
       <SidebarLinkWithDropdown
         to=""
         linkIcon={<MdOutlineMiscellaneousServices />}
         linkTitle="Xidmətlər"
         isDropdown={true}
-        dropdownItem={[
-          { title: "Xidmətlər (daxili)", to: "/servicespage" },
-        ]}
+        dropdownItem={[{ title: "Xidmətlər (daxili)", to: "/servicespage" }]}
       />
       <SidebarLinkWithDropdown to="/blog" linkTitle="Xəbərlər" linkIcon={<PiNewspaperClipping />} />
       <SidebarLinkWithDropdown to="/newblogs" linkTitle="Bloqlar" linkIcon={<PiNewspaperClipping />} />
