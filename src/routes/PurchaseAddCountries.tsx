@@ -4,7 +4,14 @@ import { IoIosCloseCircleOutline } from "react-icons/io";
 import { URL } from "../Base";
 import { toast, ToastContainer, Zoom } from "react-toastify";
 
+type C = {
+  _id: string;
+  countries: { country: string; _id: string }[];
+};
+
 const PurchaseAddCountries: React.FC = () => {
+  const [countryData, setCountryData] = React.useState<C[]>([]);
+
   const [loading, setLoading] = React.useState<boolean>(false);
   const [showInput, setShowInput] = React.useState<boolean>(false);
   const [country, setCountry] = React.useState<string>("");
@@ -56,6 +63,7 @@ const PurchaseAddCountries: React.FC = () => {
       const response = await axios.get(`${URL}/purchaseCountries`);
       if (response.data) {
         console.log(response.data, "salmamlas");
+        setCountryData(response.data);
       } else {
         console.log(response.status);
       }
@@ -112,6 +120,21 @@ const PurchaseAddCountries: React.FC = () => {
     getData();
   }, []);
 
+  const deleteCountryOnDb = async (_id: string) => {
+    try {
+      await axios.delete(`${URL}/purchaseCountry/${_id}`);
+      setCountryData((prevData) =>
+        prevData.map((record) => ({
+          ...record,
+          countries: record.countries.filter((country) => country._id !== _id),
+        }))
+      );
+    } catch (error) {
+      console.error("Error deleting country", error);
+      toast.error("bir xeta oldu", { position: "top-center" });
+    }
+  };
+
   return (
     <div className="purchase-add-countries">
       <ToastContainer transition={Zoom} autoClose={2000} />
@@ -154,7 +177,26 @@ const PurchaseAddCountries: React.FC = () => {
         </button>
       </div>
 
-      <div className="current-countries">{}</div>
+      <div className="current-countries">
+        {countryData && countryData.length > 0 ? (
+          countryData.map((data) => (
+            <div key={data._id}>
+              {data.countries && data.countries.length > 0 ? (
+                data.countries.map((country) => (
+                  <div className="country-item" key={country._id}>
+                    <span>{country?.country}</span>
+                    <IoIosCloseCircleOutline className="delete-item" onClick={() => deleteCountryOnDb(country?._id)} />
+                  </div>
+                ))
+              ) : (
+                <p>No countries found</p>
+              )}
+            </div>
+          ))
+        ) : (
+          <p>Loading...</p>
+        )}
+      </div>
     </div>
   );
 };
