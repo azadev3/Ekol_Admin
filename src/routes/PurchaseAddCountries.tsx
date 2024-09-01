@@ -189,7 +189,7 @@ const PurchaseAddCountries: React.FC = () => {
                   </div>
                 ))
               ) : (
-                <p>No countries found</p>
+                <p></p>
               )}
             </div>
           ))
