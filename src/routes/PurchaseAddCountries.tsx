@@ -53,7 +53,7 @@ const PurchaseAddCountries: React.FC = () => {
   const fetchCountries = async () => {
     setLoading(true);
     try {
-      const response = await axios.post(`${URL}/purchaseAddCountry`, countries, {
+      const response = await axios.post(`${URL}/purchaseAddCountry`, {countries}, {
         headers: {
           "Content-Type": "application/json",
         },
