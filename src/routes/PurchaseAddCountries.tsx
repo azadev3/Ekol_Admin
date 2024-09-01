@@ -21,7 +21,9 @@ const PurchaseAddCountries: React.FC = () => {
       setCountries((prevCountry) => [...prevCountry, country]);
       setCountry("");
     } else {
-      alert("1 ölkədən yalnız 1 dəfə əlavə edə bilərsiniz və mövcud xana boş ola bilməz.");
+      toast.warn("1 ölkədən yalnız 1 dəfə əlavə edə bilərsiniz və mövcud xana boş ola bilməz.", {
+        position: "top-center",
+      });
     }
   };
 
@@ -49,12 +51,24 @@ const PurchaseAddCountries: React.FC = () => {
     return () => document.removeEventListener("keyup", ifClickEnter);
   }, [country, countries]);
 
+  const getData = async () => {
+    try {
+      const response = await axios.get(`${URL}/purchaseCountries`);
+      if (response.data) {
+        console.log(response.data, "salmamlas");
+      } else {
+        console.log(response.status);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   //send countries to DB
   const fetchCountries = async () => {
     setLoading(true);
     try {
       const countriesData = countries.map((country) => ({ country }));
-      console.log(countriesData, "bu countriesdatadir!");
 
       const response = await axios.post(
         `${URL}/purchaseAddCountry`,
@@ -73,6 +87,7 @@ const PurchaseAddCountries: React.FC = () => {
         });
         setCountries([]);
         setCountry("");
+        getData();
       } else {
         toast.error("Bir server xətası vəya başqa bir problem oldu. Lütfən yenidən yoxlayın və ya adminlərlə görüşün", {
           position: "top-center",
@@ -92,6 +107,10 @@ const PurchaseAddCountries: React.FC = () => {
       return () => clearTimeout(timeout);
     }
   };
+
+  React.useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <div className="purchase-add-countries">
@@ -134,6 +153,8 @@ const PurchaseAddCountries: React.FC = () => {
           {loading ? "Ölkələr göndərilir..." : "Emal üçün sayta göndər"}
         </button>
       </div>
+
+      <div className="current-countries">{}</div>
     </div>
   );
 };

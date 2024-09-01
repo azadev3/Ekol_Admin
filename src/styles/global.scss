@@ -683,4 +683,15 @@ $activecolor: rgb(38, 38, 40);
       pointer-events: all;
     }
   }
+
+  .current-countries {
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    margin-top: 24px;
+  }
+
 }
