@@ -112,6 +112,7 @@ import PurchAnnEdit from "../routes/purchaseAnnouncements/PurchAnnEdit";
 import PurchRuleCreate from "../routes/purchaserules/PurchRuleCreate";
 import PurchRuleShow from "../routes/purchaserules/PurchRuleShow";
 import PurchaseContact from "../routes/purchasecontact/PurchaseContact";
+import PurchaseAddCountries from "../routes/PurchaseAddCountries";
 
 const Content: React.FC = () => {
   const toggleSidebar = useRecoilValue(ToggleSidebarState);
@@ -268,6 +269,7 @@ const Content: React.FC = () => {
         <Route path="/purchaserules/create" element={<PurchRuleCreate />} />
         {/* PURCHASE CONTACT (NEW FEATURE) */}
         <Route path="/purchasecontact" element={<PurchaseContact />} />
+        <Route path="/purchaseAddCountries" element={<PurchaseAddCountries />} />
 
         {/* CERTIFICATES */}
         <Route path="/certificates" element={<CertificatesShow />} />

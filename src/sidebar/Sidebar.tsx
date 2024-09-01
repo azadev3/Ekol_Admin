@@ -162,6 +162,7 @@ const Sidebarr: React.FC = () => {
           { title: "Satınalma Elanları", to: "/purchaseannouncement" },
           { title: "Satınalma Qaydaları", to: "/purchaserules" },
           { title: "Satınalma Əlaqə", to: "/purchasecontact" },
+          { title: "Ölkə əlavə et", to: "/purchaseAddCountries" },
         ]}
       />
       <SidebarLinkWithDropdown

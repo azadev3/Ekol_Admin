@@ -390,7 +390,8 @@ $activecolor: rgb(38, 38, 40);
                     }
                   }
                   input,
-                  select, textarea {
+                  select,
+                  textarea {
                     width: 100%;
                     height: 50px;
                     font-size: 21px;
@@ -429,64 +430,62 @@ $activecolor: rgb(38, 38, 40);
                   font-weight: 500;
                   padding-bottom: 24px;
                 }
-                
-              .field {
-                width: 100%;
-                height: auto;
-                gap: 16px;
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                .input-field {
-                  width: 100%;
-                  display: flex;
-                  align-items: flex-start;
-                  justify-content: flex-start;
-                  flex-direction: column;
-                  gap: 12px;
-                  background-color: rgba(243, 243, 243, 0.456);
-                  padding: 12px 12px;
-                  label {
-                    font-size: 18px;
-                    font-weight: 300;
-                    background-color: #71717177;
-                    color: #000000;
-                    font-weight: 500;
-                    padding: 8px 40px;
-                    border-radius: 5px;
-                  }
 
-                  input[type="number"] {
-                    &::-webkit-inner-spin-button {
-                      display: none;
-                    }
-                  }
-                  input,
-                  select, textarea {
+                .field {
+                  width: 100%;
+                  height: auto;
+                  gap: 16px;
+                  display: grid;
+                  grid-template-columns: repeat(2, 1fr);
+                  .input-field {
                     width: 100%;
-                    height: 50px;
-                    font-size: 21px;
-                    font-weight: bold;
-                    letter-spacing: -0.8px;
-                    border-radius: 12px;
-                    border: 4px solid #cecece60;
-                    padding: 0px 12px;
-                    outline: none;
-                    transition: 70ms ease-in-out;
-                    cursor: pointer;
-                    &:hover {
-                      border: 2px solid #cecece90;
+                    display: flex;
+                    align-items: flex-start;
+                    justify-content: flex-start;
+                    flex-direction: column;
+                    gap: 12px;
+                    background-color: rgba(243, 243, 243, 0.456);
+                    padding: 12px 12px;
+                    label {
+                      font-size: 18px;
+                      font-weight: 300;
+                      background-color: #71717177;
+                      color: #000000;
+                      font-weight: 500;
+                      padding: 8px 40px;
+                      border-radius: 5px;
                     }
-                    &:focus {
-                      border: 4px solid rgba(73, 126, 77, 0.655);
-                      cursor: auto;
+
+                    input[type="number"] {
+                      &::-webkit-inner-spin-button {
+                        display: none;
+                      }
+                    }
+                    input,
+                    select,
+                    textarea {
+                      width: 100%;
+                      height: 50px;
+                      font-size: 21px;
+                      font-weight: bold;
+                      letter-spacing: -0.8px;
+                      border-radius: 12px;
+                      border: 4px solid #cecece60;
+                      padding: 0px 12px;
+                      outline: none;
+                      transition: 70ms ease-in-out;
+                      cursor: pointer;
+                      &:hover {
+                        border: 2px solid #cecece90;
+                      }
+                      &:focus {
+                        border: 4px solid rgba(73, 126, 77, 0.655);
+                        cursor: auto;
+                      }
                     }
                   }
-                  
                 }
               }
-
-              }
-
             }
           }
         }
@@ -500,5 +499,188 @@ $activecolor: rgb(38, 38, 40);
   img {
     width: 300px;
     height: 300px;
+  }
+}
+
+.purchase-add-countries {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  h3 {
+    font-size: 28px;
+    font-weight: 500;
+    color: #303030;
+    letter-spacing: -0.8px;
+  }
+
+  .buttons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+    .add,
+    .send {
+      margin-top: 24px;
+      background-color: mediumslateblue;
+      padding: 7px 50px;
+      color: white;
+      font-weight: 500;
+      font-size: 18px;
+      border: none;
+      outline: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 200ms ease-in-out;
+      &:hover {
+        background-color: rgb(146, 56, 168);
+      }
+      &:active {
+        transform: scale(0.99);
+      }
+    }
+    .send {
+      text-transform: capitalize;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(20px);
+      transition: 200ms ease-in-out;
+      background-color: rgb(67, 189, 100);
+      color: rgb(255, 249, 249);
+      font-weight: 600;
+      font-size: 18px;
+      &:hover {
+        background-color: rgb(74, 122, 43);
+      }
+      &.actived {
+        opacity: 1;
+        transform: translateX(0);
+        pointer-events: all;
+      }
+     
+      &#disable-btn{
+        background-color: #909090 !important;
+        color: #303030 !important;
+        cursor: no-drop !important;
+        &:active {
+          transform: scale(1) !important;
+        }
+        &:hover {
+          background-color: #909090 !important;
+          color: #303030 !important;
+          cursor: no-drop !important;
+        }
+      }
+
+    }
+  }
+
+  .container-for-countries {
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    margin-top: 0;
+    opacity: 0;
+    height: 0;
+    pointer-events: none;
+    transform: translateY(-5px);
+    transition: 150ms ease-in-out;
+
+    .added-countries-basket {
+      width: 60%;
+      margin-bottom: 24px;
+      height: auto;
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      justify-items: flex-start;
+      align-items: flex-start;
+      gap: 10px;
+      background-color: transparent;
+      .country-item {
+        padding: 8px 24px;
+        width: 100%;
+        background-color: rgb(207, 208, 255);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        border-radius: 12px;
+        span {
+          color: rgb(0, 0, 0);
+          font-weight: 600;
+          font-size: 17px;
+          letter-spacing: -0.5px;
+          user-select: none;
+        }
+        .delete-item {
+          font-size: 21px;
+          color: rgb(0, 0, 0);
+          cursor: pointer;
+          &:hover {
+            color: red;
+          }
+          &:active {
+            transform: translateY(1px);
+          }
+        }
+      }
+    }
+
+    .input {
+      width: 100%;
+      max-width: 50%;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 7px;
+      input {
+        width: 60%;
+        height: 100%;
+        border-radius: 24px;
+        border: 3px solid #cecece;
+        padding: 0px 18px;
+        color: #404040;
+        font-weight: 500;
+        font-size: 17px;
+        outline: none;
+        transition: 100ms ease-in-out;
+        &:focus {
+          border: 3px solid mediumslateblue;
+        }
+      }
+
+      button {
+        background-color: rgb(70, 179, 72);
+        color: white;
+        font-weight: 500;
+        font-size: 16px;
+        border: none;
+        padding: 8px 24px;
+        outline: none;
+        border-radius: 24px;
+        cursor: pointer;
+        transition: background-color 200ms ease-in-out;
+        &:hover {
+          background-color: rgb(146, 56, 168);
+        }
+        &:active {
+          transform: scale(0.99);
+        }
+      }
+    }
+
+    &.active {
+      margin-top: 36px;
+      opacity: 1;
+      height: auto;
+      transform: translateY(0);
+      pointer-events: all;
+    }
   }
 }
