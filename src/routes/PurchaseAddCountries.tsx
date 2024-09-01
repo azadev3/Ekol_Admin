@@ -53,11 +53,17 @@ const PurchaseAddCountries: React.FC = () => {
   const fetchCountries = async () => {
     setLoading(true);
     try {
-      const response = await axios.post(`${URL}/purchaseAddCountry`, {countries}, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const countiresData = countries?.map((country) => ({ country }));
+
+      const response = await axios.post(
+        `${URL}/purchaseAddCountry`,
+        { countries: countiresData },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (response.data) {
         console.log(response.data);
