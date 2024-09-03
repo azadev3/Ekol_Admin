@@ -113,6 +113,9 @@ import PurchRuleCreate from "../routes/purchaserules/PurchRuleCreate";
 import PurchRuleShow from "../routes/purchaserules/PurchRuleShow";
 import PurchaseContact from "../routes/purchasecontact/PurchaseContact";
 import PurchaseAddCountries from "../routes/PurchaseAddCountries";
+import YearlyCalculationsCreate from "../routes/yearlycalculations/YearlyCalculationsCreate";
+import YearlyCalculationsShow from "../routes/yearlycalculations/YearlyCalculationsShow";
+import YearlyCalculationsEdit from "../routes/yearlycalculations/YearlyCalculationsEdit";
 
 const Content: React.FC = () => {
   const toggleSidebar = useRecoilValue(ToggleSidebarState);
@@ -292,6 +295,11 @@ const Content: React.FC = () => {
         <Route path="/videos/:editid" element={<VideosEdit />} />
         {/* VIDEOS (VIDEOS PAGE) */}
         <Route path="/emails" element={<EmailsShow />} />
+
+        {/* YEARLY CALCULATIONS */}
+        <Route path="/yearly_calculations" element={<YearlyCalculationsShow />} />
+        <Route path="/yearly_calculations/create" element={<YearlyCalculationsCreate />} />
+        <Route path="/yearly_calculations/:editid" element={<YearlyCalculationsEdit />} />
       </Routes>
     </main>
   );
