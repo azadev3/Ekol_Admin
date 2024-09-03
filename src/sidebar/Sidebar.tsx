@@ -116,6 +116,7 @@ const Sidebarr: React.FC = () => {
           { title: "Sertifikatlar", to: "/certificates" },
           { title: "Gördüyümüz işlər (Daxili)", to: "/ourworksinner" },
           { title: "İllik hesabatlar", to: "/yearly_calculations" },
+          { title: "Rüblük hesabatlar", to: "/calculations" },
         ]}
       />
       <SidebarLinkWithDropdown
