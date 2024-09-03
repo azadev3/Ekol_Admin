@@ -35,13 +35,13 @@ const YearlyCalculationsCreate: React.FC = () => {
     }
 
     try {
-      const response = await axios.post(`${URL}/purchase`, formData, {
+      const response = await axios.post(`${URL}/yearly_calculations`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
       if (response.data || response.status === 200) {
-        navigate("/purchase");
+        navigate("/yearly_calculations");
         setSnackbarMessage("UĞURLU!");
         setOpenSnackbar(true);
       }
