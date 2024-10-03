@@ -107,7 +107,7 @@ const ApplyVacationShow: React.FC = () => {
                 <div className="left">
                   <div className="profile">
                     <img
-                      src={item.profile ? `https://kaiyi-21d4.onrender.com${item.profile}` : ""}
+                      src={item.profile ? `https://ekol-server-1.onrender.com${item.profile}` : ""}
                       alt="userprofile"
                       title="Profil"
                     />

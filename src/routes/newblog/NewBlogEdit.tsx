@@ -63,7 +63,7 @@ const NewBlogEdit: React.FC = () => {
           setDescriptionAz(data.description.az || "");
           setDescriptionEn(data.description.en || "");
           setDescriptionRu(data.description.ru || "");
-          setImagePreview(`https://kaiyi-21d4.onrender.com${data.image}` || "");
+          setImagePreview(`https://ekol-server-1.onrender.com${data.image}` || "");
         } catch (error) {
           console.error("Error fetching data:", error);
         }

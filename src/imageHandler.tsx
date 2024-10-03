@@ -32,7 +32,7 @@ export function imageHandler(this: any) {
         if (quill && imageUrl) {
           const range = quill.getSelection();
           if (range) {
-            quill.insertEmbed(range.index, "image", `https://kaiyi-21d4.onrender.com${imageUrl}`);
+            quill.insertEmbed(range.index, "image", `https://ekol-server-1.onrender.com${imageUrl}`);
           }
         }
       } catch (error) {
