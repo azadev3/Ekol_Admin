@@ -44,6 +44,8 @@ const NewBlogEdit: React.FC = () => {
   const [description_az, setDescriptionAz] = useState("");
   const [description_en, setDescriptionEn] = useState("");
   const [description_ru, setDescriptionRu] = useState("");
+  const [created_at, setCreatedAt] = useState("");
+  const [updated, setUpdated] = useState("");
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string>("");
 
@@ -61,7 +63,7 @@ const NewBlogEdit: React.FC = () => {
           setDescriptionAz(data.description.az || "");
           setDescriptionEn(data.description.en || "");
           setDescriptionRu(data.description.ru || "");
-          setImagePreview(`https://ekol-server-1.onrender.com${data.image}` || "");
+          setImagePreview(`https://kaiyi-21d4.onrender.com${data.image}` || "");
         } catch (error) {
           console.error("Error fetching data:", error);
         }
@@ -83,9 +85,9 @@ const NewBlogEdit: React.FC = () => {
     formData.append("description_az", description_az);
     formData.append("description_en", description_en);
     formData.append("description_ru", description_ru);
-    if (image) {
-      formData.append("imgback", image);
-    }
+    formData.append("created_at", created_at);
+    formData.append("update", updated);
+    formData.append("imgback", image ? image : "");
 
     try {
       const response = await axios.put(`${URL}/newblogs/${editid}`, formData, {
@@ -126,7 +128,6 @@ const NewBlogEdit: React.FC = () => {
 
       <form noValidate autoComplete="off" onSubmit={handleSubmit} style={{ marginTop: "16px" }}>
         <TextField
-          required
           label="Başlıq(AZ)"
           variant="outlined"
           fullWidth
@@ -137,7 +138,6 @@ const NewBlogEdit: React.FC = () => {
         />
 
         <TextField
-          required
           label="Başlıq(EN)"
           variant="outlined"
           fullWidth
@@ -148,7 +148,6 @@ const NewBlogEdit: React.FC = () => {
         />
 
         <TextField
-          required
           label="Başlıq(RU)"
           variant="outlined"
           fullWidth
@@ -172,6 +171,26 @@ const NewBlogEdit: React.FC = () => {
           Açıqlama(RU)
         </Typography>
         <ReactQuill value={description_ru} onChange={setDescriptionRu} modules={modules} formats={formats} />
+
+        <TextField
+          label="Yaradılma tarixini istədiyiniz formatta yazın məsələn: (03.10.2024)"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={created_at}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => setCreatedAt(e.target.value)}
+          name="created_at"
+        />
+
+        <TextField
+          label="İstəyə uyğun yenilənmə tarixini qeyd edə və ya boş saxlaya bilərsiniz"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={updated}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => setUpdated(e.target.value)}
+          name="updated"
+        />
 
         {/* upload image area */}
         <input

@@ -35,7 +35,7 @@ const HeroEdit: React.FC = () => {
           setDescriptionAz(data.description.az || "");
           setDescriptionEn(data.description.en || "");
           setDescriptionRu(data.description.ru || "");
-          setImagePreview(`https://ekol-server-1.onrender.com${data.image}` || "");
+          setImagePreview(`https://kaiyi-21d4.onrender.com${data.image}` || "");
         } catch (error) {
           console.error("Error fetching data:", error);
         }
@@ -94,14 +94,12 @@ const HeroEdit: React.FC = () => {
     }
   };
 
-
   return (
     <div className="component-edit">
       <Title description="Dəyişiklik et" title="Hero" to="" />
 
       <form noValidate autoComplete="off" onSubmit={handleSubmit} style={{ marginTop: "16px" }}>
         <TextField
-          required
           label="Başlıq(AZ)"
           variant="outlined"
           fullWidth
@@ -112,7 +110,6 @@ const HeroEdit: React.FC = () => {
         />
 
         <TextField
-          required
           label="Başlıq(EN)"
           variant="outlined"
           fullWidth
@@ -123,7 +120,6 @@ const HeroEdit: React.FC = () => {
         />
 
         <TextField
-          required
           label="Başlıq(RU)"
           variant="outlined"
           fullWidth
@@ -134,7 +130,6 @@ const HeroEdit: React.FC = () => {
         />
 
         <TextField
-          required
           label="Açıqlama(AZ)"
           variant="outlined"
           fullWidth
@@ -145,7 +140,6 @@ const HeroEdit: React.FC = () => {
         />
 
         <TextField
-          required
           label="Açıqlama(EN)"
           variant="outlined"
           fullWidth
@@ -156,7 +150,6 @@ const HeroEdit: React.FC = () => {
         />
 
         <TextField
-          required
           label="Açıqlama(RU)"
           variant="outlined"
           fullWidth

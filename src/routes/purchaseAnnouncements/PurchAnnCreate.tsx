@@ -44,24 +44,6 @@ const PurchAnnCreate: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (
-      !title_az ||
-      !title_en ||
-      !title_ru ||
-      !description_az ||
-      !description_en ||
-      !description_ru ||
-      !pdf ||
-      !predmet_az ||
-      !predmet_en ||
-      !predmet_ru ||
-      !end_date
-    ) {
-      setSnackbarMessage("Bütün xanaları doldurun.");
-      setOpenSnackbar(true);
-      return;
-    }
-
     const formData = new FormData();
     formData.append("title_az", title_az);
     formData.append("title_en", title_en);
@@ -73,12 +55,9 @@ const PurchAnnCreate: React.FC = () => {
     formData.append("predmet_en", predmet_en);
     formData.append("predmet_ru", predmet_ru);
     formData.append("end_date", end_date);
-    formData.append("status", selectedStatus); 
+    formData.append("status", selectedStatus);
 
-
-    if (pdf) {
-      formData.append("pdf", pdf);
-    }
+    formData.append("pdf", pdf ? pdf : "");
 
     try {
       const response = await axios.post(`${URL}/purchaseannouncement`, formData, {
@@ -86,7 +65,7 @@ const PurchAnnCreate: React.FC = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log(response.data)
+      console.log(response.data);
       if (response.data || response.status === 200) {
         navigate("/purchaseannouncement");
         setSnackbarMessage("UĞURLU!");
@@ -121,7 +100,6 @@ const PurchAnnCreate: React.FC = () => {
 
       <form noValidate autoComplete="off" onSubmit={handleSubmit} style={{ marginTop: "16px" }}>
         <TextField
-          required
           label="Başlıq(AZ)"
           variant="outlined"
           fullWidth
@@ -132,7 +110,6 @@ const PurchAnnCreate: React.FC = () => {
         />
 
         <TextField
-          required
           label="Başlıq(EN)"
           variant="outlined"
           fullWidth
@@ -143,7 +120,6 @@ const PurchAnnCreate: React.FC = () => {
         />
 
         <TextField
-          required
           label="Başlıq(RU)"
           variant="outlined"
           fullWidth
@@ -169,7 +145,6 @@ const PurchAnnCreate: React.FC = () => {
         <ReactQuill value={description_ru} onChange={setDescriptionRu} modules={modules} formats={formats} />
 
         <TextField
-          required
           label="Predmet(AZ)"
           variant="outlined"
           fullWidth
@@ -180,7 +155,6 @@ const PurchAnnCreate: React.FC = () => {
         />
 
         <TextField
-          required
           label="Predmet(EN)"
           variant="outlined"
           fullWidth
@@ -191,7 +165,6 @@ const PurchAnnCreate: React.FC = () => {
         />
 
         <TextField
-          required
           label="Predmet(RU)"
           variant="outlined"
           fullWidth
@@ -202,7 +175,6 @@ const PurchAnnCreate: React.FC = () => {
         />
 
         <TextField
-          required
           label="Bitmə tarixi"
           variant="outlined"
           fullWidth
@@ -215,14 +187,11 @@ const PurchAnnCreate: React.FC = () => {
         <Typography variant="h6" style={{ color: "mediumslateblue", marginTop: "24px" }}>
           Aşağıdakılardan birini işarələyin*
         </Typography>
-        <RadioGroup
-        value={selectedStatus}
-        onChange={(e) => setSelectedStatus(e.target.value)}
-      >
-        <FormControlLabel value="new" control={<Radio />} label="Yeni ?" />
-        <FormControlLabel value="current" control={<Radio />} label="Aktual ?" />
-        <FormControlLabel value="ended" control={<Radio />} label="Bitmiş ?" />
-      </RadioGroup>
+        <RadioGroup value={selectedStatus} onChange={(e) => setSelectedStatus(e.target.value)}>
+          <FormControlLabel value="new" control={<Radio />} label="Yeni ?" />
+          <FormControlLabel value="current" control={<Radio />} label="Aktual ?" />
+          <FormControlLabel value="ended" control={<Radio />} label="Bitmiş ?" />
+        </RadioGroup>
 
         {/* upload PDF area */}
         <input

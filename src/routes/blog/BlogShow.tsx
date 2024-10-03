@@ -51,7 +51,6 @@ const BlogShow: React.FC = () => {
     try {
       const deleteitem = await axios.delete(`${URL}/blog/${id}`);
       if (deleteitem.data) {
-        console.log(deleteitem.data);
         window.location.reload();
       } else {
         console.log(deleteitem.status);

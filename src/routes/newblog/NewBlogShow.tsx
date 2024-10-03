@@ -23,6 +23,7 @@ const NewBlogShow: React.FC = () => {
     { field: "description_az", headerName: "Description AZ", width: 200 },
     { field: "description_en", headerName: "Description EN", width: 200 },
     { field: "description_ru", headerName: "Description RU", width: 200 },
+    { field: "created_at", headerName: "Yaranma tarixi", width: 200 },
     {
       field: "actions",
       headerName: "Actions",
@@ -75,6 +76,7 @@ const NewBlogShow: React.FC = () => {
           description_az: item.description?.az || "",
           description_en: item.description?.en || "",
           description_ru: item.description?.ru || "",
+          created_at: item.created_at || "",
         }));
         setRows(rowsWithId);
       } catch (error) {

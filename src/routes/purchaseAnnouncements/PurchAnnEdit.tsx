@@ -86,10 +86,7 @@ const PurchAnnEdit: React.FC = () => {
     formData.append("predmet_ru", predmet_ru);
     formData.append("end_date", end_date);
     formData.append("status", selectedStatus);
-
-    if (pdf) {
-      formData.append("pdf", pdf);
-    }
+    formData.append("pdf", pdf ? pdf : "");
 
     try {
       const response = await axios.put(`${URL}/purchaseannouncement/${editid}`, formData, {
@@ -130,7 +127,6 @@ const PurchAnnEdit: React.FC = () => {
 
       <form noValidate autoComplete="off" onSubmit={handleSubmit} style={{ marginTop: "16px" }}>
         <TextField
-          required
           label="Başlıq(AZ)"
           variant="outlined"
           fullWidth
@@ -141,7 +137,6 @@ const PurchAnnEdit: React.FC = () => {
         />
 
         <TextField
-          required
           label="Başlıq(EN)"
           variant="outlined"
           fullWidth
@@ -152,7 +147,6 @@ const PurchAnnEdit: React.FC = () => {
         />
 
         <TextField
-          required
           label="Başlıq(RU)"
           variant="outlined"
           fullWidth
@@ -178,7 +172,6 @@ const PurchAnnEdit: React.FC = () => {
         <ReactQuill value={description_ru} onChange={setDescriptionRu} modules={modules} formats={formats} />
 
         <TextField
-          required
           label="Predmet(AZ)"
           variant="outlined"
           fullWidth
@@ -189,7 +182,6 @@ const PurchAnnEdit: React.FC = () => {
         />
 
         <TextField
-          required
           label="Predmet(EN)"
           variant="outlined"
           fullWidth
@@ -200,7 +192,6 @@ const PurchAnnEdit: React.FC = () => {
         />
 
         <TextField
-          required
           label="Predmet(RU)"
           variant="outlined"
           fullWidth
@@ -211,7 +202,6 @@ const PurchAnnEdit: React.FC = () => {
         />
 
         <TextField
-          required
           label="Bitmə tarixi"
           variant="outlined"
           fullWidth

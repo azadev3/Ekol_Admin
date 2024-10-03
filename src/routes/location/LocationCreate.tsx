@@ -93,8 +93,8 @@ const LocationCreate: React.FC = () => {
 
         <TextField
           required
-          placeholder="Google map'dən seçdiyiniz ünvana sağ click edərək aldığınız bağlantı url'ni bura kopyalayın"
-          label="Ünvan url (Google map)"
+          placeholder="Google map'dən aldığınız iframe i yapışdırın - Çox hallarda bu cür başlayır: <iframe ...."
+          label="Iframe (Google map)"
           variant="outlined"
           fullWidth
           margin="normal"

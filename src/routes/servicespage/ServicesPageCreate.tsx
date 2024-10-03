@@ -45,9 +45,7 @@ const ServicesPageCreate: React.FC = () => {
     formData.append("description_az", description_az);
     formData.append("description_en", description_en);
     formData.append("description_ru", description_ru);
-    if (image) {
-      formData.append("imgback", image);
-    }
+    formData.append("imgback", image ? image : "");
 
     try {
       const response = await axios.post(`${URL}/servicespage`, formData, {
@@ -64,12 +62,6 @@ const ServicesPageCreate: React.FC = () => {
       console.error(error);
       setSnackbarMessage("GÖZLƏNİLMƏZ XƏTA...");
       setOpenSnackbar(true);
-    }
-
-    if (!title_az || !title_en || !title_ru || !description_az || !description_en || !description_ru || !image) {
-      setSnackbarMessage("Bütün xanaları doldurun.");
-      setOpenSnackbar(true);
-      return;
     }
   };
 
@@ -95,7 +87,6 @@ const ServicesPageCreate: React.FC = () => {
 
       <form noValidate autoComplete="off" style={{ marginTop: "16px" }}>
         <TextField
-          required
           label="Başlıq(AZ)"
           variant="outlined"
           fullWidth
@@ -106,7 +97,6 @@ const ServicesPageCreate: React.FC = () => {
         />
 
         <TextField
-          required
           label="Başlıq(EN)"
           variant="outlined"
           fullWidth
@@ -117,7 +107,6 @@ const ServicesPageCreate: React.FC = () => {
         />
 
         <TextField
-          required
           label="Başlıq(RU)"
           variant="outlined"
           fullWidth

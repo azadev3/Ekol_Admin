@@ -29,8 +29,8 @@ const ImagespageEdit: React.FC = () => {
           setCategoryNameAz(data.categoryName.az || "");
           setCategoryNameEn(data.categoryName.en || "");
           setCategoryNameRu(data.categoryName.ru || "");
-          setImagePreviewCategoryImage(`https://ekol-server-1.onrender.com${data.categoryImg }`|| "");
-          setImagesPreviews(data.images.map((img: any) => `https://ekol-server-1.onrender.com${img.image}`));
+          setImagePreviewCategoryImage(`https://kaiyi-21d4.onrender.com${data.categoryImg }`|| "");
+          setImagesPreviews(data.images.map((img: any) => `https://kaiyi-21d4.onrender.com${img.image}`));
         })
         .catch(error => {
           console.error("Error fetching data:", error);

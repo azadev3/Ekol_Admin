@@ -30,9 +30,7 @@ const HeroCreate: React.FC = () => {
     formData.append("description_az", description_az);
     formData.append("description_en", description_en);
     formData.append("description_ru", description_ru);
-    if (image) {
-      formData.append("imgback", image);
-    }
+    formData.append("imgback", image ? image : "");
 
     try {
       const response = await axios.post(`${URL}/hero`, formData, {
@@ -49,12 +47,6 @@ const HeroCreate: React.FC = () => {
       console.error(error);
       setSnackbarMessage("GÖZLƏNİLMƏZ XƏTA...");
       setOpenSnackbar(true);
-    }
-
-    if (!title_az || !title_en || !title_ru || !description_az || !description_en || !description_ru || !image) {
-      setSnackbarMessage("Bütün xanaları doldurun.");
-      setOpenSnackbar(true);
-      return;
     }
   };
 
@@ -80,7 +72,6 @@ const HeroCreate: React.FC = () => {
 
       <form noValidate autoComplete="off" style={{ marginTop: "16px" }}>
         <TextField
-          required
           label="Başlıq(AZ)"
           variant="outlined"
           fullWidth
@@ -91,7 +82,6 @@ const HeroCreate: React.FC = () => {
         />
 
         <TextField
-          required
           label="Başlıq(EN)"
           variant="outlined"
           fullWidth
@@ -102,7 +92,6 @@ const HeroCreate: React.FC = () => {
         />
 
         <TextField
-          required
           label="Başlıq(RU)"
           variant="outlined"
           fullWidth
@@ -113,7 +102,6 @@ const HeroCreate: React.FC = () => {
         />
 
         <TextField
-          required
           label="Açıqlama(AZ)"
           variant="outlined"
           fullWidth
@@ -124,7 +112,6 @@ const HeroCreate: React.FC = () => {
         />
 
         <TextField
-          required
           label="Açıqlama(EN)"
           variant="outlined"
           fullWidth
@@ -135,7 +122,6 @@ const HeroCreate: React.FC = () => {
         />
 
         <TextField
-          required
           label="Açıqlama(RU)"
           variant="outlined"
           fullWidth

@@ -5,7 +5,7 @@ import axios from "axios";
 import { URL } from "../../Base";
 import { useNavigate } from "react-router-dom";
 import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css"; 
+import "react-quill/dist/quill.snow.css";
 
 const BlogCreate: React.FC = () => {
   const modules = {
@@ -46,6 +46,8 @@ const BlogCreate: React.FC = () => {
   const [description_ru, setDescriptionRu] = useState("");
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string>("");
+  const [created_at, setCreatedAt] = useState("");
+  const [updated, setUpdated] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -57,10 +59,9 @@ const BlogCreate: React.FC = () => {
     formData.append("description_az", description_az);
     formData.append("description_en", description_en);
     formData.append("description_ru", description_ru);
-    if (image) {
-      formData.append("imgback", image);
-    }
-
+    formData.append("imgback", image ? image : "");
+    formData.append("created_at", created_at);
+    formData.append("updated", updated);
     try {
       const response = await axios.post(`${URL}/blog`, formData, {
         headers: {
@@ -76,12 +77,6 @@ const BlogCreate: React.FC = () => {
       console.error(error);
       setSnackbarMessage("GÖZLƏNİLMƏZ XƏTA...");
       setOpenSnackbar(true);
-    }
-
-    if (!title_az || !title_en || !title_ru || !description_az || !description_en || !description_ru || !image) {
-      setSnackbarMessage("Bütün xanaları doldurun.");
-      setOpenSnackbar(true);
-      return;
     }
   };
 
@@ -107,7 +102,6 @@ const BlogCreate: React.FC = () => {
 
       <form noValidate autoComplete="off" style={{ marginTop: "16px" }}>
         <TextField
-          required
           label="Başlıq(AZ)"
           variant="outlined"
           fullWidth
@@ -118,7 +112,6 @@ const BlogCreate: React.FC = () => {
         />
 
         <TextField
-          required
           label="Başlıq(EN)"
           variant="outlined"
           fullWidth
@@ -129,7 +122,6 @@ const BlogCreate: React.FC = () => {
         />
 
         <TextField
-          required
           label="Başlıq(RU)"
           variant="outlined"
           fullWidth
@@ -153,6 +145,26 @@ const BlogCreate: React.FC = () => {
           Açıqlama(RU)
         </Typography>
         <ReactQuill value={description_ru} onChange={setDescriptionRu} modules={modules} formats={formats} />
+
+        <TextField
+          label="Yaradılma tarixini istədiyiniz formatta yazın məsələn: (03.10.2024)"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={created_at}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => setCreatedAt(e.target.value)}
+          name="created_at"
+        />
+
+        <TextField
+          label="İstəyə uyğun yenilənmə tarixini qeyd edə və ya boş saxlaya bilərsiniz"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={updated}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => setUpdated(e.target.value)}
+          name="updated"
+        />
 
         {/* upload image area */}
         <input

@@ -60,7 +60,7 @@ const ServicesPageEdit: React.FC = () => {
           setDescriptionAz(data.description.az || "");
           setDescriptionEn(data.description.en || "");
           setDescriptionRu(data.description.ru || "");
-          setImagePreview(`https://ekol-server-1.onrender.com${data.image}` || "")
+          setImagePreview(`https://kaiyi-21d4.onrender.com${data.image}` || "");
         } catch (error) {
           console.error("Error fetching data:", error);
         }
@@ -82,9 +82,7 @@ const ServicesPageEdit: React.FC = () => {
     formData.append("description_az", description_az);
     formData.append("description_en", description_en);
     formData.append("description_ru", description_ru);
-    if (image) {
-      formData.append("imgback", image);
-    }
+    formData.append("imgback", image ? image : "");
 
     try {
       const response = await axios.put(`${URL}/servicespage/${editid}`, formData, {
@@ -125,7 +123,6 @@ const ServicesPageEdit: React.FC = () => {
 
       <form noValidate autoComplete="off" onSubmit={handleSubmit} style={{ marginTop: "16px" }}>
         <TextField
-          required
           label="Başlıq(AZ)"
           variant="outlined"
           fullWidth
@@ -136,7 +133,6 @@ const ServicesPageEdit: React.FC = () => {
         />
 
         <TextField
-          required
           label="Başlıq(EN)"
           variant="outlined"
           fullWidth
@@ -147,7 +143,6 @@ const ServicesPageEdit: React.FC = () => {
         />
 
         <TextField
-          required
           label="Başlıq(RU)"
           variant="outlined"
           fullWidth

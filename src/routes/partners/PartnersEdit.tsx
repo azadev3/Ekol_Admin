@@ -27,7 +27,7 @@ const PartnersEdit: React.FC = () => {
           setTitleAz(data.title.az || "");
           setTitleEn(data.title.en || "");
           setTitleRu(data.title.ru || "");
-          setImagePreview(`https://ekol-server-1.onrender.com${data.logo}` || "");
+          setImagePreview(`https://kaiyi-21d4.onrender.com${data.logo}` || "");
 
         } catch (error) {
           console.error("Error fetching data:", error);
