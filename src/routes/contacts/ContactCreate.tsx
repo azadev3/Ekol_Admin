@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState } from "react";
 import Title from "../../uitils/Title";
-import { TextField, Button, Snackbar, Alert, } from "@mui/material";
+import { TextField, Button, Snackbar, Alert } from "@mui/material";
 import axios from "axios";
 import { URL } from "../../Base";
 import { useNavigate } from "react-router-dom";
@@ -88,14 +88,11 @@ const ContactCreate: React.FC = () => {
   };
 
   const handleImageChange =
-  (
-    setImage: React.Dispatch<React.SetStateAction<File | null>>
-  ) =>
-  (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files[0]) {
-      setImage(event.target.files[0]);
-    }
-  };
+    (setImage: React.Dispatch<React.SetStateAction<File | null>>) => (event: ChangeEvent<HTMLInputElement>) => {
+      if (event.target.files && event.target.files[0]) {
+        setImage(event.target.files[0]);
+      }
+    };
 
   return (
     <div className="component-create">
@@ -143,12 +140,7 @@ const ContactCreate: React.FC = () => {
           onChange={(e) => setTelephoneValue(e.target.value)}
           name="telephone_value"
         />
-        <input
-          type="file"
-          accept="image/*"
-          name="telephone_logo"
-          onChange={handleImageChange(setTelephoneLogo)}
-        />
+        <input type="file" accept="image/*" name="telephone_logo" onChange={handleImageChange(setTelephoneLogo)} />
 
         {/* Faks */}
         <TextField
@@ -191,12 +183,7 @@ const ContactCreate: React.FC = () => {
           onChange={(e) => setFaksValue(e.target.value)}
           name="faks_value"
         />
-        <input
-          type="file"
-          accept="image/*"
-          name="faks_logo"
-          onChange={handleImageChange(setFaksLogo)}
-        />
+        <input type="file" accept="image/*" name="faks_logo" onChange={handleImageChange(setFaksLogo)} />
 
         {/* Location */}
         <TextField
@@ -239,12 +226,7 @@ const ContactCreate: React.FC = () => {
           onChange={(e) => setLocationValue(e.target.value)}
           name="location_value"
         />
-        <input
-          type="file"
-          accept="image/*"
-          name="location_logo"
-          onChange={handleImageChange(setLocationLogo)}
-        />
+        <input type="file" accept="image/*" name="location_logo" onChange={handleImageChange(setLocationLogo)} />
 
         {/* Email */}
         <TextField
@@ -287,23 +269,14 @@ const ContactCreate: React.FC = () => {
           onChange={(e) => setEmailValue(e.target.value)}
           name="email_value"
         />
-        <input
-          type="file"
-          accept="image/*"
-          name="email_logo"
-          onChange={handleImageChange(setEmailLogo)}
-        />
+        <input type="file" accept="image/*" name="email_logo" onChange={handleImageChange(setEmailLogo)} />
 
         <Button type="submit" variant="contained" color="primary" fullWidth>
           Yadda Saxla
         </Button>
       </form>
 
-      <Snackbar
-        open={openSnackbar}
-        autoHideDuration={6000}
-        onClose={handleSnackbarClose}
-      >
+      <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleSnackbarClose}>
         <Alert onClose={handleSnackbarClose} severity="success">
           {snackbarMessage}
         </Alert>
