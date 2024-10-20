@@ -121,6 +121,9 @@ import CalculationsCreate from "../routes/calculations/CalculationsCreate";
 import CalculationsEdit from "../routes/calculations/CalculationsEdit";
 import BlogImageCreate from "../routes/blog/BlogImageCreate";
 import BlogImageShow from "../routes/blog/BlogImageShow";
+import OurWorksInnerImagesShow from "../routes/ourworksinner/OurWorksInnerImagesShow";
+import OurWorksInnerImageCreate from "../routes/ourworksinner/OurWorksInnerImagesCreate";
+import OurWorksInnerImagesEdit from "../routes/ourworksinner/OurWorksInnerImagesEdit";
 
 const Content: React.FC = () => {
   const toggleSidebar = useRecoilValue(ToggleSidebarState);
@@ -230,6 +233,9 @@ const Content: React.FC = () => {
         <Route path="/ourworksinner" element={<OurworksinnerShow />} />
         <Route path="/ourworksinner/create" element={<OurworksinnerCreate />} />
         <Route path="/ourworksinner/:editid" element={<OurworksinnerEdit />} />
+        <Route path="/ourworksimages" element={<OurWorksInnerImagesShow />} />
+        <Route path="/ourworksimages/create" element={<OurWorksInnerImageCreate />} />
+        <Route path="/ourworksimages/:editid" element={<OurWorksInnerImagesEdit />} />
         {/* COB (CAREER OPPORTUNITIES BACKGROUND AND TITLE SECTION) */}
         <Route path="/careerOpportunitiesBackground" element={<CobShow />} />
         <Route path="/careerOpportunitiesBackground/create" element={<CobCreate />} />
@@ -269,7 +275,6 @@ const Content: React.FC = () => {
         <Route path="/purchase" element={<PurchaseShow />} />
         <Route path="/purchase/create" element={<PurchaseCreate />} />
         <Route path="/purchase/:editid" element={<PurchaseEdit />} />
-
         {/* PURCHASE ANNOUNCEMENTS (NEW FEATURE) */}
         <Route path="/purchaseannouncement" element={<PurchAnnShow />} />
         <Route path="/purchaseannouncement/create" element={<PurchAnnCreate />} />

@@ -116,6 +116,7 @@ const Sidebarr: React.FC = () => {
           { title: "Partnyorlar", to: "/partners" },
           { title: "Sertifikatlar", to: "/certificates" },
           { title: "Gördüyümüz işlər (Daxili)", to: "/ourworksinner" },
+          { title: "Gördüyümüz işlər - Şəkil yüklə", to: "/ourworksimages" },
           { title: "İllik hesabatlar", to: "/yearly_calculations" },
           { title: "Rüblük hesabatlar", to: "/calculations" },
         ]}
