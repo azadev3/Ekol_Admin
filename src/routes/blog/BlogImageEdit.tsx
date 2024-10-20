@@ -75,6 +75,7 @@ const BlogImageEdit: React.FC = () => {
           "Content-Type": "multipart/form-data",
         },
       });
+      console.log(response.data)
       setSnackbarMessage("Düzəliş uğurludur!");
       setOpenSnackbar(true);
       navigate("/blogimage");

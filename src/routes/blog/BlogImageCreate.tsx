@@ -39,7 +39,7 @@ const BlogImageCreate: React.FC = () => {
     }
 
     const formData = new FormData();
-    images.forEach((image) => formData.append("imgback[]", image));
+    images.forEach((image) => formData.append("imgback", image));
     formData.append("selected_blog", selected_blog);
     try {
       const response = await axios.post(`${URL}/blogimage`, formData, {
