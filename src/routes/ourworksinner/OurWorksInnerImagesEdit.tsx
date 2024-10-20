@@ -91,22 +91,25 @@ const OurWorksInnerImagesEdit: React.FC = () => {
   };
 
   // Handle multiple image selection and previews
+
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
-      const files = Array.from(event.target.files);
-      setImages(files);
+      const newFiles = Array.from(event.target.files);
 
-      // Generate previews for selected images
-      const previews = files.map((file) => {
+      setImages((prevImages) => [...prevImages, ...newFiles]);
+
+      const previews = newFiles.map((file) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
         return new Promise<string>((resolve) => {
-          reader.onloadend = () => resolve(reader.result as string);
+          reader.onloadend = () => {
+            resolve(reader.result as string);
+          };
         });
       });
 
       Promise.all(previews).then((previewsArray) => {
-        setImagePreviews(previewsArray);
+        setImagePreviews((prevPreviews) => [...prevPreviews, ...previewsArray]);
       });
     }
   };
@@ -117,7 +120,7 @@ const OurWorksInnerImagesEdit: React.FC = () => {
 
   return (
     <div className="component-edit">
-      <Title description="Dəyişiklik et" title="Xəbərlər" to="" />
+      <Title description="Dəyişiklik et" title="Gördüyümüz işlər daxili" to="" />
 
       <form noValidate autoComplete="off" onSubmit={handleSubmit} style={{ marginTop: "16px" }}>
         {/* upload multiple images */}
@@ -171,6 +174,7 @@ const OurWorksInnerImagesEdit: React.FC = () => {
         <select
           onChange={handleChangeSelect}
           required
+          value={selected_ourworks}
           name="selected_ourworks"
           style={{ width: "100%", maxWidth: "50%", height: "46px", borderRadius: "4px", margin: "24px 0px" }}>
           <option value="">Bu şəkillər hansı xəbərin tərkibində olacaq?</option>

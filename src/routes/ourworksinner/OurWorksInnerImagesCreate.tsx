@@ -35,7 +35,8 @@ const OurWorksInnerImagesCreate: React.FC = () => {
 
     if (!selected_ourworks || !images) {
       setOpenSnackbar(true);
-     setSnackbarMessage("Düzəlişdə bir xəta oldu yenidən yoxlayın");
+      setSnackbarMessage("Düzəlişdə bir xəta oldu yenidən yoxlayın");
+      return;
     }
 
     const formData = new FormData();
@@ -87,6 +88,7 @@ const OurWorksInnerImagesCreate: React.FC = () => {
 
   const handleChangeSelect = (event: ChangeEvent<HTMLSelectElement>) => {
     setSelectedOurWork(event.target.value);
+    console.log(event.target.value);
   };
 
   return (
@@ -95,70 +97,74 @@ const OurWorksInnerImagesCreate: React.FC = () => {
 
       <form noValidate autoComplete="off" style={{ marginTop: "16px" }}>
         {/* upload multiple images */}
-       <div
-       style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-start",
-          justifyContent: "flex-start"
-        }}
-       >
-       <input
-          accept="image/*"
-          style={{ display: "none" }}
-          id="upload-images"
-          type="file"
-          name="imgourworks"
-          multiple
-          onChange={handleImageChange}
-        />
-        <label htmlFor="upload-images">
-          <Button
-            variant="contained"
-            component="span"
-            style={{ marginTop: "16px", backgroundColor: "mediumslateblue" }}>
-            Şəkillər əlavə et
-          </Button>
-        </label>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-start",
+            justifyContent: "flex-start",
+          }}>
+          <input
+            accept="image/*"
+            style={{ display: "none" }}
+            id="upload-images"
+            type="file"
+            name="imgourworks"
+            multiple
+            onChange={handleImageChange}
+          />
+          <label htmlFor="upload-images">
+            <Button
+              variant="contained"
+              component="span"
+              style={{ marginTop: "16px", backgroundColor: "mediumslateblue" }}>
+              Şəkillər əlavə et
+            </Button>
+          </label>
 
-        {/* Display previews of selected images */}
-        {imagePreviews.length > 0 && (
-          <Box mt={2}>
-            <Typography variant="subtitle1">Resim Önizlemeleri:</Typography>
-            <Box
-              mt={2}
-              sx={{
-                display: "flex",
-                gap: "16px", // Space between images
-                flexWrap: "wrap", // Allows wrapping to next line if screen is too small
-              }}>
-              {imagePreviews.map((preview, index) => (
-                <Box key={index}>
-                  <img
-                    src={preview}
-                    alt={`Preview ${index + 1}`}
-                    style={{
-                      width: "150px",
-                      height: "150px",
-                      objectFit: "cover",
-                      borderRadius: "8px", // Rounded corners for images
-                    }}
-                  />
-                </Box>
-              ))}
+          {/* Display previews of selected images */}
+          {imagePreviews.length > 0 && (
+            <Box mt={2}>
+              <Typography variant="subtitle1">Resim Önizlemeleri:</Typography>
+              <Box
+                mt={2}
+                sx={{
+                  display: "flex",
+                  gap: "16px", // Space between images
+                  flexWrap: "wrap", // Allows wrapping to next line if screen is too small
+                }}>
+                {imagePreviews.map((preview, index) => (
+                  <Box key={index}>
+                    <img
+                      src={preview}
+                      alt={`Preview ${index + 1}`}
+                      style={{
+                        width: "150px",
+                        height: "150px",
+                        objectFit: "cover",
+                        borderRadius: "8px", // Rounded corners for images
+                      }}
+                    />
+                  </Box>
+                ))}
+              </Box>
             </Box>
-          </Box>
-        )}
+          )}
 
-        <select
-          onChange={handleChangeSelect}
-          required 
-          name="selected_ourworks"
-          style={{ width: "100%", maxWidth: "50%", height: "46px", borderRadius: "4px", margin: "24px 0px" }}>
-          <option value="">Bu şəkillər hansı xəbərin tərkibində olacaq?</option>
-          {ourworksdata ? ourworksdata?.map((ourworks: any) => <option value={ourworks?._id || ""}>{ourworks?.title || ""}</option>) : ""}
-        </select>
-       </div>
+          <select
+            onChange={handleChangeSelect}
+            required
+            value={selected_ourworks}
+            name="selected_ourworks"
+            style={{ width: "100%", maxWidth: "50%", height: "46px", borderRadius: "4px", margin: "24px 0px" }}>
+            <option value="">Bu şəkillər hansı xəbərin tərkibində olacaq?</option>
+            {ourworksdata
+              ? ourworksdata?.map((ourworks: any) => (
+                  <option value={ourworks?._id || ""}>{ourworks?.title || ""}</option>
+                ))
+              : ""}
+          </select>
+        </div>
 
         <Button
           variant="contained"

@@ -153,6 +153,7 @@ const BlogImageCreate: React.FC = () => {
         <select
           onChange={handleChangeSelect}
           required 
+          value={selected_blog}
           name="selected_blog"
           style={{ width: "100%", maxWidth: "50%", height: "46px", borderRadius: "4px", margin: "24px 0px" }}>
           <option value="">Bu şəkillər hansı xəbərin tərkibində olacaq?</option>
