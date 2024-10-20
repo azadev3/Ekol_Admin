@@ -119,6 +119,8 @@ import YearlyCalculationsEdit from "../routes/yearlycalculations/YearlyCalculati
 import CalculationsShow from "../routes/calculations/CalculationsShow";
 import CalculationsCreate from "../routes/calculations/CalculationsCreate";
 import CalculationsEdit from "../routes/calculations/CalculationsEdit";
+import BlogImageCreate from "../routes/blog/BlogImageCreate";
+import BlogImageShow from "../routes/blog/BlogImageShow";
 
 const Content: React.FC = () => {
   const toggleSidebar = useRecoilValue(ToggleSidebarState);
@@ -174,6 +176,8 @@ const Content: React.FC = () => {
         <Route path="/blog" element={<BlogShow />} />
         <Route path="/blog/create" element={<BlogCreate />} />
         <Route path="/blog/:editid" element={<BlogEdit />} />
+        <Route path="/blogimage" element={<BlogImageShow />} />
+        <Route path="/blogimage/create" element={<BlogImageCreate />} />
         {/* NEW BLOGS (BLOQLAR) */}
         <Route path="/newblogs" element={<NewBlogShow />} />
         <Route path="/newblogs/create" element={<NewBlogCreate />} />

@@ -48,6 +48,7 @@ const BlogCreate: React.FC = () => {
   const [imagePreview, setImagePreview] = useState<string>("");
   const [created_at, setCreatedAt] = useState("");
   const [updated, setUpdated] = useState("");
+  
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

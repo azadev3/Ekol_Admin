@@ -97,6 +97,7 @@ const Sidebarr: React.FC = () => {
         dropdownItem={[{ title: "Xidmətlər (daxili)", to: "/servicespage" }]}
       />
       <SidebarLinkWithDropdown to="/blog" linkTitle="Xəbərlər" linkIcon={<PiNewspaperClipping />} />
+      <SidebarLinkWithDropdown to="/blogimage" linkTitle="Xəbərlər üçün şəkillər" linkIcon={<PiNewspaperClipping />} />
       <SidebarLinkWithDropdown to="/newblogs" linkTitle="Bloqlar" linkIcon={<PiNewspaperClipping />} />
       <SidebarLinkWithDropdown to="/contact" linkTitle="Əlaqə" linkIcon={<BsTelephoneForward />} />
       <SidebarLinkWithDropdown to="/socials" linkTitle="Sosial Medialar" linkIcon={<LuShare2 />} />
