@@ -53,8 +53,7 @@ const ContactShow: React.FC = () => {
     try {
       const deleteitem = await axios.delete(`${URL}/contact/${id}`);
       if (deleteitem.data) {
-        console.log(deleteitem.data);
-        window.location.reload();
+        fetchData();
       } else {
         console.log(deleteitem.status);
       }
@@ -64,33 +63,32 @@ const ContactShow: React.FC = () => {
   };
 
   // GET DATA
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get(`${URL}/contact`);
+      const rowsWithId = response.data.map((item: any) => ({
+        id: item._id,
+        location_title_az: item.location?.title?.az || "",
+        location_title_en: item.location?.title?.en || "",
+        location_title_ru: item.location?.title?.ru || "",
+        location_value: item.location?.value || "",
+        email_title_az: item.email?.title?.az || "",
+        email_title_en: item.email?.title?.en || "",
+        email_title_ru: item.email?.title?.ru || "",
+        email_value: item.email?.value || "",
+      }));
+      setRows(rowsWithId);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      const timeout = setTimeout(() => {
+        setLoading(false);
+      }, 500);
+      return () => clearTimeout(timeout);
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get(`${URL}/contact`);
-        const rowsWithId = response.data.map((item: any) => ({
-          id: item._id,
-          location_title_az: item.location?.title?.az || "",
-          location_title_en: item.location?.title?.en || "",
-          location_title_ru: item.location?.title?.ru || "",
-          location_value: item.location?.value || "",
-          email_title_az: item.email?.title?.az || "",
-          email_title_en: item.email?.title?.en || "",
-          email_title_ru: item.email?.title?.ru || "",
-          email_value: item.email?.value || "",
-        }));
-        setRows(rowsWithId);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        const timeout = setTimeout(() => {
-          setLoading(false);
-        }, 500);
-        return () => clearTimeout(timeout);
-      }
-    };
-
     fetchData();
   }, []);
 

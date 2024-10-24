@@ -10,9 +10,7 @@ import Loader from "../../Loader";
 
 const BlogShow: React.FC = () => {
   const [loading, setLoading] = useRecoilState(LoadingState);
-
   const [rows, setRows] = useState<any[]>([]);
-
   const navigate = useNavigate();
 
   // COLUMNS
@@ -51,7 +49,8 @@ const BlogShow: React.FC = () => {
     try {
       const deleteitem = await axios.delete(`${URL}/blog/${id}`);
       if (deleteitem.data) {
-        window.location.reload();
+        // Refresh data after deletion
+        fetchData();
       } else {
         console.log(deleteitem.status);
       }
@@ -61,31 +60,35 @@ const BlogShow: React.FC = () => {
   };
 
   // GET DATA
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get(`${URL}/blog`);
-        const rowsWithId = response.data.map((item: any) => ({
-          id: item._id,
-          title_az: item.title?.az || "",
-          title_en: item.title?.en || "",
-          title_ru: item.title?.ru || "",
-          description_az: item.description?.az || "",
-          description_en: item.description?.en || "",
-          description_ru: item.description?.ru || "",
-        }));
-        setRows(rowsWithId);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        const timeout = setTimeout(() => {
-          setLoading(false);
-        }, 500);
-        return () => clearTimeout(timeout);
-      }
-    };
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get(`${URL}/blog`);
+      const rowsWithId = response.data.map((item: any) => ({
+        id: item._id,
+        title_az: item.title?.az || "",
+        title_en: item.title?.en || "",
+        title_ru: item.title?.ru || "",
+        description_az: item.description?.az || "",
+        description_en: item.description?.en || "",
+        description_ru: item.description?.ru || "",
+      }));
 
+      // Sort the rows by creation date or id, assuming latest entries have the highest id
+      rowsWithId.sort((a:any, b:any) => b.id.localeCompare(a.id)); // or use a creation date field if available
+
+      setRows(rowsWithId);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      const timeout = setTimeout(() => {
+        setLoading(false);
+      }, 500);
+      return () => clearTimeout(timeout);
+    }
+  };
+
+  useEffect(() => {
     fetchData();
   }, []);
 

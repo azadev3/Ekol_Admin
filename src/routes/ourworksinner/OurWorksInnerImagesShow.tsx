@@ -45,7 +45,7 @@ const OurWorksInnerImagesShow: React.FC = () => {
     try {
       const deleteitem = await axios.delete(`${URL}/ourworksimages/${id}`);
       if (deleteitem.data) {
-        window.location.reload();
+        fetchData();
       } else {
         console.log(deleteitem.status);
       }
@@ -55,25 +55,24 @@ const OurWorksInnerImagesShow: React.FC = () => {
   };
 
   // GET DATA
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get(`${URL}/ourworksimages`);
+      const rowsWithId = response.data.map((item: any) => ({
+        id: item._id,
+      }));
+      setRows(rowsWithId);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      const timeout = setTimeout(() => {
+        setLoading(false);
+      }, 500);
+      return () => clearTimeout(timeout);
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get(`${URL}/ourworksimages`);
-        const rowsWithId = response.data.map((item: any) => ({
-          id: item._id,
-        }));
-        setRows(rowsWithId);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        const timeout = setTimeout(() => {
-          setLoading(false);
-        }, 500);
-        return () => clearTimeout(timeout);
-      }
-    };
-
     fetchData();
   }, []);
 

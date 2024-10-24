@@ -43,8 +43,7 @@ const GalleryDropdownShow: React.FC = () => {
     try {
       const deleteitem = await axios.delete(`${URL}/gallerydropdown/${id}`);
       if (deleteitem.data) {
-        console.log(deleteitem.data);
-        window.location.reload();
+        fetchData();
       } else {
         console.log(deleteitem.status);
       }
@@ -54,22 +53,21 @@ const GalleryDropdownShow: React.FC = () => {
   };
 
   // GET DATA
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${URL}/gallerydropdown`);
+      const rowsWithId = response.data.map((item: any) => ({
+        id: item._id,
+        title_az: item.title?.az || "",
+        title_en: item.title?.en || "",
+        title_ru: item.title?.ru || "",
+      }));
+      setRows(rowsWithId);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`${URL}/gallerydropdown`);
-        const rowsWithId = response.data.map((item: any) => ({
-          id: item._id,
-          title_az: item.title?.az || "",
-          title_en: item.title?.en || "",
-          title_ru: item.title?.ru || "",
-        }));
-        setRows(rowsWithId);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
     fetchData();
   }, []);
 

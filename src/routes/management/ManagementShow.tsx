@@ -52,8 +52,7 @@ const ManagementShow: React.FC = () => {
     try {
       const deleteitem = await axios.delete(`${URL}/management/${id}`);
       if (deleteitem.data) {
-        console.log(deleteitem.data);
-        window.location.reload();
+        fetchData();
       } else {
         console.log(deleteitem.status);
       }
@@ -63,31 +62,30 @@ const ManagementShow: React.FC = () => {
   };
 
   // GET DATA
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${URL}/management`);
+      const rowsWithId = response.data.map((item: any) => ({
+        id: item._id,
+        nameSurname_az: item.nameSurname?.az || "",
+        nameSurname_en: item.nameSurname?.en || "",
+        nameSurname_ru: item.nameSurname?.ru || "",
+        job_az: item.job?.az || "",
+        job_en: item.job?.en || "",
+        job_ru: item.job?.ru || "",
+        education_az: item.education?.az || "",
+        education_en: item.education?.en || "",
+        education_ru: item.education?.ru || "",
+        description_az: item.description?.az || "",
+        description_en: item.description?.en || "",
+        description_ru: item.description?.ru || "",
+      }));
+      setRows(rowsWithId);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`${URL}/management`);
-        const rowsWithId = response.data.map((item: any) => ({
-          id: item._id,
-          nameSurname_az: item.nameSurname?.az || "",
-          nameSurname_en: item.nameSurname?.en || "",
-          nameSurname_ru: item.nameSurname?.ru || "",
-          job_az: item.job?.az || "",
-          job_en: item.job?.en || "",
-          job_ru: item.job?.ru || "",
-          education_az: item.education?.az || "",
-          education_en: item.education?.en || "",
-          education_ru: item.education?.ru || "",
-          description_az: item.description?.az || "",
-          description_en: item.description?.en || "",
-          description_ru: item.description?.ru || "",
-        }));
-        setRows(rowsWithId);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
     fetchData();
   }, []);
 

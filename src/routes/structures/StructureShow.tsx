@@ -44,8 +44,7 @@ const StructureShow: React.FC = () => {
     try {
       const deleteitem = await axios.delete(`${URL}/departments/${id}`);
       if (deleteitem.data) {
-        console.log(deleteitem.data);
-        window.location.reload();
+        fetchData();
       } else {
         console.log(deleteitem.status);
       }
@@ -55,24 +54,23 @@ const StructureShow: React.FC = () => {
   };
 
   // GET DATA
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${URL}/departments`);
+      console.log(response.data, ';salamamamam')
+      const rowsWithId = response.data.map((item: any) => ({
+        id: item._id,
+        title_az: item.departments.title?.az || "",
+        title_en: item.departments.title?.en || "",
+        title_ru: item.departments.title?.ru || "",
+        category: item.departments.category || "",
+      }));
+      setRows(rowsWithId);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`${URL}/departments`);
-        console.log(response.data, ';salamamamam')
-        const rowsWithId = response.data.map((item: any) => ({
-          id: item._id,
-          title_az: item.departments.title?.az || "",
-          title_en: item.departments.title?.en || "",
-          title_ru: item.departments.title?.ru || "",
-          category: item.departments.category || "",
-        }));
-        setRows(rowsWithId);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
     fetchData();
   }, []);
 

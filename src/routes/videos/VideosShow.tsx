@@ -41,8 +41,7 @@ const VideosShow: React.FC = () => {
     try {
       const deleteitem = await axios.delete(`${URL}/videos/${id}`);
       if (deleteitem.data) {
-        console.log(deleteitem.data);
-        window.location.reload();
+        fetchData();
       } else {
         console.log(deleteitem.status);
       }
@@ -52,20 +51,19 @@ const VideosShow: React.FC = () => {
   };
 
   // GET DATA
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${URL}/videos`);
+      const rowsWithId = response.data.map((item: any) => ({
+        id: item._id,
+        video: item.video || "",
+      }));
+      setRows(rowsWithId);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`${URL}/videos`);
-        const rowsWithId = response.data.map((item: any) => ({
-          id: item._id,
-          video: item.video || "",
-        }));
-        setRows(rowsWithId);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
     fetchData();
   }, []);
 

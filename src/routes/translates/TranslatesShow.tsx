@@ -49,8 +49,7 @@ const TranslatesShow: React.FC = () => {
     try {
       const deleteitem = await axios.delete(`${URL}/translates/${id}`);
       if (deleteitem.data) {
-        console.log(deleteitem.data);
-        window.location.reload();
+        fetchData();
       } else {
         console.log(deleteitem.status);
       }
@@ -60,29 +59,28 @@ const TranslatesShow: React.FC = () => {
   };
 
   // GET DATA
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get(`${URL}/translates`);
+      const rowsWithId = response.data.map((item: any) => ({
+        id: item._id,
+        key: item.key,
+        az: item.az,
+        en: item.en,
+        ru: item.ru,
+      }));
+      setRows(rowsWithId);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      const timeout = setTimeout(() => {
+        setLoading(false);
+      }, 500);
+      return () => clearTimeout(timeout);
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get(`${URL}/translates`);
-        const rowsWithId = response.data.map((item: any) => ({
-          id: item._id,
-          key: item.key,
-          az: item.az,
-          en: item.en,
-          ru: item.ru,
-        }));
-        setRows(rowsWithId);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        const timeout = setTimeout(() => {
-          setLoading(false);
-        }, 500);
-        return () => clearTimeout(timeout);
-      }
-    };
-
     fetchData();
   }, []);
 

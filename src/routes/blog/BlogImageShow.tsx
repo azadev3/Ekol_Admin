@@ -9,14 +9,50 @@ import { useRecoilState } from "recoil";
 import Loader from "../../Loader";
 
 const BlogImageShow: React.FC = () => {
+  const [blogs, setBlogs] = useState<[]>([]);
+  const [_, setBlogImages] = useState<[]>([]);
   const [loading, setLoading] = useRecoilState(LoadingState);
-
   const [rows, setRows] = useState<any[]>([]);
-
   const navigate = useNavigate();
+
+  const getBlogs = async () => {
+    const response = await axios.get(`${URL}/blogfront`, {
+      headers: {
+        "Accept-Language": "az",
+      },
+    });
+    if (response.data) {
+      setBlogs(response.data);
+    }
+  };
+
+  const getBlogImages = async () => {
+    const response = await axios.get(`${URL}/blogimagefront`, {
+      headers: {
+        "Accept-Language": "az",
+      },
+    });
+    if (response.data) {
+      setBlogImages(response.data);
+    }
+  };
+
+  useEffect(() => {
+    getBlogs();
+    getBlogImages();
+  }, []);
 
   // COLUMNS
   const columns: GridColDef[] = [
+    {
+      field: "selected_blog",
+      headerName: "Seçilən xəbər:",
+      width: 950,
+      renderCell: (params) => {
+        const blog:any = blogs.find((blog: any) => blog._id === params.row.selected_blog);
+        return <span>{blog ? blog.title : "Blog tapilmadi"}</span>;
+      },
+    },
     {
       field: "actions",
       headerName: "Actions",
@@ -25,13 +61,13 @@ const BlogImageShow: React.FC = () => {
         <div className="buttons-grid">
           <button
             className="edit"
-            onClick={() => navigate(`/blogimage/${params.row.id}`)} // Navigating to the edit page with the row's id
+            onClick={() => navigate(`/blogimage/${params.row.id}`)}
           >
             Düzəliş
           </button>
           <button
             className="delete"
-            onClick={() => handleDelete(params.row.id)} // Handle the delete operation
+            onClick={() => handleDelete(params.row.id)}
           >
             Sil
           </button>
@@ -45,7 +81,7 @@ const BlogImageShow: React.FC = () => {
     try {
       const deleteitem = await axios.delete(`${URL}/blogimage/${id}`);
       if (deleteitem.data) {
-        window.location.reload();
+        fetchData();
       } else {
         console.log(deleteitem.status);
       }
@@ -55,27 +91,32 @@ const BlogImageShow: React.FC = () => {
   };
 
   // GET DATA
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get(`${URL}/blogimage`);
-        const rowsWithId = response.data.map((item: any) => ({
-          id: item._id,
-        }));
-        setRows(rowsWithId);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        const timeout = setTimeout(() => {
-          setLoading(false);
-        }, 500);
-        return () => clearTimeout(timeout);
-      }
-    };
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get(`${URL}/blogimage`);
+      const rowsWithId = response.data.map((item: any) => ({
+        id: item._id,
+        selected_blog: item.selected_blog, // Directly using the ID
+        imgback: item.imgback,
+      }));
 
+      // Sort the rows by ID (or another creation date field if available)
+      rowsWithId.sort((a: any, b: any) => b.id.localeCompare(a.id));
+
+      setRows(rowsWithId);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      const timeout = setTimeout(() => {
+        setLoading(false);
+      }, 500);
+      return () => clearTimeout(timeout);
+    }
+  };
+  useEffect(() => {
     fetchData();
-  }, []);
+  }, [blogs]); // Dependency array updated to re-fetch when blogs change
 
   return (
     <div className="show-component">
