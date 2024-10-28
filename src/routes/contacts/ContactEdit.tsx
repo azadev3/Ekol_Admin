@@ -36,6 +36,8 @@ const ContactEdit: React.FC = () => {
   const [emailValue, setEmailValue] = useState("");
   const [emailLogo, setEmailLogo] = useState<File | null>(null);
 
+  const [iframe, setIframe] = useState<string>("");
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -100,6 +102,8 @@ const ContactEdit: React.FC = () => {
     formData.append("email_value", emailValue);
     if (emailLogo) formData.append("email_logo", emailLogo);
 
+    formData.append("iframemap", iframe);
+
     try {
       const response = await axios.put(`${URL}/contact/${editid}`, formData, {
         headers: {
@@ -123,8 +127,7 @@ const ContactEdit: React.FC = () => {
   };
 
   const handleImageChange =
-    (setLogo: React.Dispatch<React.SetStateAction<File | null>>) =>
-    (event: ChangeEvent<HTMLInputElement>) => {
+    (setLogo: React.Dispatch<React.SetStateAction<File | null>>) => (event: ChangeEvent<HTMLInputElement>) => {
       if (event.target.files && event.target.files[0]) {
         setLogo(event.target.files[0]);
       }
@@ -307,6 +310,19 @@ const ContactEdit: React.FC = () => {
         />
         <input type="file" accept="image/*" name="email_logo" onChange={handleImageChange(setEmailLogo)} />
 
+        {/* map */}
+        <TextField
+          required
+          label="Xəritə (Google mapdən aldığınız iframe linkini bura yapışdırın)"
+          variant="outlined"
+          placeholder="Məsələn: <iframe src='' width='' height=''></iframe>"
+          fullWidth
+          margin="normal"
+          value={iframe}
+          onChange={(e) => setIframe(e.target.value)}
+          name="iframemap"
+        />
+
         <Box mt={2} mb={2}>
           <Button type="submit" variant="contained" color="primary">
             Yadda saxla
@@ -314,12 +330,7 @@ const ContactEdit: React.FC = () => {
         </Box>
       </form>
 
-      <Snackbar
-        open={openSnackbar}
-        autoHideDuration={6000}
-        onClose={handleSnackbarClose}
-        message={snackbarMessage}
-      >
+      <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleSnackbarClose} message={snackbarMessage}>
         <Alert onClose={handleSnackbarClose} severity={snackbarMessage.includes("Uğurlu") ? "success" : "error"}>
           {snackbarMessage}
         </Alert>

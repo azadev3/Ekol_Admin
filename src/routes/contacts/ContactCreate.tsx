@@ -36,6 +36,8 @@ const ContactCreate: React.FC = () => {
   const [locationLogo, setLocationLogo] = useState<File | null>(null);
   const [emailLogo, setEmailLogo] = useState<File | null>(null);
 
+  const [iframe, setIframe] = useState<string>("");
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -59,6 +61,8 @@ const ContactCreate: React.FC = () => {
     formData.append("email_title_en", emailTitleEn);
     formData.append("email_title_ru", emailTitleRu);
     formData.append("email_value", emailValue);
+
+    formData.append("iframemap", iframe);
 
     if (telephoneLogo) formData.append("telephone_logo", telephoneLogo);
     if (faksLogo) formData.append("faks_logo", faksLogo);
@@ -270,6 +274,19 @@ const ContactCreate: React.FC = () => {
           name="email_value"
         />
         <input type="file" accept="image/*" name="email_logo" onChange={handleImageChange(setEmailLogo)} />
+
+        {/* map */}
+        <TextField
+          required
+          label="Xəritə (Google mapdən aldığınız iframe linkini bura yapışdırın)"
+          variant="outlined"
+          placeholder="Məsələn: <iframe src='' width='' height=''></iframe>"
+          fullWidth
+          margin="normal"
+          value={iframe}
+          onChange={(e) => setIframe(e.target.value)}
+          name="iframemap"
+        />
 
         <Button type="submit" variant="contained" color="primary" fullWidth>
           Yadda Saxla

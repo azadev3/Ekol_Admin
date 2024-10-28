@@ -77,6 +77,7 @@ const ContactShow: React.FC = () => {
         email_title_en: item.email?.title?.en || "",
         email_title_ru: item.email?.title?.ru || "",
         email_value: item.email?.value || "",
+        iframe: item.iframe || "",
       }));
       setRows(rowsWithId);
     } catch (error) {
