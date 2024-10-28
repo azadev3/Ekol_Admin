@@ -112,6 +112,7 @@ const Sidebarr: React.FC = () => {
           { title: "Biz kimik?", to: "/whoarewe" },
           { title: "Rəhbərlik", to: "/management" },
           { title: "Struktur", to: "/departments" },
+          { title: "Struktur Kateqoriyalar", to: "/departmentscategories" },
           { title: "Lisenziyalar", to: "/lisansepage" },
           { title: "Partnyorlar", to: "/partners" },
           { title: "Sertifikatlar", to: "/certificates" },

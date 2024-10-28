@@ -124,6 +124,9 @@ import BlogImageShow from "../routes/blog/BlogImageShow";
 import OurWorksInnerImagesShow from "../routes/ourworksinner/OurWorksInnerImagesShow";
 import OurWorksInnerImageCreate from "../routes/ourworksinner/OurWorksInnerImagesCreate";
 import OurWorksInnerImagesEdit from "../routes/ourworksinner/OurWorksInnerImagesEdit";
+import StructureCategoriesShow from "../routes/structurecategories/StructureCategoriesShow";
+import StructureCategoriesCreate from "../routes/structurecategories/StructureCategoriesCreate";
+import StructureCategoriesEdit from "../routes/structurecategories/StructureCategoriesEdit";
 
 const Content: React.FC = () => {
   const toggleSidebar = useRecoilValue(ToggleSidebarState);
@@ -317,6 +320,11 @@ const Content: React.FC = () => {
         <Route path="/yearly_calculations" element={<YearlyCalculationsShow />} />
         <Route path="/yearly_calculations/create" element={<YearlyCalculationsCreate />} />
         <Route path="/yearly_calculations/:editid" element={<YearlyCalculationsEdit />} />
+
+        {/* structure categories */}
+        <Route path="/departmentscategories" element={<StructureCategoriesShow />} />
+        <Route path="/departmentscategories/create" element={<StructureCategoriesCreate />} />
+        <Route path="/departmentscategories/:editid" element={<StructureCategoriesEdit />} />
       </Routes>
     </main>
   );

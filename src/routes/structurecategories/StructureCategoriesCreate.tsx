@@ -1,39 +1,11 @@
 import React, { ChangeEvent, useState } from "react";
 import Title from "../../uitils/Title";
-import { TextField, Button, Snackbar, Alert, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
+import { TextField, Button, Snackbar, Alert } from "@mui/material";
 import axios from "axios";
 import { URL } from "../../Base";
 import { useNavigate } from "react-router-dom";
 
-type categoriesType = {
-  _id: string;
-  title: string;
-};
-
-const StructureCreate: React.FC = () => {
-  const [categories, setCategories] = React.useState<categoriesType[]>([]);
-
-  React.useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await axios.get(`${URL}/departmentscategoriesfront`, {
-          headers: {
-            "Accept-Language": "az",
-          },
-        });
-        if (response.data) {
-          setCategories(response.data);
-        } else {
-          console.log(response.status);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchCategories();
-  }, []);
-
+const StructureCategoriesCreate: React.FC = () => {
   const navigate = useNavigate();
 
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
@@ -42,7 +14,6 @@ const StructureCreate: React.FC = () => {
   const [title_az, setTitleAz] = useState("");
   const [title_en, setTitleEn] = useState("");
   const [title_ru, setTitleRu] = useState("");
-  const [category, setCategory] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -51,13 +22,12 @@ const StructureCreate: React.FC = () => {
       title_az,
       title_en,
       title_ru,
-      category,
     };
 
     try {
-      const response = await axios.post(`${URL}/departments`, departamentData);
+      const response = await axios.post(`${URL}/departmentscategories`, departamentData);
       if (response.data || response.status === 200) {
-        navigate("/departments");
+        navigate("/departmentscategories");
       }
       setSnackbarMessage("UĞURLU!.");
       setOpenSnackbar(true);
@@ -80,7 +50,7 @@ const StructureCreate: React.FC = () => {
 
   return (
     <div className="component-create">
-      <Title description="Əlavə et" title="Strukturlar" to="" />
+      <Title description="Əlavə et" title="Strukturlar (Kateqoriya)" to="" />
 
       <form noValidate autoComplete="off" style={{ marginTop: "16px" }}>
         <TextField
@@ -116,24 +86,6 @@ const StructureCreate: React.FC = () => {
           name="title_ru"
         />
 
-        <FormControl fullWidth margin="normal" variant="outlined">
-          <InputLabel id="category-label">Kategori</InputLabel>
-          <Select
-            name="category"
-            labelId="category-label"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            label="Kategori">
-            {categories && categories?.length > 0
-              ? categories.map((cat: categoriesType, index) => (
-                  <MenuItem key={cat?._id ? cat?._id : index} value={cat.title}>
-                    {cat.title}
-                  </MenuItem>
-                ))
-              : ""}
-          </Select>
-        </FormControl>
-
         <Button
           variant="contained"
           color="success"
@@ -153,4 +105,4 @@ const StructureCreate: React.FC = () => {
   );
 };
 
-export default StructureCreate;
+export default StructureCategoriesCreate;
