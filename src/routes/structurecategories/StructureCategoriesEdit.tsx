@@ -23,9 +23,9 @@ const StructureCategoriesEdit: React.FC = () => {
         try {
           const response = await axios.get(`${URL}/departmentscategories/${editid}`);
           const data = response.data;
-          setTitleAz(data.departments.title.az || "");
-          setTitleEn(data.departments.title.en || "");
-          setTitleRu(data.departments.title.ru || "");
+          setTitleAz(data.title.az || "");
+          setTitleEn(data.title.en || "");
+          setTitleRu(data.title.ru || "");
         } catch (error) {
           console.error("Error fetching data:", error);
         }
@@ -64,7 +64,7 @@ const StructureCategoriesEdit: React.FC = () => {
 
   return (
     <div className="component-edit">
-      <Title description="Dəyişiklik et" title="Strukturlar (Departments)" to="" />
+      <Title description="Dəyişiklik et" title="Strukturlar (Kateqoriyalar)" to="" />
 
       <form noValidate autoComplete="off" onSubmit={handleSubmit} style={{ marginTop: "16px" }}>
         <TextField

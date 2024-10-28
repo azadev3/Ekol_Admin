@@ -59,9 +59,9 @@ const StructureCategoriesShow: React.FC = () => {
       console.log(response.data, ';salamamamam')
       const rowsWithId = response.data.map((item: any) => ({
         id: item._id,
-        title_az: item.departments.title?.az || "",
-        title_en: item.departments.title?.en || "",
-        title_ru: item.departments.title?.ru || "",
+        title_az: item.title?.az || "",
+        title_en: item.title?.en || "",
+        title_ru: item.title?.ru || "",
       }));
       setRows(rowsWithId);
     } catch (error) {
@@ -74,7 +74,7 @@ const StructureCategoriesShow: React.FC = () => {
 
   return (
     <div className="show-component">
-      <Title description="Əlavə et, dəyişdir, sil." title="Strukturlar (Departments)" to="/departmentscategories/create" />
+      <Title description="Əlavə et, dəyişdir, sil." title="Strukturlar (Kateqoriyalar)" to="/departmentscategories/create" />
       <div style={{ height: "100%", width: "100%", marginTop: "24px" }}>
         <DataGrid columns={columns} rows={rows} />
       </div>
