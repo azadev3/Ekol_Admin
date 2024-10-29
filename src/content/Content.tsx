@@ -127,6 +127,9 @@ import OurWorksInnerImagesEdit from "../routes/ourworksinner/OurWorksInnerImages
 import StructureCategoriesShow from "../routes/structurecategories/StructureCategoriesShow";
 import StructureCategoriesCreate from "../routes/structurecategories/StructureCategoriesCreate";
 import StructureCategoriesEdit from "../routes/structurecategories/StructureCategoriesEdit";
+import EqDescShow from "../routes/equipmentsdescription/EqDescShow";
+import EqDescCreate from "../routes/equipmentsdescription/EqDescCreate";
+import EqDescEdit from "../routes/equipmentsdescription/EqDescEdit";
 
 const Content: React.FC = () => {
   const toggleSidebar = useRecoilValue(ToggleSidebarState);
@@ -325,6 +328,11 @@ const Content: React.FC = () => {
         <Route path="/departmentscategories" element={<StructureCategoriesShow />} />
         <Route path="/departmentscategories/create" element={<StructureCategoriesCreate />} />
         <Route path="/departmentscategories/:editid" element={<StructureCategoriesEdit />} />
+
+        {/* equipments description */}
+        <Route path="/equipments-description" element={<EqDescShow />} />
+        <Route path="/equipments-description/create" element={<EqDescCreate />} />
+        <Route path="/equipments-description/:editid" element={<EqDescEdit />} />
       </Routes>
     </main>
   );
