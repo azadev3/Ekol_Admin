@@ -21,7 +21,6 @@ const EqDescShow: React.FC = () => {
 
   // COLUMNS
   const columns: GridColDef[] = [
-    { field: "selected_eq", headerName: "Olduğu Avadanlıq:", width: 300 },
     { field: "description_az", headerName: "Description AZ", width: 200 },
     { field: "description_en", headerName: "Description EN", width: 200 },
     { field: "description_ru", headerName: "Description RU", width: 200 },
