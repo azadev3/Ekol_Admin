@@ -6,22 +6,6 @@ import { URL } from "../../Base";
 import Title from "../../uitils/Title";
 
 const EqDescEdit: React.FC = () => {
-  const [eqData, setEqData] = React.useState<[]>([]);
-  const getOurworks = async () => {
-    const response = await axios.get(`${URL}/equipmentsfront`, {
-      headers: {
-        "Accept-Language": "az",
-      },
-    });
-    if (response.data) {
-      setEqData(response.data);
-    }
-  };
-
-  React.useEffect(() => {
-    getOurworks();
-  }, []);
-
   const { editid } = useParams();
   const navigate = useNavigate();
 
@@ -31,9 +15,8 @@ const EqDescEdit: React.FC = () => {
   const [description_az, setDescriptionAz] = useState("");
   const [description_en, setDescriptionEn] = useState("");
   const [description_ru, setDescriptionRu] = useState("");
-  const [image, setImage] = useState<File | null>(null);
-  const [imagePreview, setImagePreview] = useState<string>("");
-  const [selected_eq, setSelectedEq] = useState<string>("");
+  const [images, setImages] = useState<File[]>([]);
+  const [imagePreviews, setImagePreviews] = useState<string[]>([]);
 
   // Fetch data
   useEffect(() => {
@@ -46,7 +29,10 @@ const EqDescEdit: React.FC = () => {
           setDescriptionAz(data.description.az || "");
           setDescriptionEn(data.description.en || "");
           setDescriptionRu(data.description.ru || "");
-          setImagePreview(`https://ekol-server-1.onrender.com${data.image}` || "");
+          if (data.images && Array.isArray(data.images)) {
+            const fetchedPreviews = data.images.map((img: string) => `https://ekol-server-1.onrender.com${img}`);
+            setImagePreviews(fetchedPreviews);
+          }
         } catch (error) {
           console.error("Error fetching data:", error);
         }
@@ -65,11 +51,7 @@ const EqDescEdit: React.FC = () => {
     formData.append("description_az", description_az);
     formData.append("description_en", description_en);
     formData.append("description_ru", description_ru);
-    formData.append("selected_eq", selected_eq);
-
-    if (image) {
-      formData.append("imgback", image);
-    }
+    images.forEach((image) => formData.append("imgeq", image));
 
     try {
       const response = await axios.put(`${URL}/equipments-description/${editid}`, formData, {
@@ -92,19 +74,26 @@ const EqDescEdit: React.FC = () => {
     setOpenSnackbar(false);
   };
 
-  const handleChangeSelect = (event: ChangeEvent<HTMLSelectElement>) => {
-    setSelectedEq(event.target.value);
-  };
-
+  // Handle multiple image selection and previews
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files[0]) {
-      const file = event.target.files[0];
-      setImage(file);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+    if (event.target.files) {
+      const newFiles = Array.from(event.target.files);
+
+      setImages((prevImages) => [...prevImages, ...newFiles]);
+
+      const previews = newFiles.map((file) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        return new Promise<string>((resolve) => {
+          reader.onloadend = () => {
+            resolve(reader.result as string);
+          };
+        });
+      });
+
+      Promise.all(previews).then((previewsArray) => {
+        setImagePreviews((prevPreviews) => [...prevPreviews, ...previewsArray]);
+      });
     }
   };
 
@@ -142,43 +131,53 @@ const EqDescEdit: React.FC = () => {
           onChange={(e: ChangeEvent<HTMLInputElement>) => setDescriptionRu(e.target.value)}
           name="description_ru"
         />
-
-        {/* upload image area */}
+        {/* upload multiple images */}
         <input
           accept="image/*"
           style={{ display: "none" }}
-          id="upload-image"
+          id="upload-images"
           type="file"
-          name="imgback"
+          name="imgeq"
+          multiple
           onChange={handleImageChange}
         />
-        <label htmlFor="upload-image">
+        <label htmlFor="upload-images">
           <Button
             variant="contained"
             component="span"
             style={{ marginTop: "16px", backgroundColor: "mediumslateblue" }}>
-            Şəkil əlavə et
+            Şəkillər əlavə et
           </Button>
         </label>
 
-        {imagePreview && (
+        {/* Display previews of selected images */}
+        {imagePreviews.length > 0 && (
           <Box mt={2}>
-            <Typography variant="subtitle1">Şəkil:</Typography>
-            <img src={imagePreview} alt="Preview" style={{ width: "80%", maxHeight: "400px", objectFit: "cover" }} />
+            <Typography variant="subtitle1">Şəkil Önizlemeleri:</Typography>
+            <Box
+              mt={2}
+              sx={{
+                display: "flex",
+                gap: "16px", // Space between images
+                flexWrap: "wrap", // Allows wrapping to next line if screen is too small
+              }}>
+              {imagePreviews.map((preview, index) => (
+                <Box key={index}>
+                  <img
+                    src={preview}
+                    alt={`Preview ${index + 1}`}
+                    style={{
+                      width: "150px",
+                      height: "150px",
+                      objectFit: "cover",
+                      borderRadius: "8px", // Rounded corners for images
+                    }}
+                  />
+                </Box>
+              ))}
+            </Box>
           </Box>
         )}
-
-        <select
-          onChange={handleChangeSelect}
-          required
-          value={selected_eq}
-          name="selected_eq"
-          style={{ width: "100%", maxWidth: "50%", height: "46px", borderRadius: "4px", margin: "24px 0px" }}>
-          <option value="">Bu şəkillər hansı xəbərin tərkibində olacaq?</option>
-          {eqData
-            ? eqData?.map((eqdatas: any) => <option value={eqdatas?._id || ""}>{eqdatas?.title || ""}</option>)
-            : ""}
-        </select>
 
         <Button type="submit" variant="contained" color="success" style={{ marginTop: "16px", marginLeft: "24px" }}>
           Düzəliş et
