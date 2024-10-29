@@ -7,10 +7,8 @@ import { useNavigate } from "react-router-dom";
 
 const EqDescCreate: React.FC = () => {
   const navigate = useNavigate();
-
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
   const [snackbarMessage, setSnackbarMessage] = React.useState("");
-
   const [description_az, setDescriptionAz] = useState("");
   const [description_en, setDescriptionEn] = useState("");
   const [description_ru, setDescriptionRu] = useState("");
@@ -19,7 +17,6 @@ const EqDescCreate: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     const formData = new FormData();
     formData.append("description_az", description_az);
     formData.append("description_en", description_en);
@@ -51,7 +48,6 @@ const EqDescCreate: React.FC = () => {
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       const newFiles = Array.from(event.target.files);
-
       setImages((prevImages) => [...prevImages, ...newFiles]);
 
       const previews = newFiles.map((file) => {
@@ -70,6 +66,12 @@ const EqDescCreate: React.FC = () => {
     }
   };
 
+  const deleteImage = (index: number) => {
+    // Resimleri silmek için önceki durumdan yeni bir durum oluşturuyoruz
+    setImages((prevImages) => prevImages.filter((_, i) => i !== index));
+    setImagePreviews((prevPreviews) => prevPreviews.filter((_, i) => i !== index));
+  };
+
   return (
     <div className="component-create">
       <Title description="Əlavə et" title="Avadanlıqlar üçün açıqlamalar" to="" />
@@ -84,7 +86,6 @@ const EqDescCreate: React.FC = () => {
           onChange={(e: ChangeEvent<HTMLInputElement>) => setDescriptionAz(e.target.value)}
           name="description_az"
         />
-
         <TextField
           label="Açıqlama(EN)"
           variant="outlined"
@@ -94,7 +95,6 @@ const EqDescCreate: React.FC = () => {
           onChange={(e: ChangeEvent<HTMLInputElement>) => setDescriptionEn(e.target.value)}
           name="description_en"
         />
-
         <TextField
           label="Açıqlama(RU)"
           variant="outlined"
@@ -104,14 +104,8 @@ const EqDescCreate: React.FC = () => {
           onChange={(e: ChangeEvent<HTMLInputElement>) => setDescriptionRu(e.target.value)}
           name="description_ru"
         />
-        {/* upload multiple images */}
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "flex-start",
-            justifyContent: "flex-start",
-          }}>
+        
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "flex-start" }}>
           <input
             accept="image/*"
             style={{ display: "none" }}
@@ -122,37 +116,38 @@ const EqDescCreate: React.FC = () => {
             onChange={handleImageChange}
           />
           <label htmlFor="upload-images">
-            <Button
-              variant="contained"
-              component="span"
-              style={{ marginTop: "16px", backgroundColor: "mediumslateblue" }}>
+            <Button variant="contained" component="span" style={{ marginTop: "16px", backgroundColor: "mediumslateblue" }}>
               Şəkillər əlavə et
             </Button>
           </label>
 
-          {/* Display previews of selected images */}
           {imagePreviews.length > 0 && (
             <Box mt={2}>
               <Typography variant="subtitle1">Resim Önizlemeleri:</Typography>
-              <Box
-                mt={2}
-                sx={{
-                  display: "flex",
-                  gap: "16px", // Space between images
-                  flexWrap: "wrap", // Allows wrapping to next line if screen is too small
-                }}>
+              <Box mt={2} sx={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
                 {imagePreviews.map((preview, index) => (
-                  <Box key={index}>
+                  <Box key={index} position="relative">
                     <img
                       src={preview}
                       alt={`Preview ${index + 1}`}
-                      style={{
-                        width: "150px",
-                        height: "150px",
-                        objectFit: "cover",
-                        borderRadius: "8px", // Rounded corners for images
-                      }}
+                      style={{ width: "150px", height: "150px", objectFit: "cover", borderRadius: "8px" }}
                     />
+                    <Button
+                      onClick={() => deleteImage(index)}
+                      style={{
+                        position: "absolute",
+                        top: 0,
+                        right: 0,
+                        backgroundColor: "red",
+                        color: "white",
+                        borderRadius: "50%",
+                        minWidth: "30px",
+                        height: "30px",
+                        padding: 0,
+                      }}
+                    >
+                      X
+                    </Button>
                   </Box>
                 ))}
               </Box>
@@ -160,16 +155,11 @@ const EqDescCreate: React.FC = () => {
           )}
         </div>
 
-        <Button
-          variant="contained"
-          color="success"
-          onClick={handleSubmit}
-          style={{ marginTop: "16px", marginLeft: "24px" }}>
+        <Button variant="contained" color="success" onClick={handleSubmit} style={{ marginTop: "16px", marginLeft: "24px" }}>
           Göndər
         </Button>
       </form>
 
-      {/* Snackbar for displaying messages */}
       <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleSnackbarClose}>
         <Alert onClose={handleSnackbarClose} severity="info" sx={{ width: "100%", height: "50px" }}>
           {snackbarMessage}
