@@ -10,13 +10,31 @@ import Loader from "../../Loader";
 
 const ToolsInnerImagesShow: React.FC = () => {
   const [loading, setLoading] = useRecoilState(LoadingState);
-
+  const [blogs, setBlogs] = useState<any[]>([]);
   const [rows, setRows] = useState<any[]>([]);
-
   const navigate = useNavigate();
 
-  // COLUMNS
+  const getBlogs = async () => {
+    const response = await axios.get(`${URL}/toolsinnerfront`, {
+      headers: {
+        "Accept-Language": "az",
+      },
+    });
+    if (response.data) {
+      setBlogs(response.data);
+    }
+  };
+
   const columns: GridColDef[] = [
+    {
+      field: "selected_tools",
+      headerName: "Seçilən avadanlıq:",
+      width: 900,
+      renderCell: (params) => {
+        const blog = blogs.find((blog: any) => blog._id === params.row.selected_tools);
+        return <span>{blog ? blog.title : "Avadanlıq tapılmadı"}</span>;
+      },
+    },
     {
       field: "actions",
       headerName: "Actions",
@@ -25,13 +43,13 @@ const ToolsInnerImagesShow: React.FC = () => {
         <div className="buttons-grid">
           <button
             className="edit"
-            onClick={() => navigate(`/toolsinnerimages/${params.row.id}`)} // Navigating to the edit page with the row's id
+            onClick={() => navigate(`/toolsinnerimages/${params.row.id}`)}
           >
             Düzəliş
           </button>
           <button
             className="delete"
-            onClick={() => handleDelete(params.row.id)} // Handle the delete operation
+            onClick={() => handleDelete(params.row.id)}
           >
             Sil
           </button>
@@ -40,7 +58,7 @@ const ToolsInnerImagesShow: React.FC = () => {
     },
   ];
 
-  // DELETE
+  // DELETE FONKSİYONU
   const handleDelete = async (id: any) => {
     try {
       const deleteitem = await axios.delete(`${URL}/toolsinnerimages/${id}`);
@@ -54,26 +72,26 @@ const ToolsInnerImagesShow: React.FC = () => {
     }
   };
 
-  // GET DATA
+  // DATA FETCH
   const fetchData = async () => {
     setLoading(true);
     try {
       const response = await axios.get(`${URL}/toolsinnerimages`);
       const rowsWithId = response.data.map((item: any) => ({
-        id: item._id,
+        ...item,  
+        id: item._id,  
       }));
       setRows(rowsWithId);
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
-      const timeout = setTimeout(() => {
-        setLoading(false);
-      }, 500);
-      return () => clearTimeout(timeout);
+      setLoading(false);
     }
   };
+
   useEffect(() => {
     fetchData();
+    getBlogs();
   }, []);
 
   return (
@@ -81,7 +99,7 @@ const ToolsInnerImagesShow: React.FC = () => {
       {loading ? (
         <Loader />
       ) : (
-        <React.Fragment>
+        <>
           <Title
             description="Əlavə et, dəyişdir, sil."
             title="Avadanliqlar şəkil yüklə"
@@ -90,7 +108,7 @@ const ToolsInnerImagesShow: React.FC = () => {
           <div style={{ height: "100%", width: "100%", marginTop: "24px" }}>
             <DataGrid columns={columns} rows={rows} />
           </div>
-        </React.Fragment>
+        </>
       )}
     </div>
   );
