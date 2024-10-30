@@ -127,9 +127,6 @@ import OurWorksInnerImagesEdit from "../routes/ourworksinner/OurWorksInnerImages
 import StructureCategoriesShow from "../routes/structurecategories/StructureCategoriesShow";
 import StructureCategoriesCreate from "../routes/structurecategories/StructureCategoriesCreate";
 import StructureCategoriesEdit from "../routes/structurecategories/StructureCategoriesEdit";
-import EqDescShow from "../routes/equipmentsdescription/EqDescShow";
-import EqDescCreate from "../routes/equipmentsdescription/EqDescCreate";
-import EqDescEdit from "../routes/equipmentsdescription/EqDescEdit";
 import ToolsInnerShow from "../routes/toolsinner/ToolsInnerShow";
 import ToolsInnerCreate from "../routes/toolsinner/ToolsInnerCreate";
 import ToolsInnerEdit from "../routes/toolsinner/ToolsInnerEdit";
