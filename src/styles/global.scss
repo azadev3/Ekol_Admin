@@ -6,6 +6,29 @@
   font-family: "Inter", sans-serif;
 }
 
+
+.toggle-status {
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 12px;
+  background-color: mediumseagreen;
+  border-radius: 6px;
+  cursor: pointer;
+  user-select: none;
+  transition: 100ms ease;
+  span {
+    color: white;
+  }
+  &:hover {
+    background-color: mediumslateblue;
+  }
+  &:active {
+    transform: scale(0.96);
+  }
+}
+
 $darkcolor: rgb(38, 38, 38);
 $darkwhite: #dddddd;
 $activecolor: rgb(38, 38, 40);
