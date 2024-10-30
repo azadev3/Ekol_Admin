@@ -16,18 +16,23 @@ const BlogShow: React.FC = () => {
   const [status, setStatus] = React.useState<{ [key: string]: boolean }>({});
 
   const toggleStatus = async (id: string | number) => {
-    const newStatus = !status[id];
+    const newStatus = !status[id]; 
     setStatus((prevStatus) => ({
       ...prevStatus,
-      [id]: newStatus,
+      [id]: newStatus, 
     }));
-
+  
     try {
       await axios.put(`${URL}/blog/status/${id}`, { status: newStatus });
     } catch (error) {
       console.error("Status güncellenirken hata oluştu:", error);
+      setStatus((prevStatus) => ({
+        ...prevStatus,
+        [id]: !newStatus, 
+      }));
     }
   };
+  
 
   // COLUMNS
   const columns: GridColDef[] = [
@@ -78,7 +83,6 @@ const BlogShow: React.FC = () => {
     }
   };
 
-  // GET DATA
   const fetchData = async () => {
     setLoading(true);
     try {
@@ -91,11 +95,18 @@ const BlogShow: React.FC = () => {
         description_az: item.description?.az || "",
         description_en: item.description?.en || "",
         description_ru: item.description?.ru || "",
+        status: item.status, 
       }));
-
-      // Sort the rows by creation date or id, assuming latest entries have the highest id
-      rowsWithId.sort((a: any, b: any) => b.id.localeCompare(a.id)); // or use a creation date field if available
-
+  
+      const statusMap:any = {};
+      rowsWithId.forEach((row:any) => {
+        statusMap[row.id] = row.status;
+      });
+      setStatus(statusMap); 
+  
+      // Sort the rows by creation date or id
+      rowsWithId.sort((a: any, b: any) => b.id.localeCompare(a.id));
+  
       setRows(rowsWithId);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -106,7 +117,7 @@ const BlogShow: React.FC = () => {
       return () => clearTimeout(timeout);
     }
   };
-
+  
   useEffect(() => {
     fetchData();
   }, []);
