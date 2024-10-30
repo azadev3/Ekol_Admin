@@ -84,7 +84,7 @@ const ToolsInnerImagesShow: React.FC = () => {
         <React.Fragment>
           <Title
             description="Əlavə et, dəyişdir, sil."
-            title="Gördüyümüz işlər şəkil yüklə"
+            title="Avadanliqlar şəkil yüklə"
             to="/toolsinnerimages/create"
           />
           <div style={{ height: "100%", width: "100%", marginTop: "24px" }}>
