@@ -130,6 +130,9 @@ import StructureCategoriesEdit from "../routes/structurecategories/StructureCate
 import EqDescShow from "../routes/equipmentsdescription/EqDescShow";
 import EqDescCreate from "../routes/equipmentsdescription/EqDescCreate";
 import EqDescEdit from "../routes/equipmentsdescription/EqDescEdit";
+import ToolsInnerShow from "../routes/toolsinner/ToolsInnerShow";
+import ToolsInnerCreate from "../routes/toolsinner/ToolsInnerCreate";
+import ToolsInnerEdit from "../routes/toolsinner/ToolsInnerEdit";
 
 const Content: React.FC = () => {
   const toggleSidebar = useRecoilValue(ToggleSidebarState);
@@ -330,9 +333,9 @@ const Content: React.FC = () => {
         <Route path="/departmentscategories/:editid" element={<StructureCategoriesEdit />} />
 
         {/* equipments description */}
-        <Route path="/equipments-description" element={<EqDescShow />} />
-        <Route path="/equipments-description/create" element={<EqDescCreate />} />
-        <Route path="/equipments-description/:editid" element={<EqDescEdit />} />
+        <Route path="/toolsinner" element={<ToolsInnerShow />} />
+        <Route path="/toolsinner/create" element={<ToolsInnerCreate />} />
+        <Route path="/toolsinner/:editid" element={<ToolsInnerEdit />} />
       </Routes>
     </main>
   );

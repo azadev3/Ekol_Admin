@@ -152,8 +152,7 @@ const Sidebarr: React.FC = () => {
         linkTitle="Fəaliyyət"
         isDropdown={true}
         dropdownItem={[
-          { title: "Avadanlıqlar", to: "/equipments" },
-          { title: "Avadanlıqlar Əlavələr", to: "/equipments-description" },
+          { title: "Avadanlıqlar (Daxili)", to: "/toolsinner" },
           { title: "Sosial Həyat", to: "/sociallife" },
           { title: "Sosial Həyat (Karusel)", to: "/sociallifecarousel" },
         ]}
