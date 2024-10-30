@@ -8,7 +8,7 @@ import "react-quill/dist/quill.snow.css";
 
 const ToolsInnerImagesEdit: React.FC = () => {
   const [toolsinnerdata, setToolsInnerData] = React.useState<[]>([]);
-  const getOurworks = async () => {
+  const getTools = async () => {
     const response = await axios.get(`${URL}/toolsinnerfront`, {
       headers: {
         "Accept-Language": "az",
@@ -20,7 +20,7 @@ const ToolsInnerImagesEdit: React.FC = () => {
   };
 
   React.useEffect(() => {
-    getOurworks();
+    getTools();
   }, []);
 
   const { editid } = useParams();
@@ -66,7 +66,7 @@ const ToolsInnerImagesEdit: React.FC = () => {
     }
 
     const formData = new FormData();
-    images.forEach((image) => formData.append("imgourworks", image));
+    images.forEach((image) => formData.append("imgtools", image));
     formData.append("selected_tools", selected_tools);
 
     try {
@@ -128,7 +128,7 @@ const ToolsInnerImagesEdit: React.FC = () => {
           style={{ display: "none" }}
           id="upload-images"
           type="file"
-          name="imgourworks"
+          name="imgtools"
           multiple
           onChange={handleImageChange}
         />

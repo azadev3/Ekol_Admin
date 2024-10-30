@@ -93,7 +93,7 @@ const ToolsInnerImagesCreate: React.FC = () => {
 
   return (
     <div className="component-create">
-      <Title description="Əlavə et" title="Hero" to="" />
+      <Title description="Əlavə et" title="Avadanliqlar şəkil əlavə et" to="" />
 
       <form noValidate autoComplete="off" style={{ marginTop: "16px" }}>
         {/* upload multiple images */}

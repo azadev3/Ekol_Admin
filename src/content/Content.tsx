@@ -133,6 +133,9 @@ import EqDescEdit from "../routes/equipmentsdescription/EqDescEdit";
 import ToolsInnerShow from "../routes/toolsinner/ToolsInnerShow";
 import ToolsInnerCreate from "../routes/toolsinner/ToolsInnerCreate";
 import ToolsInnerEdit from "../routes/toolsinner/ToolsInnerEdit";
+import ToolsInnerImagesShow from "../routes/toolsinner/ToolsInnerImagesShow";
+import ToolsInnerImagesCreate from "../routes/toolsinner/ToolsInnerImagesCreate";
+import ToolsInnerImagesEdit from "../routes/toolsinner/ToolsInnerImagesEdit";
 
 const Content: React.FC = () => {
   const toggleSidebar = useRecoilValue(ToggleSidebarState);
@@ -336,6 +339,9 @@ const Content: React.FC = () => {
         <Route path="/toolsinner" element={<ToolsInnerShow />} />
         <Route path="/toolsinner/create" element={<ToolsInnerCreate />} />
         <Route path="/toolsinner/:editid" element={<ToolsInnerEdit />} />
+        <Route path="/toolsinnerimages" element={<ToolsInnerImagesShow />} />
+        <Route path="/toolsinnerimages/create" element={<ToolsInnerImagesCreate />} />
+        <Route path="/toolsinnerimages/:editid" element={<ToolsInnerImagesEdit />} />
       </Routes>
     </main>
   );
