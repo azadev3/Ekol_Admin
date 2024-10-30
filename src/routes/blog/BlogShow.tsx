@@ -21,14 +21,13 @@ const BlogShow: React.FC = () => {
       ...prevStatus,
       [id]: newStatus,
     }));
-    
+
     try {
-      await axios.put(`${URL}/blog/${id}`, { status: newStatus });
+      await axios.put(`${URL}/blog/status/${id}`, { status: newStatus });
     } catch (error) {
       console.error("Status güncellenirken hata oluştu:", error);
     }
   };
-  
 
   // COLUMNS
   const columns: GridColDef[] = [
