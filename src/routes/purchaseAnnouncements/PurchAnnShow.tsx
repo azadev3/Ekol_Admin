@@ -11,12 +11,9 @@ import Loader from "../../Loader";
 
 const PurchAnnShow: React.FC = () => {
   const [loading, setLoading] = useRecoilState(LoadingState);
-
   const [rows, setRows] = useState<any[]>([]);
-
   const navigate = useNavigate();
-
-  const [statusActive, setStatusActive] = React.useState<{ [key: string]: boolean }>({});
+  const [statusActive, setStatusActive] = useState<{ [key: string]: boolean }>({});
 
   const toggleStatus = async (id: string | number) => {
     const newStatus = !statusActive[id];
@@ -58,13 +55,13 @@ const PurchAnnShow: React.FC = () => {
         <div className="buttons-grid">
           <button
             className="edit"
-            onClick={() => navigate(`/purchaseannouncement/${params.row.id}`)} // Navigating to the edit page with the row's id
+            onClick={() => navigate(`/purchaseannouncement/${params.row.id}`)}
           >
             Düzəliş
           </button>
           <button
             className="delete"
-            onClick={() => handleDelete(params.row.id)} // Handle the delete operation
+            onClick={() => handleDelete(params.row.id)}
           >
             Sil
           </button>
@@ -112,15 +109,20 @@ const PurchAnnShow: React.FC = () => {
         statusActive: item.statusActive || "",
       }));
       setRows(rowsWithId);
+
+      const initialStatusActive: { [key: string]: boolean } = {};
+      response.data.forEach((item: any) => {
+        initialStatusActive[item._id] = item.statusActive;
+      });
+      setStatusActive(initialStatusActive);
+
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
-      const timeout = setTimeout(() => {
-        setLoading(false);
-      }, 500);
-      return () => clearTimeout(timeout);
+      setLoading(false);
     }
   };
+
   useEffect(() => {
     fetchData();
   }, []);
