@@ -16,23 +16,23 @@ const BlogShow: React.FC = () => {
   const [status, setStatus] = React.useState<{ [key: string]: boolean }>({});
 
   const toggleStatus = async (id: string | number) => {
-    const newStatus = !status[id]; 
+    const newStatus = !status[id];
     setStatus((prevStatus) => ({
       ...prevStatus,
-      [id]: newStatus, 
+      [id]: newStatus,
     }));
-  
+
     try {
       await axios.put(`${URL}/blog/status/${id}`, { status: newStatus });
+      fetchData();
     } catch (error) {
       console.error("Status güncellenirken hata oluştu:", error);
       setStatus((prevStatus) => ({
         ...prevStatus,
-        [id]: !newStatus, 
+        [id]: !newStatus,
       }));
     }
   };
-  
 
   // COLUMNS
   const columns: GridColDef[] = [
@@ -48,20 +48,14 @@ const BlogShow: React.FC = () => {
       width: 350,
       renderCell: (params) => (
         <div className="buttons-grid">
-          <button
-            className="edit"
-            onClick={() => navigate(`/blog/${params.row.id}`)} // Navigating to the edit page with the row's id
-          >
+          <button className="edit" onClick={() => navigate(`/blog/${params.row.id}`)}>
             Düzəliş
           </button>
-          <button
-            className="delete"
-            onClick={() => handleDelete(params.row.id)} // Handle the delete operation
-          >
+          <button className="delete" onClick={() => handleDelete(params.row.id)}>
             Sil
           </button>
           <div className="toggle-status" onClick={() => toggleStatus(params?.row?.id)}>
-            <span>{status[params?.row?.id] ? "Deaktiv et" : "Aktiv et"}</span>
+            <span>{status[params.row.id] ? "Deaktiv et" : "Aktiv et"}</span>
           </div>
         </div>
       ),
@@ -95,18 +89,16 @@ const BlogShow: React.FC = () => {
         description_az: item.description?.az || "",
         description_en: item.description?.en || "",
         description_ru: item.description?.ru || "",
-        status: item.status, 
+        status: item.status,
       }));
-  
-      const statusMap:any = {};
-      rowsWithId.forEach((row:any) => {
+
+      const statusMap: any = {};
+      rowsWithId.forEach((row: any) => {
         statusMap[row.id] = row.status;
       });
-      setStatus(statusMap); 
-  
-      // Sort the rows by creation date or id
+      setStatus(statusMap);
+
       rowsWithId.sort((a: any, b: any) => b.id.localeCompare(a.id));
-  
       setRows(rowsWithId);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -117,7 +109,7 @@ const BlogShow: React.FC = () => {
       return () => clearTimeout(timeout);
     }
   };
-  
+
   useEffect(() => {
     fetchData();
   }, []);
