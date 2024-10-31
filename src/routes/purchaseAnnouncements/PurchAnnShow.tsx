@@ -16,6 +16,26 @@ const PurchAnnShow: React.FC = () => {
 
   const navigate = useNavigate();
 
+  const [statusActive, setStatusActive] = React.useState<{ [key: string]: boolean }>({});
+
+  const toggleStatus = async (id: string | number) => {
+    const newStatus = !statusActive[id];
+    setStatusActive((prevStatus) => ({
+      ...prevStatus,
+      [id]: newStatus,
+    }));
+
+    try {
+      await axios.put(`${URL}/purch/status/${id}`, { statusActive: newStatus });
+    } catch (error) {
+      console.error("Status güncellenirken hata oluştu:", error);
+      setStatusActive((prevStatus) => ({
+        ...prevStatus,
+        [id]: !newStatus,
+      }));
+    }
+  };
+
   // COLUMNS
   const columns: GridColDef[] = [
     { field: "title_az", headerName: "Title AZ", width: 100 },
@@ -33,7 +53,7 @@ const PurchAnnShow: React.FC = () => {
     {
       field: "actions",
       headerName: "Actions",
-      width: 200,
+      width: 300,
       renderCell: (params) => (
         <div className="buttons-grid">
           <button
@@ -48,6 +68,9 @@ const PurchAnnShow: React.FC = () => {
           >
             Sil
           </button>
+          <div className="toggle-status" onClick={() => toggleStatus(params?.row?.id)}>
+            <span>{statusActive[params?.row?.id] ? "Deaktiv et" : "Aktiv et"}</span>
+          </div>
         </div>
       ),
     },
@@ -86,6 +109,7 @@ const PurchAnnShow: React.FC = () => {
         end_date: item.end_date || "",
         createdAt: moment(item.createdAt).format("LLL") || "",
         status: item.status || "",
+        statusActive: item.statusActive || "",
       }));
       setRows(rowsWithId);
     } catch (error) {
