@@ -88,11 +88,14 @@ const PurchAnnShow: React.FC = () => {
   };
 
   // GET DATA
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const response = await axios.get(`${URL}/purchaseannouncement`);
-      const rowsWithId = response.data.map((item: any) => ({
+// GET DATA
+const fetchData = async () => {
+  setLoading(true);
+  try {
+    const response = await axios.get(`${URL}/purchaseannouncement`);
+    const rowsWithId = response.data
+      .reverse() 
+      .map((item: any) => ({
         id: item._id,
         title_az: item.title?.az || "",
         title_en: item.title?.en || "",
@@ -108,20 +111,20 @@ const PurchAnnShow: React.FC = () => {
         status: item.status || "",
         statusActive: item.statusActive || "",
       }));
-      setRows(rowsWithId);
+    setRows(rowsWithId);
 
-      const initialStatusActive: { [key: string]: boolean } = {};
-      response.data.forEach((item: any) => {
-        initialStatusActive[item._id] = item.statusActive;
-      });
-      setStatusActive(initialStatusActive);
+    const initialStatusActive: { [key: string]: boolean } = {};
+    response.data.forEach((item: any) => {
+      initialStatusActive[item._id] = item.statusActive;
+    });
+    setStatusActive(initialStatusActive);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  } finally {
+    setLoading(false);
+  }
+};
 
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   useEffect(() => {
     fetchData();
