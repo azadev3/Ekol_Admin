@@ -13,6 +13,7 @@ import { IoLogoElectron, IoImages } from "react-icons/io5";
 import { GoInfo } from "react-icons/go";
 import { AiOutlineRise } from "react-icons/ai";
 import { GiMovementSensor, GiReceiveMoney } from "react-icons/gi";
+import { GoEyeClosed } from "react-icons/go";
 
 export const SidebarLinkLengthState = atom<string>({
   key: "lengthStateKeySidebarLink",
@@ -182,6 +183,15 @@ const Sidebarr: React.FC = () => {
         ]}
       />
       <SidebarLinkWithDropdown to="/emails" linkTitle="E-maillər" linkIcon={<MdEmail />} />
+      <SidebarLinkWithDropdown
+        to=""
+        linkIcon={<GoEyeClosed />}
+        linkTitle="Gizlət / Göstər"
+        isDropdown={true}
+        dropdownItem={[
+          { title: "Rəhbərlik", to: "/hidden-rehberlik" },
+        ]}
+      />
     </aside>
   );
 };

@@ -133,6 +133,7 @@ import ToolsInnerEdit from "../routes/toolsinner/ToolsInnerEdit";
 import ToolsInnerImagesShow from "../routes/toolsinner/ToolsInnerImagesShow";
 import ToolsInnerImagesCreate from "../routes/toolsinner/ToolsInnerImagesCreate";
 import ToolsInnerImagesEdit from "../routes/toolsinner/ToolsInnerImagesEdit";
+import HiddenRehberlik from "../routes/hiddenrehberlik/HiddenRehberlik";
 
 const Content: React.FC = () => {
   const toggleSidebar = useRecoilValue(ToggleSidebarState);
@@ -339,6 +340,8 @@ const Content: React.FC = () => {
         <Route path="/toolsinnerimages" element={<ToolsInnerImagesShow />} />
         <Route path="/toolsinnerimages/create" element={<ToolsInnerImagesCreate />} />
         <Route path="/toolsinnerimages/:editid" element={<ToolsInnerImagesEdit />} />
+        {/* Show - hidden */}
+        <Route path="/hidden-rehberlik" element={<HiddenRehberlik />} />
       </Routes>
     </main>
   );
