@@ -55,7 +55,6 @@ const BlogEdit: React.FC = () => {
         try {
           const response = await axios.get(`${URL}/blog/${editid}`);
           const data = response.data;
-          console.log(data, "salam");
           setTitleAz(data.title.az || "");
           setTitleEn(data.title.en || "");
           setTitleRu(data.title.ru || "");
@@ -84,7 +83,6 @@ const BlogEdit: React.FC = () => {
     formData.append("description_az", description_az);
     formData.append("description_en", description_en);
     formData.append("description_ru", description_ru);
-    formData.append("imgback", image ? image : "");
     formData.append("imgback", image ? image : "");
     formData.append("created_at", created_at);
 
