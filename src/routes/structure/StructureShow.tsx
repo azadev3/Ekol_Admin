@@ -4,59 +4,23 @@ import Title from "../../uitils/Title";
 import axios from "axios";
 import { URL } from "../../Base";
 import { useNavigate } from "react-router-dom";
-import { LoadingState } from "../hero/HeroShow";
-import { useRecoilState } from "recoil";
 import Loader from "../../Loader";
+import { atom, useRecoilState } from "recoil";
 
-const OurWorksInnerImagesShow: React.FC = () => {
+export const LoadingState = atom<boolean>({
+  key: "loadingStateKey",
+  default: false,
+});
+
+const StructureShow: React.FC = () => {
   const [loading, setLoading] = useRecoilState(LoadingState);
 
   const [rows, setRows] = useState<any[]>([]);
 
   const navigate = useNavigate();
 
-  const [ourworks, setOurworks] = useState<[]>([]);
-  const [scw, setImgs] = useState<[]>([]);
-
-  const getOurworks = async () => {
-    const response = await axios.get(`${URL}/ourworksinnerfront`, {
-      headers: {
-        "Accept-Language": "az",
-      },
-    });
-    if (response.data) {
-      setOurworks(response.data);
-    }
-  };
-
-  const getImgs = async () => {
-    const response = await axios.get(`${URL}/ourworksimagesfront`, {
-      headers: {
-        "Accept-Language": "az",
-      },
-    });
-    if (response.data) {
-      setImgs(response.data);
-    }
-  };
-
-  useEffect(() => {
-    getImgs();
-    getOurworks();
-  }, []);
-
   // COLUMNS
   const columns: GridColDef[] = [
-    {
-      field: "selected_ourworks",
-      headerName: "Seçilən:",
-      width: 950,
-      renderCell: (params) => {
-        const img: any = ourworks.find((img: any) => img._id === params.row.selected_ourworks);
-        return <span>{img ? img.title : "Tapilmadi"}</span>;
-      },
-      
-    },
     {
       field: "actions",
       headerName: "Actions",
@@ -65,7 +29,7 @@ const OurWorksInnerImagesShow: React.FC = () => {
         <div className="buttons-grid">
           <button
             className="edit"
-            onClick={() => navigate(`/ourworksimages/${params.row.id}`)} // Navigating to the edit page with the row's id
+            onClick={() => navigate(`/structure/${params.row.id}`)} // Navigating to the edit page with the row's id
           >
             Düzəliş
           </button>
@@ -83,7 +47,7 @@ const OurWorksInnerImagesShow: React.FC = () => {
   // DELETE
   const handleDelete = async (id: any) => {
     try {
-      const deleteitem = await axios.delete(`${URL}/ourworksimages/${id}`);
+      const deleteitem = await axios.delete(`${URL}/structure/${id}`);
       if (deleteitem.data) {
         fetchData();
       } else {
@@ -98,10 +62,9 @@ const OurWorksInnerImagesShow: React.FC = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`${URL}/ourworksimages`);
+      const response = await axios.get(`${URL}/structure`);
       const rowsWithId = response.data.map((item: any) => ({
         id: item._id,
-        selected_ourworks: item.selected_ourworks,
       }));
       setRows(rowsWithId);
     } catch (error) {
@@ -113,6 +76,7 @@ const OurWorksInnerImagesShow: React.FC = () => {
       return () => clearTimeout(timeout);
     }
   };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -123,7 +87,7 @@ const OurWorksInnerImagesShow: React.FC = () => {
         <Loader />
       ) : (
         <React.Fragment>
-          <Title description="Əlavə et, dəyişdir, sil." title="Gördüyümüz işlər şəkil yüklə" to="/ourworksimages/create" />
+          <Title description="Əlavə et, dəyişdir, sil." title="Structure" to="/structure/create" />
           <div style={{ height: "100%", width: "100%", marginTop: "24px" }}>
             <DataGrid columns={columns} rows={rows} />
           </div>
@@ -133,4 +97,4 @@ const OurWorksInnerImagesShow: React.FC = () => {
   );
 };
 
-export default OurWorksInnerImagesShow;
+export default StructureShow;

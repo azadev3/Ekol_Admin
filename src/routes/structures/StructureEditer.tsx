@@ -1,51 +1,80 @@
-import React, { ChangeEvent, useState } from "react";
-import Title from "../../uitils/Title";
+import React, { useEffect, useState, ChangeEvent } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { TextField, Button, Snackbar, Alert, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import axios from "axios";
 import { URL } from "../../Base";
-import { useNavigate } from "react-router-dom";
-
+import Title from "../../uitils/Title";
 type categoriesType = {
-  _id: string;
+  id: number;
   title: string;
 };
 
-const StructureCreate: React.FC = () => {
-  const [categories, setCategories] = React.useState<categoriesType[]>([]);
-
-  React.useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await axios.get(`${URL}/departmentscategoriesfront`, {
-          headers: {
-            "Accept-Language": "az",
-          },
-        });
-        if (response.data) {
-          setCategories(response.data);
-        } else {
-          console.log(response.status);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchCategories();
-  }, []);
-
+const StructureEditer: React.FC = () => {
+  const categories: categoriesType[] = [
+    {
+      id: 1,
+      title: "Daxili nəzarət departamenti",
+    },
+    {
+      id: 2,
+      title: "Ekologiya idarəsi",
+    },
+    {
+      id: 3,
+      title: "İstehsalat üzrə müavin (texniki drektor)",
+    },
+    {
+      id: 4,
+      title: "Baş direktorun müavini",
+    },
+    {
+      id: 5,
+      title: "SƏTƏM üzrə müavin",
+    },
+    {
+      id: 6,
+      title: "Ümumi işlər üzrə müavin",
+    },
+    {
+      id: 7,
+      title: "İqdisadiyyat və Uçot üzrə müavin",
+    },
+  ];
+  const { editid } = useParams();
   const navigate = useNavigate();
 
-  const [openSnackbar, setOpenSnackbar] = React.useState(false);
-  const [snackbarMessage, setSnackbarMessage] = React.useState("");
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
 
   const [title_az, setTitleAz] = useState("");
   const [title_en, setTitleEn] = useState("");
   const [title_ru, setTitleRu] = useState("");
   const [category, setCategory] = useState("");
 
+  // Fetch data
+  useEffect(() => {
+    if (editid) {
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(`${URL}/departments/${editid}`);
+          const data = response.data;
+          setTitleAz(data.departments.title.az || "");
+          setTitleEn(data.departments.title.en || "");
+          setTitleRu(data.departments.title.ru || "");
+          setCategory(data.departments.category || "");
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      };
+      fetchData();
+    }
+  }, [editid]);
+
+  // UPDATE
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!editid) return;
 
     const departamentData = {
       title_az,
@@ -53,24 +82,16 @@ const StructureCreate: React.FC = () => {
       title_ru,
       category,
     };
-
     try {
-      const response = await axios.post(`${URL}/departments`, departamentData);
-      if (response.data || response.status === 200) {
-        navigate("/departments");
-      }
-      setSnackbarMessage("UĞURLU!.");
+      const response = await axios.put(`${URL}/departments/${editid}`, departamentData);
+      console.log(response.data);
+      setSnackbarMessage("Düzəliş uğurludur!");
       setOpenSnackbar(true);
+      navigate("/departments");
     } catch (error) {
       console.error(error);
-      setSnackbarMessage("GÖZLƏNİLMƏZ XƏTA...");
+      setSnackbarMessage("Düzəlişdə bir xəta oldu yenidən yoxlayın");
       setOpenSnackbar(true);
-    }
-
-    if (!title_az || !title_en || !title_ru) {
-      setSnackbarMessage("Bütün xanaları doldurun.");
-      setOpenSnackbar(true);
-      return;
     }
   };
 
@@ -79,10 +100,10 @@ const StructureCreate: React.FC = () => {
   };
 
   return (
-    <div className="component-create">
-      <Title description="Əlavə et" title="Strukturlar" to="" />
+    <div className="component-edit">
+      <Title description="Dəyişiklik et" title="Strukturlar (Departments)" to="" />
 
-      <form noValidate autoComplete="off" style={{ marginTop: "16px" }}>
+      <form noValidate autoComplete="off" onSubmit={handleSubmit} style={{ marginTop: "16px" }}>
         <TextField
           required
           label="Başlıq(AZ)"
@@ -124,22 +145,16 @@ const StructureCreate: React.FC = () => {
             value={category}
             onChange={(e) => setCategory(e.target.value)}
             label="Kategori">
-            {categories && categories?.length > 0
-              ? categories.map((cat: categoriesType, index) => (
-                  <MenuItem key={cat?._id ? cat?._id : index} value={cat.title}>
-                    {cat.title}
-                  </MenuItem>
-                ))
-              : ""}
+            {categories.map((cat: categoriesType, index) => (
+              <MenuItem key={index} value={cat.title}>
+                {cat.title}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
 
-        <Button
-          variant="contained"
-          color="success"
-          onClick={handleSubmit}
-          style={{ marginTop: "16px", marginLeft: "24px" }}>
-          Göndər
+        <Button type="submit" variant="contained" color="success" style={{ marginTop: "16px", marginLeft: "24px" }}>
+          Düzəliş et
         </Button>
       </form>
 
@@ -153,4 +168,4 @@ const StructureCreate: React.FC = () => {
   );
 };
 
-export default StructureCreate;
+export default StructureEditer;

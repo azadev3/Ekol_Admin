@@ -1,50 +1,49 @@
 import React, { useEffect, useState, ChangeEvent } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Button, Snackbar, Alert, Typography, Box } from "@mui/material";
+import { Button, Snackbar, Alert, Typography, Box, IconButton } from "@mui/material";
 import axios from "axios";
 import { URL } from "../../Base";
 import Title from "../../uitils/Title";
 import "react-quill/dist/quill.snow.css";
+import { FaDeleteLeft } from "react-icons/fa6";
 
 const BlogImageEdit: React.FC = () => {
-  const [blogs, setBlogs] = React.useState<[]>([]);
-  const getBlogs = async () => {
-    const response = await axios.get(`${URL}/blogfront`, {
-      headers: {
-        "Accept-Language": "az",
-      },
-    });
-    if (response.data) {
-      setBlogs(response.data);
-    }
-  };
-
-  React.useEffect(() => {
-    getBlogs();
-  }, []);
-
-  const { editid } = useParams();
-  const navigate = useNavigate();
-
-  const [openSnackbar, setOpenSnackbar] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState("");
-
-  // State to handle multiple images and previews
+  const [blogs, setBlogs] = useState<[]>([]);
   const [images, setImages] = useState<File[]>([]);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const [selected_blog, setSelectBlog] = useState<string>("");
+  const [existingImages, setExistingImages] = useState<string[]>([]); // Mevcut resimler
+  const [imagesToDelete, setImagesToDelete] = useState<string[]>([]); // Silinecek resimler
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const { editid } = useParams();
+  const navigate = useNavigate();
 
-  // Fetch data
+  // Blogları yükleme
+  useEffect(() => {
+    const getBlogs = async () => {
+      const response = await axios.get(`${URL}/blogfront`, {
+        headers: {
+          "Accept-Language": "az",
+        },
+      });
+      if (response.data) {
+        setBlogs(response.data);
+      }
+    };
+    getBlogs();
+  }, []);
+
+  // Düzenlenecek resimleri yükleme
   useEffect(() => {
     if (editid) {
       const fetchData = async () => {
         try {
           const response = await axios.get(`${URL}/blogimage/${editid}`);
           const data = response.data;
-          // Assuming the response contains an array of images, update previews
           if (data.images && Array.isArray(data.images)) {
             const fetchedPreviews = data.images.map((img: string) => `https://ekol-server-1.onrender.com${img}`);
-            setImagePreviews(fetchedPreviews);
+            setExistingImages(fetchedPreviews);
           }
         } catch (error) {
           console.error("Error fetching data:", error);
@@ -54,47 +53,9 @@ const BlogImageEdit: React.FC = () => {
     }
   }, [editid]);
 
-  // UPDATE
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!editid) return;
-
-    if (!selected_blog || !images) {
-      setOpenSnackbar(true);
-      setSnackbarMessage("Düzəlişdə bir xəta oldu yenidən yoxlayın");
-    }
-
-    const formData = new FormData();
-    images.forEach((image) => formData.append("imgback", image));
-    formData.append("selected_blog", selected_blog);
-
-    try {
-      const response = await axios.put(`${URL}/blogimage/${editid}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      console.log(response.data);
-      setSnackbarMessage("Düzəliş uğurludur!");
-      setOpenSnackbar(true);
-      navigate("/blogimage");
-    } catch (error) {
-      console.error(error);
-      setSnackbarMessage("Düzəlişdə bir xəta oldu yenidən yoxlayın");
-      setOpenSnackbar(true);
-    }
-  };
-
-  const handleSnackbarClose = () => {
-    setOpenSnackbar(false);
-  };
-
-  // Handle multiple image selection and previews
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       const newFiles = Array.from(event.target.files);
-
       setImages((prevImages) => [...prevImages, ...newFiles]);
 
       const previews = newFiles.map((file) => {
@@ -113,8 +74,44 @@ const BlogImageEdit: React.FC = () => {
     }
   };
 
+  const handleDeleteExistingImage = (image: string) => {
+    setExistingImages((prev) => prev.filter((img) => img !== image));
+    setImagesToDelete((prev) => [...prev, image]);
+  };
+
   const handleChangeSelect = (event: ChangeEvent<HTMLSelectElement>) => {
     setSelectBlog(event.target.value);
+  };
+
+  const handleSnackbarClose = () => {
+    setOpenSnackbar(false);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!editid) return;
+
+    const formData = new FormData();
+    images.forEach((image) => formData.append("newImages", image));
+    formData.append("selected_blog", selected_blog);
+    formData.append("deletedImages", JSON.stringify(imagesToDelete)); // Silinecek resimler
+
+    try {
+      const response = await axios.put(`${URL}/blogimage/${editid}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log(response.data);
+      setSnackbarMessage("Düzəliş uğurludur!");
+      setOpenSnackbar(true);
+      navigate("/blogimage");
+    } catch (error) {
+      console.error(error);
+      setSnackbarMessage("Düzəlişdə bir xəta oldu yenidən yoxlayın");
+      setOpenSnackbar(true);
+    }
   };
 
   return (
@@ -122,13 +119,12 @@ const BlogImageEdit: React.FC = () => {
       <Title description="Dəyişiklik et" title="Xəbərlər" to="" />
 
       <form noValidate autoComplete="off" onSubmit={handleSubmit} style={{ marginTop: "16px" }}>
-        {/* upload multiple images */}
         <input
           accept="image/*"
           style={{ display: "none" }}
           id="upload-images"
           type="file"
-          name="imgback"
+          name="newImages"
           multiple
           onChange={handleImageChange}
         />
@@ -141,16 +137,55 @@ const BlogImageEdit: React.FC = () => {
           </Button>
         </label>
 
-        {/* Display previews of selected images */}
-        {imagePreviews.length > 0 && (
+        {/* Mevcut resimler */}
+        {existingImages.length > 0 && (
           <Box mt={2}>
-            <Typography variant="subtitle1">Şəkil Önizlemeleri:</Typography>
+            <Typography variant="subtitle1">Mevcut Şəkillər:</Typography>
             <Box
               mt={2}
               sx={{
                 display: "flex",
-                gap: "16px", // Space between images
-                flexWrap: "wrap", // Allows wrapping to next line if screen is too small
+                gap: "16px",
+                flexWrap: "wrap",
+              }}>
+              {existingImages.map((image, index) => (
+                <Box key={index} position="relative">
+                  <img
+                    src={image}
+                    alt={`Existing ${index + 1}`}
+                    style={{
+                      width: "150px",
+                      height: "150px",
+                      objectFit: "cover",
+                      borderRadius: "8px",
+                    }}
+                  />
+                  <IconButton
+                    onClick={() => handleDeleteExistingImage(image)}
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      right: 0,
+                      backgroundColor: "white",
+                    }}>
+                    <FaDeleteLeft />
+                  </IconButton>
+                </Box>
+              ))}
+            </Box>
+          </Box>
+        )}
+
+        {/* Yeni resimler */}
+        {imagePreviews.length > 0 && (
+          <Box mt={2}>
+            <Typography variant="subtitle1">Yeni Şəkil Önizlemeleri:</Typography>
+            <Box
+              mt={2}
+              sx={{
+                display: "flex",
+                gap: "16px",
+                flexWrap: "wrap",
               }}>
               {imagePreviews.map((preview, index) => (
                 <Box key={index}>
@@ -161,7 +196,7 @@ const BlogImageEdit: React.FC = () => {
                       width: "150px",
                       height: "150px",
                       objectFit: "cover",
-                      borderRadius: "8px", // Rounded corners for images
+                      borderRadius: "8px",
                     }}
                   />
                 </Box>
@@ -185,7 +220,6 @@ const BlogImageEdit: React.FC = () => {
         </Button>
       </form>
 
-      {/* Snackbar for displaying messages */}
       <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleSnackbarClose}>
         <Alert onClose={handleSnackbarClose} severity="info" sx={{ width: "100%", height: "50px" }}>
           {snackbarMessage}

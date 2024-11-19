@@ -112,8 +112,9 @@ const Sidebarr: React.FC = () => {
         dropdownItem={[
           { title: "Biz kimik?", to: "/whoarewe" },
           { title: "Rəhbərlik", to: "/management" },
-          { title: "Struktur", to: "/departments" },
-          { title: "Struktur Kateqoriyalar", to: "/departmentscategories" },
+          { title: "Struktur", to: "/structure" },
+          // { title: "Struktur", to: "/departments" },
+          // { title: "Struktur Kateqoriyalar", to: "/departmentscategories" },
           { title: "Lisenziyalar", to: "/lisansepage" },
           { title: "Partnyorlar", to: "/partners" },
           { title: "Sertifikatlar", to: "/certificates" },

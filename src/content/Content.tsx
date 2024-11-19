@@ -33,9 +33,6 @@ import WhoareweEdit from "../routes/whoarewe/WhoareweEdit";
 import ManagementShow from "../routes/management/ManagementShow";
 import ManagementCreate from "../routes/management/ManagementCreate";
 import ManagementEdit from "../routes/management/ManagementEdit";
-import StructureCreate from "../routes/structures/StructureCreate";
-import StructureEdit from "../routes/structures/StructureEdit";
-import StructureShow from "../routes/structures/StructureShow";
 import LisanseShow from "../routes/lisanse/LisanseShow";
 import LisanseCreate from "../routes/lisanse/LisanseCreate";
 import LisanseEdit from "../routes/lisanse/LisanseEdit";
@@ -124,9 +121,6 @@ import BlogImageShow from "../routes/blog/BlogImageShow";
 import OurWorksInnerImagesShow from "../routes/ourworksinner/OurWorksInnerImagesShow";
 import OurWorksInnerImageCreate from "../routes/ourworksinner/OurWorksInnerImagesCreate";
 import OurWorksInnerImagesEdit from "../routes/ourworksinner/OurWorksInnerImagesEdit";
-import StructureCategoriesShow from "../routes/structurecategories/StructureCategoriesShow";
-import StructureCategoriesCreate from "../routes/structurecategories/StructureCategoriesCreate";
-import StructureCategoriesEdit from "../routes/structurecategories/StructureCategoriesEdit";
 import ToolsInnerShow from "../routes/toolsinner/ToolsInnerShow";
 import ToolsInnerCreate from "../routes/toolsinner/ToolsInnerCreate";
 import ToolsInnerEdit from "../routes/toolsinner/ToolsInnerEdit";
@@ -134,6 +128,10 @@ import ToolsInnerImagesShow from "../routes/toolsinner/ToolsInnerImagesShow";
 import ToolsInnerImagesCreate from "../routes/toolsinner/ToolsInnerImagesCreate";
 import ToolsInnerImagesEdit from "../routes/toolsinner/ToolsInnerImagesEdit";
 import HiddenRehberlik from "../routes/hiddenrehberlik/HiddenRehberlik";
+import StructureShow from "../routes/structure/StructureShow";
+import StructureCreate from "../routes/structure/StructureCreate";
+import StructureEdit from "../routes/structure/StructureEdit";
+import BlogImageEdit from "../routes/blog/BlogImageEdit";
 
 const Content: React.FC = () => {
   const toggleSidebar = useRecoilValue(ToggleSidebarState);
@@ -191,6 +189,8 @@ const Content: React.FC = () => {
         <Route path="/blog/:editid" element={<BlogEdit />} />
         <Route path="/blogimage" element={<BlogImageShow />} />
         <Route path="/blogimage/create" element={<BlogImageCreate />} />
+        <Route path="/blogimage/:editid" element={<BlogImageEdit />} />
+
         {/* NEW BLOGS (BLOQLAR) */}
         <Route path="/newblogs" element={<NewBlogShow />} />
         <Route path="/newblogs/create" element={<NewBlogCreate />} />
@@ -220,9 +220,12 @@ const Content: React.FC = () => {
         <Route path="/management/create" element={<ManagementCreate />} />
         <Route path="/management/:editid" element={<ManagementEdit />} />
         {/* STRUCTURES */}
-        <Route path="/departments" element={<StructureShow />} />
-        <Route path="/departments/create" element={<StructureCreate />} />
-        <Route path="/departments/:editid" element={<StructureEdit />} />
+        {/* <Route path="/departments" element={<StructureShow />} /> */}
+        {/* <Route path="/departments/create" element={<StructureCreate />} /> */}
+        {/* <Route path="/departments/:editid" element={<StructureEdit />} /> */}
+        <Route path="/structure" element={<StructureShow />} />
+        <Route path="/structure/create" element={<StructureCreate />} />
+        <Route path="/structure/:editid" element={<StructureEdit />} />
         {/* LISANSLAR */}
         <Route path="/lisanse" element={<LisanseShow />} />
         <Route path="/lisanse/create" element={<LisanseCreate />} />
@@ -329,9 +332,9 @@ const Content: React.FC = () => {
         <Route path="/yearly_calculations/:editid" element={<YearlyCalculationsEdit />} />
 
         {/* structure categories */}
-        <Route path="/departmentscategories" element={<StructureCategoriesShow />} />
-        <Route path="/departmentscategories/create" element={<StructureCategoriesCreate />} />
-        <Route path="/departmentscategories/:editid" element={<StructureCategoriesEdit />} />
+        {/* <Route path="/departmentscategories" element={<StructureCategoriesShow />} /> */}
+        {/* <Route path="/departmentscategories/create" element={<StructureCategoriesCreate />} /> */}
+        {/* <Route path="/departmentscategories/:editid" element={<StructureCategoriesEdit />} /> */}
 
         {/* equipments description */}
         <Route path="/toolsinner" element={<ToolsInnerShow />} />

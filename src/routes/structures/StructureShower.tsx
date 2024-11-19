@@ -5,7 +5,7 @@ import axios from "axios";
 import { URL } from "../../Base";
 import { useNavigate } from "react-router-dom";
 
-const StructureShow: React.FC = () => {
+const StructureShower: React.FC = () => {
   const [rows, setRows] = useState<any[]>([]);
 
   const navigate = useNavigate();
@@ -84,4 +84,4 @@ const StructureShow: React.FC = () => {
   );
 };
 
-export default StructureShow;
+export default StructureShower;
