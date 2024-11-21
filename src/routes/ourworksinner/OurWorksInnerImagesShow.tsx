@@ -16,7 +16,7 @@ const OurWorksInnerImagesShow: React.FC = () => {
   const navigate = useNavigate();
 
   const [ourworks, setOurworks] = useState<[]>([]);
-  const [scw, setImgs] = useState<[]>([]);
+  const [_, setImgs] = useState<[]>([]);
 
   const getOurworks = async () => {
     const response = await axios.get(`${URL}/ourworksinnerfront`, {

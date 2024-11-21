@@ -12,14 +12,13 @@ const BlogImageEdit: React.FC = () => {
   const [images, setImages] = useState<File[]>([]);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const [selected_blog, setSelectBlog] = useState<string>("");
-  const [existingImages, setExistingImages] = useState<string[]>([]); // Mevcut resimler
-  const [imagesToDelete, setImagesToDelete] = useState<string[]>([]); // Silinecek resimler
+  const [existingImages, setExistingImages] = useState<string[]>([]); 
+  const [imagesToDelete, setImagesToDelete] = useState<string[]>([]); 
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const { editid } = useParams();
   const navigate = useNavigate();
 
-  // Blogları yükleme
   useEffect(() => {
     const getBlogs = async () => {
       const response = await axios.get(`${URL}/blogfront`, {
@@ -34,7 +33,6 @@ const BlogImageEdit: React.FC = () => {
     getBlogs();
   }, []);
 
-  // Düzenlenecek resimleri yükleme
   useEffect(() => {
     if (editid) {
       const fetchData = async () => {
@@ -52,24 +50,22 @@ const BlogImageEdit: React.FC = () => {
       fetchData();
     }
   }, [editid]);
-
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       const newFiles = Array.from(event.target.files);
+
       setImages((prevImages) => [...prevImages, ...newFiles]);
 
-      const previews = newFiles.map((file) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
+      const readerPromises = newFiles.map((file) => {
         return new Promise<string>((resolve) => {
-          reader.onloadend = () => {
-            resolve(reader.result as string);
-          };
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result as string);
+          reader.readAsDataURL(file);
         });
       });
 
-      Promise.all(previews).then((previewsArray) => {
-        setImagePreviews((prevPreviews) => [...prevPreviews, ...previewsArray]);
+      Promise.all(readerPromises).then((previews) => {
+        setImagePreviews((prevPreviews) => [...prevPreviews, ...previews]);
       });
     }
   };
@@ -86,23 +82,24 @@ const BlogImageEdit: React.FC = () => {
   const handleSnackbarClose = () => {
     setOpenSnackbar(false);
   };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+  
     if (!editid) return;
-
+  
     const formData = new FormData();
+    const updatedExistingImages = existingImages.filter((img) => !imagesToDelete.includes(img));
+  
     images.forEach((image) => formData.append("newImages", image));
+    
+    formData.append("existingImages", JSON.stringify(updatedExistingImages));
+    
+    formData.append("deletedImages", JSON.stringify(imagesToDelete));
+  
     formData.append("selected_blog", selected_blog);
-    formData.append("deletedImages", JSON.stringify(imagesToDelete)); // Silinecek resimler
-
+  
     try {
-      const response = await axios.put(`${URL}/blogimage/${editid}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.put(`${URL}/blogimage/${editid}`, formData);
       console.log(response.data);
       setSnackbarMessage("Düzəliş uğurludur!");
       setOpenSnackbar(true);
@@ -113,6 +110,7 @@ const BlogImageEdit: React.FC = () => {
       setOpenSnackbar(true);
     }
   };
+  
 
   return (
     <div className="component-edit">
@@ -128,6 +126,7 @@ const BlogImageEdit: React.FC = () => {
           multiple
           onChange={handleImageChange}
         />
+
         <label htmlFor="upload-images">
           <Button
             variant="contained"
@@ -137,7 +136,6 @@ const BlogImageEdit: React.FC = () => {
           </Button>
         </label>
 
-        {/* Mevcut resimler */}
         {existingImages.length > 0 && (
           <Box mt={2}>
             <Typography variant="subtitle1">Mevcut Şəkillər:</Typography>
@@ -176,7 +174,6 @@ const BlogImageEdit: React.FC = () => {
           </Box>
         )}
 
-        {/* Yeni resimler */}
         {imagePreviews.length > 0 && (
           <Box mt={2}>
             <Typography variant="subtitle1">Yeni Şəkil Önizlemeleri:</Typography>

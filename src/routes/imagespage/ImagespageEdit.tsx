@@ -19,63 +19,65 @@ const ImagespageEdit: React.FC = () => {
   const [categoryImagePreview, setImagePreviewCategoryImage] = useState<string>("");
   const [images, setImages] = useState<File[]>([]);
   const [imagesPreviews, setImagesPreviews] = useState<string[]>([]);
+  const [existingImages, setExistingImages] = useState<string[]>([]); // Track existing images for deletion
+  const [imagesToDelete, setImagesToDelete] = useState<string[]>([]); // Track images to delete
 
   useEffect(() => {
     // Fetch existing data
     if (editid) {
-      axios.get(`${URL}/imagespage/${editid}`)
-        .then(response => {
+      axios
+        .get(`${URL}/imagespage/${editid}`)
+        .then((response) => {
           const data = response.data;
           setCategoryNameAz(data.categoryName.az || "");
           setCategoryNameEn(data.categoryName.en || "");
           setCategoryNameRu(data.categoryName.ru || "");
-          setImagePreviewCategoryImage(`https://ekol-server-1.onrender.com${data.categoryImg }`|| "");
+          setImagePreviewCategoryImage(`https://ekol-server-1.onrender.com${data.categoryImg}` || "");
+          setExistingImages(data.images.map((img: any) => img.image)); // Store existing images
           setImagesPreviews(data.images.map((img: any) => `https://ekol-server-1.onrender.com${img.image}`));
         })
-        .catch(error => {
+        .catch((error) => {
           console.error("Error fetching data:", error);
         });
     }
   }, [editid]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+ 
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
 
-    const formData = new FormData();
-    formData.append("categoryName_az", categoryName_az);
-    formData.append("categoryName_en", categoryName_en);
-    formData.append("categoryName_ru", categoryName_ru);
-    if (categoryImg) {
-      formData.append("imgback", categoryImg);
-    }
-    images.forEach((file) => {
-      formData.append("images", file);
+  const formData = new FormData();
+  formData.append("categoryName_az", categoryName_az);
+  formData.append("categoryName_en", categoryName_en);
+  formData.append("categoryName_ru", categoryName_ru);
+  if (categoryImg) {
+    formData.append("imgback", categoryImg);
+  }
+
+  // Send images to delete as JSON
+  formData.append("imagesToDelete", JSON.stringify(imagesToDelete));
+
+  images.forEach((file) => {
+    formData.append("images", file);
+  });
+
+  try {
+    const response = await axios.put(`${URL}/imagespage/${editid}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
     });
-
-    try {
-      const response = await axios.put(`${URL}/imagespage/${editid}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      if (response.data || response.status === 200) {
-        navigate("/imagespage");
-      }
-      setSnackbarMessage("Başarıyla güncellendi!");
-      setOpenSnackbar(true);
-    } catch (error) {
-      console.error(error);
-      setSnackbarMessage("Gözlemlenmeyen hata...");
-      setOpenSnackbar(true);
+    if (response.data || response.status === 200) {
+      navigate("/imagespage");
     }
-
-    if (!categoryName_az || !categoryName_en || !categoryName_ru) {
-      setSnackbarMessage("Bütün alanları doldurun.");
-      setOpenSnackbar(true);
-      return;
-    }
-  };
-
+    setSnackbarMessage("SUCCESS!");
+    setOpenSnackbar(true);
+  } catch (error) {
+    console.error(error);
+    setSnackbarMessage("Error...");
+    setOpenSnackbar(true);
+  }
+};
   const handleSnackbarClose = () => {
     setOpenSnackbar(false);
   };
@@ -95,15 +97,28 @@ const ImagespageEdit: React.FC = () => {
   const handleImagesChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       const filesArray = Array.from(event.target.files);
-      setImages(prevImages => [...prevImages, ...filesArray]);
-      const previewsArray = filesArray.map(file => {
+      setImages((prevImages) => [...prevImages, ...filesArray]);
+      const previewsArray = filesArray.map((file) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
-        return new Promise<string>(resolve => {
+        return new Promise<string>((resolve) => {
           reader.onloadend = () => resolve(reader.result as string);
         });
       });
-      Promise.all(previewsArray).then(previews => setImagesPreviews(prevPreviews => [...prevPreviews, ...previews]));
+      Promise.all(previewsArray).then((previews) =>
+        setImagesPreviews((prevPreviews) => [...prevPreviews, ...previews])
+      );
+    }
+  };
+
+  const handleRemoveImage = (index: number, imagePath: string) => {
+    // Remove the image from the state
+    setImages((prevImages) => prevImages.filter((_, i) => i !== index));
+    setImagesPreviews((prevPreviews) => prevPreviews.filter((_, i) => i !== index));
+  
+    // Add the deleted image to the imagesToDelete array if it's already saved in the database
+    if (existingImages.includes(imagePath)) {
+      setImagesToDelete((prevToDelete) => [...prevToDelete, imagePath]); 
     }
   };
 
@@ -165,7 +180,11 @@ const ImagespageEdit: React.FC = () => {
         {categoryImagePreview && (
           <Box mt={2}>
             <Typography variant="subtitle1">Kateqoriya Şəkili Önizlemesi:</Typography>
-            <img src={categoryImagePreview} alt="Preview" style={{ width: "80%", maxHeight: "400px", objectFit: "cover" }} />
+            <img
+              src={categoryImagePreview}
+              alt="Preview"
+              style={{ width: "80%", maxHeight: "400px", objectFit: "cover" }}
+            />
           </Box>
         )}
 
@@ -192,27 +211,33 @@ const ImagespageEdit: React.FC = () => {
             <Typography variant="subtitle1">Əlavə olunan şəkillər:</Typography>
             <Box display="flex" flexWrap="wrap">
               {imagesPreviews.map((preview, index) => (
-                <Box key={index} m={1}>
-                  <img src={preview} alt={`Preview ${index}`} style={{ width: "150px", height: "150px", objectFit: "cover" }} />
+                <Box key={index} m={1} position="relative">
+                  <img
+                    src={preview}
+                    alt={`Preview ${index}`}
+                    style={{ width: "150px", height: "150px", objectFit: "cover" }}
+                  />
+                  <Button
+                    variant="contained"
+                    color="error"
+                    size="small"
+                    onClick={() => handleRemoveImage(index, existingImages[index])}
+                    style={{ position: "absolute", top: 0, right: 0 }}>
+                    X
+                  </Button>
                 </Box>
               ))}
             </Box>
           </Box>
         )}
 
-        <Button
-          variant="contained"
-          color="success"
-          onClick={handleSubmit}
-          style={{ marginTop: "16px", marginLeft: "24px" }}>
-          Güncelle
+        <Button variant="contained" color="primary" fullWidth onClick={handleSubmit} style={{ marginTop: "16px" }}>
+          Yenilə
         </Button>
       </form>
 
-      <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleSnackbarClose}>
-        <Alert onClose={handleSnackbarClose} severity="info" sx={{ width: "100%", height: "50px" }}>
-          {snackbarMessage}
-        </Alert>
+      <Snackbar open={openSnackbar} autoHideDuration={4000} onClose={handleSnackbarClose}>
+        <Alert severity="success">{snackbarMessage}</Alert>
       </Snackbar>
     </div>
   );
