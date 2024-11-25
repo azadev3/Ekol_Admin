@@ -1,50 +1,47 @@
 import React, { useEffect, useState, ChangeEvent } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Button, Snackbar, Alert, Typography, Box } from "@mui/material";
+import { Button, Snackbar, Alert, Typography, Box, IconButton } from "@mui/material";
 import axios from "axios";
 import { URL } from "../../Base";
 import Title from "../../uitils/Title";
 import "react-quill/dist/quill.snow.css";
+import { FaDeleteLeft } from "react-icons/fa6";
 
 const OurWorksInnerImagesEdit: React.FC = () => {
-  const [ourworksdata, setOurworksdata] = React.useState<[]>([]);
-  const getOurworks = async () => {
-    const response = await axios.get(`${URL}/ourworksinnerfront`, {
-      headers: {
-        "Accept-Language": "az",
-      },
-    });
-    if (response.data) {
-      setOurworksdata(response.data);
-    }
-  };
-
-  React.useEffect(() => {
-    getOurworks();
-  }, []);
-
+  const [ourworksdata, setOurWorksData] = useState<[]>([]);
+  const [images, setImages] = useState<File[]>([]);
+  const [imagePreviews, setImagePreviews] = useState<string[]>([]);
+  const [selected_ourworks, setSelectedOurWorks] = useState<string>("");
+  const [existingImages, setExistingImages] = useState<string[]>([]); 
+  const [imagesToDelete, setImagesToDelete] = useState<string[]>([]); 
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
   const { editid } = useParams();
   const navigate = useNavigate();
 
-  const [openSnackbar, setOpenSnackbar] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState("");
+  useEffect(() => {
+    const getOurWorksImages = async () => {
+      const response = await axios.get(`${URL}/ourworksinnerfront`, {
+        headers: {
+          "Accept-Language": "az",
+        },
+      });
+      if (response.data) {
+        setOurWorksData(response.data);
+      }
+    };
+    getOurWorksImages();
+  }, []);
 
-  // State to handle multiple images and previews
-  const [images, setImages] = useState<File[]>([]);
-  const [imagePreviews, setImagePreviews] = useState<string[]>([]);
-  const [selected_ourworks, setSelectedOurWork] = useState<string>("");
-
-  // Fetch data
   useEffect(() => {
     if (editid) {
       const fetchData = async () => {
         try {
           const response = await axios.get(`${URL}/ourworksimages/${editid}`);
           const data = response.data;
-          // Assuming the response contains an array of images, update previews
           if (data.images && Array.isArray(data.images)) {
             const fetchedPreviews = data.images.map((img: string) => `https://ekol-server-1.onrender.com${img}`);
-            setImagePreviews(fetchedPreviews);
+            setExistingImages(fetchedPreviews);
           }
         } catch (error) {
           console.error("Error fetching data:", error);
@@ -53,29 +50,57 @@ const OurWorksInnerImagesEdit: React.FC = () => {
       fetchData();
     }
   }, [editid]);
+  const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      const newFiles = Array.from(event.target.files);
 
-  // UPDATE
+      setImages((prevImages) => [...prevImages, ...newFiles]);
+
+      const readerPromises = newFiles.map((file) => {
+        return new Promise<string>((resolve) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result as string);
+          reader.readAsDataURL(file);
+        });
+      });
+
+      Promise.all(readerPromises).then((previews) => {
+        setImagePreviews((prevPreviews) => [...prevPreviews, ...previews]);
+      });
+    }
+  };
+
+  const handleDeleteExistingImage = (image: string) => {
+    setExistingImages((prev) => prev.filter((img) => img !== image));
+    setImagesToDelete((prev) => [...prev, image]);
+  };
+
+  const handleChangeSelect = (event: ChangeEvent<HTMLSelectElement>) => {
+    setSelectedOurWorks(event.target.value);
+  };
+
+  const handleSnackbarClose = () => {
+    setOpenSnackbar(false);
+  };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+  
     if (!editid) return;
-
-    if (!selected_ourworks || !images) {
-      setOpenSnackbar(true);
-      setSnackbarMessage("Düzəlişdə bir xəta oldu yenidən yoxlayın");
-    }
-
+  
     const formData = new FormData();
-    images.forEach((image) => formData.append("imgourworks", image));
+    const updatedExistingImages = existingImages.filter((img) => !imagesToDelete.includes(img));
+  
+    images.forEach((image) => formData.append("newImages", image));
+    
+    formData.append("existingImages", JSON.stringify(updatedExistingImages));
+    
+    formData.append("deletedImages", JSON.stringify(imagesToDelete));
+  
     formData.append("selected_ourworks", selected_ourworks);
-
+  
     try {
-      const response = await axios.put(`${URL}/ourworksimages/${editid}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      console.log(response.data)
+      const response = await axios.put(`${URL}/ourworksimages/${editid}`, formData);
+      console.log(response.data);
       setSnackbarMessage("Düzəliş uğurludur!");
       setOpenSnackbar(true);
       navigate("/ourworksimages");
@@ -85,53 +110,23 @@ const OurWorksInnerImagesEdit: React.FC = () => {
       setOpenSnackbar(true);
     }
   };
-
-  const handleSnackbarClose = () => {
-    setOpenSnackbar(false);
-  };
-
-  // Handle multiple image selection and previews
-  const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files) {
-      const newFiles = Array.from(event.target.files);
-
-      setImages((prevImages) => [...prevImages, ...newFiles]);
-
-      const previews = newFiles.map((file) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        return new Promise<string>((resolve) => {
-          reader.onloadend = () => {
-            resolve(reader.result as string);
-          };
-        });
-      });
-
-      Promise.all(previews).then((previewsArray) => {
-        setImagePreviews((prevPreviews) => [...prevPreviews, ...previewsArray]);
-      });
-    }
-  };
-
-  const handleChangeSelect = (event: ChangeEvent<HTMLSelectElement>) => {
-    setSelectedOurWork(event.target.value);
-  };
+  
 
   return (
     <div className="component-edit">
       <Title description="Dəyişiklik et" title="Gördüyümüz işlər daxili" to="" />
 
       <form noValidate autoComplete="off" onSubmit={handleSubmit} style={{ marginTop: "16px" }}>
-        {/* upload multiple images */}
         <input
           accept="image/*"
           style={{ display: "none" }}
           id="upload-images"
           type="file"
-          name="imgourworks"
+          name="newImages"
           multiple
           onChange={handleImageChange}
         />
+
         <label htmlFor="upload-images">
           <Button
             variant="contained"
@@ -141,16 +136,53 @@ const OurWorksInnerImagesEdit: React.FC = () => {
           </Button>
         </label>
 
-        {/* Display previews of selected images */}
-        {imagePreviews.length > 0 && (
+        {existingImages.length > 0 && (
           <Box mt={2}>
-            <Typography variant="subtitle1">Şəkil Önizlemeleri:</Typography>
+            <Typography variant="subtitle1">Mevcut Şəkillər:</Typography>
             <Box
               mt={2}
               sx={{
                 display: "flex",
-                gap: "16px", // Space between images
-                flexWrap: "wrap", // Allows wrapping to next line if screen is too small
+                gap: "16px",
+                flexWrap: "wrap",
+              }}>
+              {existingImages.map((image, index) => (
+                <Box key={index} position="relative">
+                  <img
+                    src={image}
+                    alt={`Existing ${index + 1}`}
+                    style={{
+                      width: "150px",
+                      height: "150px",
+                      objectFit: "cover",
+                      borderRadius: "8px",
+                    }}
+                  />
+                  <IconButton
+                    onClick={() => handleDeleteExistingImage(image)}
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      right: 0,
+                      backgroundColor: "white",
+                    }}>
+                    <FaDeleteLeft />
+                  </IconButton>
+                </Box>
+              ))}
+            </Box>
+          </Box>
+        )}
+
+        {imagePreviews.length > 0 && (
+          <Box mt={2}>
+            <Typography variant="subtitle1">Yeni Şəkil Önizlemeleri:</Typography>
+            <Box
+              mt={2}
+              sx={{
+                display: "flex",
+                gap: "16px",
+                flexWrap: "wrap",
               }}>
               {imagePreviews.map((preview, index) => (
                 <Box key={index}>
@@ -161,7 +193,7 @@ const OurWorksInnerImagesEdit: React.FC = () => {
                       width: "150px",
                       height: "150px",
                       objectFit: "cover",
-                      borderRadius: "8px", // Rounded corners for images
+                      borderRadius: "8px",
                     }}
                   />
                 </Box>
@@ -177,7 +209,7 @@ const OurWorksInnerImagesEdit: React.FC = () => {
           name="selected_ourworks"
           style={{ width: "100%", maxWidth: "50%", height: "46px", borderRadius: "4px", margin: "24px 0px" }}>
           <option value="">Bu şəkillər hansı xəbərin tərkibində olacaq?</option>
-          {ourworksdata ? ourworksdata?.map((ourworks: any) => <option value={ourworks?._id || ""}>{ourworks?.title || ""}</option>) : ""}
+          {ourworksdata ? ourworksdata?.map((work: any) => <option value={work?._id || ""}>{work?.title || ""}</option>) : ""}
         </select>
 
         <Button type="submit" variant="contained" color="success" style={{ marginTop: "16px", marginLeft: "24px" }}>
@@ -185,7 +217,6 @@ const OurWorksInnerImagesEdit: React.FC = () => {
         </Button>
       </form>
 
-      {/* Snackbar for displaying messages */}
       <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleSnackbarClose}>
         <Alert onClose={handleSnackbarClose} severity="info" sx={{ width: "100%", height: "50px" }}>
           {snackbarMessage}

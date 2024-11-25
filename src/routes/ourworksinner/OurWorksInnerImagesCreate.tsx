@@ -6,20 +6,20 @@ import { URL } from "../../Base";
 import { useNavigate } from "react-router-dom";
 
 const OurWorksInnerImagesCreate: React.FC = () => {
-  const [ourworksdata, setOurworksdata] = React.useState<[]>([]);
-  const getOurworks = async () => {
+  const [ourworksdata, setOurWorksData] = React.useState<[]>([]);
+  const getOurWorksInner = async () => {
     const response = await axios.get(`${URL}/ourworksinnerfront`, {
       headers: {
         "Accept-Language": "az",
       },
     });
     if (response.data) {
-      setOurworksdata(response.data);
+      setOurWorksData(response.data);
     }
   };
 
   React.useEffect(() => {
-    getOurworks();
+    getOurWorksInner();
   }, []);
 
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ const OurWorksInnerImagesCreate: React.FC = () => {
   const [snackbarMessage, setSnackbarMessage] = React.useState("");
   const [images, setImages] = useState<File[]>([]);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
-  const [selected_ourworks, setSelectedOurWork] = useState<string>("");
+  const [selected_ourworks, setSelectedOurWorks] = useState<string>("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,7 +40,7 @@ const OurWorksInnerImagesCreate: React.FC = () => {
     }
 
     const formData = new FormData();
-    images.forEach((image) => formData.append("imgourworks", image));
+    images.forEach((image) => formData.append("newImages", image));
     formData.append("selected_ourworks", selected_ourworks);
     try {
       const response = await axios.post(`${URL}/ourworksimages`, formData, {
@@ -87,13 +87,13 @@ const OurWorksInnerImagesCreate: React.FC = () => {
   };
 
   const handleChangeSelect = (event: ChangeEvent<HTMLSelectElement>) => {
-    setSelectedOurWork(event.target.value);
+    setSelectedOurWorks(event.target.value);
     console.log(event.target.value);
   };
 
   return (
     <div className="component-create">
-      <Title description="Əlavə et" title="Hero" to="" />
+      <Title description="Əlavə et" title="Gördüyümüz işlər şəkil əlavə et" to="" />
 
       <form noValidate autoComplete="off" style={{ marginTop: "16px" }}>
         {/* upload multiple images */}
@@ -109,7 +109,7 @@ const OurWorksInnerImagesCreate: React.FC = () => {
             style={{ display: "none" }}
             id="upload-images"
             type="file"
-            name="imgourworks"
+            name="newImages"
             multiple
             onChange={handleImageChange}
           />
@@ -159,8 +159,8 @@ const OurWorksInnerImagesCreate: React.FC = () => {
             style={{ width: "100%", maxWidth: "50%", height: "46px", borderRadius: "4px", margin: "24px 0px" }}>
             <option value="">Bu şəkillər hansı xəbərin tərkibində olacaq?</option>
             {ourworksdata
-              ? ourworksdata?.map((ourworks: any) => (
-                  <option value={ourworks?._id || ""}>{ourworks?.title || ""}</option>
+              ? ourworksdata?.map((ourworksinner: any) => (
+                  <option value={ourworksinner?._id || ""}>{ourworksinner?.title || ""}</option>
                 ))
               : ""}
           </select>
