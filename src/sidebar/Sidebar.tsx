@@ -14,6 +14,8 @@ import { GoInfo } from "react-icons/go";
 import { AiOutlineRise } from "react-icons/ai";
 import { GiMovementSensor, GiReceiveMoney } from "react-icons/gi";
 import { GoEyeClosed } from "react-icons/go";
+import { MdOutlineContactPage } from "react-icons/md";
+import { IoIosArrowDropdown } from "react-icons/io";
 
 export const SidebarLinkLengthState = atom<string>({
   key: "lengthStateKeySidebarLink",
@@ -189,9 +191,12 @@ const Sidebarr: React.FC = () => {
         linkIcon={<GoEyeClosed />}
         linkTitle="Gizlət / Göstər"
         isDropdown={true}
-        dropdownItem={[
-          { title: "Rəhbərlik", to: "/hidden-rehberlik" },
-        ]}
+        dropdownItem={[{ title: "Rəhbərlik", to: "/hidden-rehberlik" }]}
+      />
+      <SidebarLinkWithDropdown
+        to="/page"
+        linkTitle="Sayta Dinamik Səhifə Əlavə Et"
+        linkIcon={<MdOutlineContactPage />}
       />
     </aside>
   );

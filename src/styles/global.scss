@@ -6,6 +6,30 @@
   font-family: "Inter", sans-serif;
 }
 
+.math-process {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  margin: 24px 0;
+  .custom-ql {
+    user-select: none;
+    padding: 12px;
+    border: 1px solid #cecece90;
+    background-color: rgb(216, 216, 216);
+    border-radius: 7px;
+    color: rgb(26, 25, 25);
+    font-weight: 700;
+    cursor: pointer;
+    transition: 80ms ease;
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+}
+
 .toggle-status {
   height: 30px;
   display: flex;

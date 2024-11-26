@@ -132,6 +132,9 @@ import StructureShow from "../routes/structure/StructureShow";
 import StructureCreate from "../routes/structure/StructureCreate";
 import StructureEdit from "../routes/structure/StructureEdit";
 import BlogImageEdit from "../routes/blog/BlogImageEdit";
+import PageShow from "../routes/dynamicroute/PageShow";
+import PageCreate from "../routes/dynamicroute/PageCreate";
+import PageEdit from "../routes/dynamicroute/PageEdit";
 
 const Content: React.FC = () => {
   const toggleSidebar = useRecoilValue(ToggleSidebarState);
@@ -345,6 +348,11 @@ const Content: React.FC = () => {
         <Route path="/toolsinnerimages/:editid" element={<ToolsInnerImagesEdit />} />
         {/* Show - hidden */}
         <Route path="/hidden-rehberlik" element={<HiddenRehberlik />} />
+
+        {/* DYNAMIC PAGES */}
+        <Route path="/page" element={<PageShow />} />
+        <Route path="/page/create" element={<PageCreate />} />
+        <Route path="/page/:editid" element={<PageEdit />} />
       </Routes>
     </main>
   );
