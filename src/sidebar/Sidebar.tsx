@@ -15,7 +15,6 @@ import { AiOutlineRise } from "react-icons/ai";
 import { GiMovementSensor, GiReceiveMoney } from "react-icons/gi";
 import { GoEyeClosed } from "react-icons/go";
 import { MdOutlineContactPage } from "react-icons/md";
-import { IoIosArrowDropdown } from "react-icons/io";
 
 export const SidebarLinkLengthState = atom<string>({
   key: "lengthStateKeySidebarLink",

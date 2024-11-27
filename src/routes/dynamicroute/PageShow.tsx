@@ -19,6 +19,28 @@ const PageShow: React.FC = () => {
 
   const navigate = useNavigate();
 
+  const [status, setStatus] = React.useState<{ [key: string]: boolean }>({});
+
+  
+  const toggleStatus = async (id: string | number) => {
+    const newStatus = !status[id];
+    setStatus((prevStatus) => ({
+      ...prevStatus,
+      [id]: newStatus,
+    }));
+
+    try {
+      await axios.put(`${URL}/page/status/${id}`, { status: newStatus });
+      fetchData();
+    } catch (error) {
+      console.error("Status güncellenirken hata oluştu:", error);
+      setStatus((prevStatus) => ({
+        ...prevStatus,
+        [id]: !newStatus,
+      }));
+    }
+  };
+
   // COLUMNS
   const columns: GridColDef[] = [
     { field: "dropdown_name", headerName: "Dropdown adı", width: 150 },
@@ -34,7 +56,7 @@ const PageShow: React.FC = () => {
     {
       field: "actions",
       headerName: "Actions",
-      width: 200,
+      width: 350,
       renderCell: (params) => (
         <div className="buttons-grid">
           <button
@@ -49,6 +71,9 @@ const PageShow: React.FC = () => {
           >
             Sil
           </button>
+          <div className="toggle-status" onClick={() => toggleStatus(params?.row?.id)}>
+            <span>{status[params.row.id] ? "Deaktiv et" : "Aktiv et"}</span>
+          </div>
         </div>
       ),
     },
@@ -85,6 +110,7 @@ const PageShow: React.FC = () => {
         description_az: item.description?.az || "",
         description_en: item.description?.en || "",
         description_ru: item.description?.ru || "",
+        status: item.status,
       }));
       setRows(rowsWithId);
     } catch (error) {
