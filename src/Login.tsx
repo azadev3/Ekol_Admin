@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent } from "react";
+import React, { FormEvent } from "react";
 import "./styles/Login.scss";
 import { MdOutlineMailOutline, MdOutlinePassword } from "react-icons/md";
 import axios from "axios";
@@ -12,11 +12,11 @@ import { useRecoilState } from "recoil";
 const Login: React.FC = () => {
   const [_, setAuth] = useRecoilState(AuthState);
 
-  const [selectedOption, setSelectedOption] = React.useState<string>("");
-  const handleChangeSelectOption = (e: ChangeEvent<HTMLSelectElement>) => {
-    const { value } = e.target;
-    setSelectedOption(value);
-  };
+  const [selectedOption, __] = React.useState<string>("");
+  // const handleChangeSelectOption = (e: ChangeEvent<HTMLSelectElement>) => {
+  //   const { value } = e.target;
+  //   setSelectedOption(value);
+  // };
   const [isAdmin, setIsAdmin] = React.useState<boolean>(false);
 
   React.useEffect(() => {
