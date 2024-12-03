@@ -12,22 +12,22 @@ import { useRecoilState } from "recoil";
 const Login: React.FC = () => {
   const [_, setAuth] = useRecoilState(AuthState);
 
-  const [selectedOption, __] = React.useState<string>("");
+  // const [selectedOption, __] = React.useState<string>("");
   // const handleChangeSelectOption = (e: ChangeEvent<HTMLSelectElement>) => {
   //   const { value } = e.target;
   //   setSelectedOption(value);
   // };
-  const [isAdmin, setIsAdmin] = React.useState<boolean>(false);
+  // const [isAdmin, setIsAdmin] = React.useState<boolean>(false);
 
-  React.useEffect(() => {
-    if (selectedOption && selectedOption === "admin") {
-      setIsAdmin(true);
-      localStorage.setItem("selected_role_for_login", selectedOption);
-    } else if (selectedOption && selectedOption === "user") {
-      setIsAdmin(false);
-      localStorage.setItem("selected_role_for_login", selectedOption);
-    }
-  }, [isAdmin, selectedOption]);
+  // React.useEffect(() => {
+  //   if (selectedOption && selectedOption === "admin") {
+  //     setIsAdmin(true);
+  //     localStorage.setItem("selected_role_for_login", selectedOption);
+  //   } else if (selectedOption && selectedOption === "user") {
+  //     setIsAdmin(false);
+  //     localStorage.setItem("selected_role_for_login", selectedOption);
+  //   }
+  // }, [isAdmin, selectedOption]);
 
   const [email, setEmail] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
@@ -41,66 +41,36 @@ const Login: React.FC = () => {
         password: password,
       };
 
-      const apiEndpoint = isAdmin ? "/login" : "/login_new_user";
+      const apiEndpoint = "/login_new_user";
 
       const response = await axios.post(`${URL}${apiEndpoint}`, values);
 
-      if (isAdmin) {
-        if (response.data && response.status === 200) {
-          console.log(response.data);
-          toast.success("Giriş uğurludur!", {
-            position: "top-center",
-          });
+      if (response.data && response.status === 200) {
+        console.log(response.data);
+        toast.success("Giriş uğurludur!", {
+          position: "top-center",
+        });
 
-          localStorage.setItem("tokenforadmin", response.data?.token);
-          localStorage.setItem("usermailforadmin", response.data?.user?.email);
-          localStorage.setItem("useridforadmin", response.data?.user?.id);
-          setAuth(true);
-          navigate("/", { replace: true });
-        } else if (response.status === 402) {
-          toast.error("Email və ya şifrə yanlışdır", {
-            position: "top-center",
-          });
-          console.log(response.data);
-        } else if (response.status === 401) {
-          toast.error("İstifadəçi tapılmadı", {
-            position: "top-center",
-          });
-          console.log(response.data);
-        } else {
-          toast.warning("Bir problem oldu. Daha sonra yenidən yoxlayın", {
-            position: "top-center",
-          });
-          console.log(response.data);
-        }
+        localStorage.setItem("tokenforadmin", response.data?.token);
+        localStorage.setItem("usermailforadmin", response.data?.user?.email);
+        localStorage.setItem("useridforadmin", response.data?.user?._id);
+        setAuth(true);
+        navigate("/", { replace: true });
+      } else if (response.status === 401) {
+        toast.error("Email və ya şifrə yanlışdır", {
+          position: "top-center",
+        });
+        console.log(response.data);
+      } else if (response.status === 404) {
+        toast.error("İstifadəçi tapılmadı", {
+          position: "top-center",
+        });
+        console.log(response.data);
       } else {
-        if (response.data && response.status === 200) {
-          console.log(response.data);
-          toast.success("Giriş uğurludur!", {
-            position: "top-center",
-          });
-
-          localStorage.setItem("tokenforadmin", response.data?.token);
-          localStorage.setItem("usermailforadmin", response.data?.user?.email);
-          localStorage.setItem("useridforadmin", response.data?.user?.id);
-          setAuth(true);
-          navigate("/", { replace: true });
-        } else if (response.status === 401) {
-          toast.error("Email və ya şifrə yanlışdır", {
-            position: "top-center",
-          });
-          console.log(response.data);
-        } else if (response.status === 404) {
-          toast.error("İstifadəçi tapılmadı", {
-            position: "top-center",
-          });
-          console.log(response.data);
-        } else {
-          toast.warning("Bir problem oldu. Daha sonra yenidən yoxlayın", {
-            position: "top-center",
-          });
-          console.log(response.data);
-        }
+        toast.warning("Bir problem oldu. Daha sonra yenidən yoxlayın", {
+          position: "top-center",
+        });
+        console.log(response.data);
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -125,7 +95,7 @@ const Login: React.FC = () => {
   return (
     <div className="login-page">
       <ToastContainer transition={Zoom} autoClose={1000} pauseOnHover={false} />
-      <form className={isAdmin ? "" : "changed"} method="POST" onSubmit={handleSubmit}>
+      <form  method="POST" onSubmit={handleSubmit}>
         <img src="/166.svg" className="logo" alt="166" title="166Tech" />
         <div className="title-form">
           <h1>Sistemə giriş</h1>
@@ -134,7 +104,7 @@ const Login: React.FC = () => {
 
         <div className="inputs">
           <section className="input-field">
-            <label htmlFor="email">{isAdmin ? "Email:" : "İstifadəçi Emailiniz:"}</label>
+            <label htmlFor="email">{"Email:"}</label>
             <div className="input">
               <input
                 name="email"
@@ -148,7 +118,7 @@ const Login: React.FC = () => {
             </div>
           </section>
           <section className="input-field">
-            <label htmlFor="password">{isAdmin ? "Şifrə:" : "İstifadəçi Şifrəniz"}</label>
+            <label htmlFor="password">{"Şifrə:"}</label>
             <div className="input">
               <input
                 name="password"
