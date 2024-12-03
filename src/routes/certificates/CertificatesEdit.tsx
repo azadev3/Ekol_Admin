@@ -7,6 +7,7 @@ import Title from "../../uitils/Title";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { imageHandler } from "../../imageHandler";
+import { Option, OptionWithFormData, toastMsg } from "../../App";
 
 const CertificatesEdit: React.FC = () => {
   const modules = {
@@ -57,7 +58,7 @@ const CertificatesEdit: React.FC = () => {
     if (editid) {
       const fetchData = async () => {
         try {
-          const response = await axios.get(`${URL}/certificates/${editid}`);
+          const response = await axios.get(`${URL}/certificates/${editid}`, Option());
           const data = response.data;
           setTitleAz(data.title.az || "");
           setTitleEn(data.title.en || "");
@@ -88,17 +89,14 @@ const CertificatesEdit: React.FC = () => {
     formData.append("description_ru", description_ru);
 
     try {
-      const response = await axios.put(`${URL}/certificates/${editid}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.put(`${URL}/certificates/${editid}`, formData, OptionWithFormData());
       console.log(response.data);
       setSnackbarMessage("Düzəliş uğurludur!");
       setOpenSnackbar(true);
       navigate("/certificates");
     } catch (error) {
       console.error(error);
+      toastMsg();
       setSnackbarMessage("Düzəlişdə bir xəta oldu yenidən yoxlayın");
       setOpenSnackbar(true);
     }

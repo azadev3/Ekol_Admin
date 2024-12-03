@@ -6,6 +6,7 @@ import { URL } from "../../Base";
 import Title from "../../uitils/Title";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { Option, OptionWithFormData, toastMsg } from "../../App";
 
 const ServicesPageEdit: React.FC = () => {
   const modules = {
@@ -41,6 +42,9 @@ const ServicesPageEdit: React.FC = () => {
   const [title_az, setTitleAz] = useState("");
   const [title_en, setTitleEn] = useState("");
   const [title_ru, setTitleRu] = useState("");
+  const [slogan_az, setSloganAz] = useState("");
+  const [slogan_en, setSloganEn] = useState("");
+  const [slogan_ru, setSloganRu] = useState("");
   const [description_az, setDescriptionAz] = useState("");
   const [description_en, setDescriptionEn] = useState("");
   const [description_ru, setDescriptionRu] = useState("");
@@ -52,11 +56,14 @@ const ServicesPageEdit: React.FC = () => {
     if (editid) {
       const fetchData = async () => {
         try {
-          const response = await axios.get(`${URL}/servicespage/${editid}`);
+          const response = await axios.get(`${URL}/servicespage/${editid}`, Option());
           const data = response.data;
           setTitleAz(data.title.az || "");
           setTitleEn(data.title.en || "");
           setTitleRu(data.title.ru || "");
+          setSloganAz(data.slogan.az || "");
+          setSloganEn(data.slogan.en || "");
+          setSloganRu(data.slogan.ru || "");
           setDescriptionAz(data.description.az || "");
           setDescriptionEn(data.description.en || "");
           setDescriptionRu(data.description.ru || "");
@@ -79,17 +86,16 @@ const ServicesPageEdit: React.FC = () => {
     formData.append("title_az", title_az);
     formData.append("title_en", title_en);
     formData.append("title_ru", title_ru);
+    formData.append("slogan_az", slogan_az);
+    formData.append("slogan_en", slogan_en);
+    formData.append("slogan_ru", slogan_ru);
     formData.append("description_az", description_az);
     formData.append("description_en", description_en);
     formData.append("description_ru", description_ru);
     formData.append("imgback", image ? image : "");
 
     try {
-      const response = await axios.put(`${URL}/servicespage/${editid}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.put(`${URL}/servicespage/${editid}`, formData, OptionWithFormData());
       console.log(response.data);
       setSnackbarMessage("Düzəliş uğurludur!");
       setOpenSnackbar(true);
@@ -98,6 +104,7 @@ const ServicesPageEdit: React.FC = () => {
       console.error(error);
       setSnackbarMessage("Düzəlişdə bir xəta oldu yenidən yoxlayın");
       setOpenSnackbar(true);
+      toastMsg();
     }
   };
 
@@ -150,6 +157,34 @@ const ServicesPageEdit: React.FC = () => {
           value={title_ru}
           onChange={(e: ChangeEvent<HTMLInputElement>) => setTitleRu(e.target.value)}
           name="title_ru"
+        />
+
+        <TextField
+          label="Önizləmə mətni(AZ)"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={slogan_az}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => setSloganAz(e.target.value)}
+          name="slogan_az"
+        />
+        <TextField
+          label="Önizləmə mətni(EN)"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={slogan_en}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => setSloganEn(e.target.value)}
+          name="slogan_en"
+        />
+        <TextField
+          label="Önizləmə mətni(RU)"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={slogan_ru}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => setSloganRu(e.target.value)}
+          name="slogan_ru"
         />
 
         <Typography variant="h6" gutterBottom>

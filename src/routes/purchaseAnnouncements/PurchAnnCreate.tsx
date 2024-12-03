@@ -6,6 +6,7 @@ import { URL } from "../../Base";
 import { useNavigate } from "react-router-dom";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { OptionWithFormData, toastMsg } from "../../App";
 
 const modules = {
   toolbar: [
@@ -60,11 +61,7 @@ const PurchAnnCreate: React.FC = () => {
     formData.append("pdf", pdf ? pdf : "");
 
     try {
-      const response = await axios.post(`${URL}/purchaseannouncement`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(`${URL}/purchaseannouncement`, formData, OptionWithFormData());
       console.log(response.data);
       if (response.data || response.status === 200) {
         navigate("/purchaseannouncement");
@@ -73,6 +70,7 @@ const PurchAnnCreate: React.FC = () => {
       }
     } catch (error) {
       console.error(error);
+      toastMsg();
       setSnackbarMessage("GÖZLƏNİLMƏZ XƏTA...");
       setOpenSnackbar(true);
     }

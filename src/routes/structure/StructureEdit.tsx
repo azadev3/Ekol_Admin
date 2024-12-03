@@ -4,6 +4,7 @@ import { Button, Snackbar, Alert, Typography, Box } from "@mui/material";
 import axios from "axios";
 import { URL } from "../../Base";
 import Title from "../../uitils/Title";
+import { Option, OptionWithFormData, toastMsg } from "../../App";
 
 const StructureEdit: React.FC = () => {
   const { editid } = useParams();
@@ -20,7 +21,7 @@ const StructureEdit: React.FC = () => {
     if (editid) {
       const fetchData = async () => {
         try {
-          const response = await axios.get(`${URL}/structure/${editid}`);
+          const response = await axios.get(`${URL}/structure/${editid}`, Option());
           const data = response.data;
           setImagePreview(`https://ekol-server-1.onrender.com${data.image}` || "");
         } catch (error) {
@@ -43,17 +44,14 @@ const StructureEdit: React.FC = () => {
     }
 
     try {
-      const response = await axios.put(`${URL}/structure/${editid}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.put(`${URL}/structure/${editid}`, formData, OptionWithFormData());
       console.log(response.data);
       setSnackbarMessage("Düzəliş uğurludur!");
       setOpenSnackbar(true);
       navigate("/structure");
     } catch (error) {
       console.error(error);
+      toastMsg();
       setSnackbarMessage("Düzəlişdə bir xəta oldu yenidən yoxlayın");
       setOpenSnackbar(true);
     }

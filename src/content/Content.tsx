@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import HeroShow from "../routes/hero/HeroShow";
 import HeroCreate from "../routes/hero/HeroCreate";
 import HeroEdit from "../routes/hero/HeroEdit";
@@ -135,6 +135,10 @@ import BlogImageEdit from "../routes/blog/BlogImageEdit";
 import PageShow from "../routes/dynamicroute/PageShow";
 import PageCreate from "../routes/dynamicroute/PageCreate";
 import PageEdit from "../routes/dynamicroute/PageEdit";
+import { FaAngleDown } from "react-icons/fa6";
+import CreateUser from "../permissionsroutes/users/CreateUser";
+import CreateRole from "../permissionsroutes/roles/CreateRole";
+import CreatePermission from "../permissionsroutes/permissions/CreatePermission";
 
 const Content: React.FC = () => {
   const toggleSidebar = useRecoilValue(ToggleSidebarState);
@@ -142,6 +146,16 @@ const Content: React.FC = () => {
   const email = localStorage.getItem("usermailforadmin");
 
   const [darkmode, setDarkmode] = useRecoilState(DarkModeState);
+
+  const [toggleNav, setToggleNav] = React.useState<boolean>(false);
+
+  const navigate = useNavigate();
+
+  const [modalLogout, setModalLogout] = React.useState<boolean>(false);
+
+  const handleLogoutModal = () => {
+    setModalLogout((prev) => !prev);
+  };
 
   return (
     <main className="content" style={{ width: toggleSidebar ? "95%" : "" }}>
@@ -155,8 +169,24 @@ const Content: React.FC = () => {
           <div className="name-and-surname">
             <span>{email ? email : "example@gmail.com"}</span>
           </div>
-          <div className="profile">
+          <div className="profile" onClick={handleLogoutModal}>
             <FaRegUser className="user" />
+          </div>
+          <div className={`logout-modal ${modalLogout ? "actived" : ""}`}>
+            <button
+              type="button"
+              onClick={() => {
+                localStorage.clear();
+                setModalLogout(false);
+
+                const timeout = setTimeout(() => {
+                  window.location.reload();
+                }, 1000);
+
+                return () => clearTimeout(timeout);
+              }}>
+              Çıxış
+            </button>
           </div>
           <div
             className="mode"
@@ -164,6 +194,41 @@ const Content: React.FC = () => {
               setDarkmode((prevMode) => !prevMode);
             }}>
             {darkmode ? <IoSunnyOutline className={`sun ${darkmode ? "active" : ""}`} /> : <IoMoon className="moon" />}
+          </div>
+
+          <div className="navbar-for-permissions" style={{
+            display: email ? email === "admin@gmail.com" ? "flex" : "none" : ""
+          }}>
+            <div className="nav" onClick={() => setToggleNav((prev) => !prev)}>
+              <span>İdarəçilik</span>
+              <FaAngleDown className="down" style={{ transform: toggleNav ? "rotate(180deg)" : "" }} />
+            </div>
+            <div className={`navbar-sub ${toggleNav ? "active" : ""}`}>
+              <li
+                className="item-nav"
+                onClick={() => {
+                  setToggleNav(false);
+                  navigate("/create_user", { replace: true });
+                }}>
+                İstifadəçilər
+              </li>
+              <li
+                className="item-nav"
+                onClick={() => {
+                  setToggleNav(false);
+                  navigate("/create_role", { replace: true });
+                }}>
+                Rollar
+              </li>
+              <li
+                className="item-nav"
+                onClick={() => {
+                  setToggleNav(false);
+                  navigate("/create_permission", { replace: true });
+                }}>
+                İcazələr
+              </li>
+            </div>
           </div>
         </div>
       </header>
@@ -353,6 +418,11 @@ const Content: React.FC = () => {
         <Route path="/page" element={<PageShow />} />
         <Route path="/page/create" element={<PageCreate />} />
         <Route path="/page/:editid" element={<PageEdit />} />
+
+        {/* ROUTES FOR PERMISSIONS, ROLES AND USERS */}
+        <Route path="/create_user" element={<CreateUser />} />
+        <Route path="/create_role" element={<CreateRole />} />
+        <Route path="/create_permission" element={<CreatePermission />} />
       </Routes>
     </main>
   );

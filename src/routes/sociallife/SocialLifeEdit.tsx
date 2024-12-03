@@ -7,6 +7,7 @@ import Title from "../../uitils/Title";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { imageHandler } from "../../imageHandler";
+import { Option, OptionWithFormData, toastMsg } from "../../App";
 
 const modules = {
   toolbar: {
@@ -42,7 +43,7 @@ const SocialLifeEdit: React.FC = () => {
     if (editid) {
       const fetchData = async () => {
         try {
-          const response = await axios.get(`${URL}/sociallife/${editid}`);
+          const response = await axios.get(`${URL}/sociallife/${editid}`, Option());
           const data = response.data;
           setDescriptionAz(data.description.az || "");
           setDescriptionEn(data.description.en || "");
@@ -67,17 +68,14 @@ const SocialLifeEdit: React.FC = () => {
     formData.append("description_ru", description_ru);
 
     try {
-      const response = await axios.put(`${URL}/sociallife/${editid}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.put(`${URL}/sociallife/${editid}`, formData, OptionWithFormData());
       console.log(response.data);
       setSnackbarMessage("Düzəliş uğurludur!");
       setOpenSnackbar(true);
       navigate("/sociallife");
     } catch (error) {
       console.error(error);
+      toastMsg();
       setSnackbarMessage("Düzəlişdə bir xəta oldu yenidən yoxlayın");
       setOpenSnackbar(true);
     }

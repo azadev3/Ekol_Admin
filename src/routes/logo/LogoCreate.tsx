@@ -4,6 +4,7 @@ import { Button, Snackbar, Alert, Typography, Box } from "@mui/material";
 import axios from "axios";
 import { URL } from "../../Base";
 import { useNavigate } from "react-router-dom";
+import { OptionWithFormData, toastMsg } from "../../App";
 
 const LogoCreate: React.FC = () => {
   const navigate = useNavigate();
@@ -23,11 +24,7 @@ const LogoCreate: React.FC = () => {
     }
 
     try {
-      const response = await axios.post(`${URL}/logo`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(`${URL}/logo`, formData, OptionWithFormData());
       if (response.data || response.status === 200) {
         navigate("/logo");
       }
@@ -37,6 +34,7 @@ const LogoCreate: React.FC = () => {
       console.error(error);
       setSnackbarMessage("GÖZLƏNİLMƏZ XƏTA...");
       setOpenSnackbar(true);
+      toastMsg();
     }
 
     if (!image) {

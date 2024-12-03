@@ -4,6 +4,7 @@ import { Button, Snackbar, Alert, TextField } from "@mui/material";
 import axios from "axios";
 import { URL } from "../../Base";
 import { useNavigate } from "react-router-dom";
+import { Option, toastMsg } from "../../App";
 
 const TranslatesCreate: React.FC = () => {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ const TranslatesCreate: React.FC = () => {
     };
 
     try {
-      const response = await axios.post(`${URL}/translates`, data);
+      const response = await axios.post(`${URL}/translates`, data, Option());
       if (response.data || response.status === 200) {
         navigate("/translates");
       }
@@ -35,6 +36,7 @@ const TranslatesCreate: React.FC = () => {
       setOpenSnackbar(true);
     } catch (error) {
       console.error(error);
+      toastMsg();
       setSnackbarMessage("GÖZLƏNİLMƏZ XƏTA...");
       setOpenSnackbar(true);
     }

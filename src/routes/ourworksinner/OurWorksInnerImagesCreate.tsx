@@ -4,6 +4,7 @@ import { Button, Snackbar, Alert, Typography, Box } from "@mui/material";
 import axios from "axios";
 import { URL } from "../../Base";
 import { useNavigate } from "react-router-dom";
+import { OptionWithFormData, toastMsg } from "../../App";
 
 const OurWorksInnerImagesCreate: React.FC = () => {
   const [ourworksdata, setOurWorksData] = React.useState<[]>([]);
@@ -43,11 +44,7 @@ const OurWorksInnerImagesCreate: React.FC = () => {
     images.forEach((image) => formData.append("newImages", image));
     formData.append("selected_ourworks", selected_ourworks);
     try {
-      const response = await axios.post(`${URL}/ourworksimages`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(`${URL}/ourworksimages`, formData, OptionWithFormData());
       if (response.data || response.status === 200) {
         navigate("/ourworksimages");
       }
@@ -55,6 +52,7 @@ const OurWorksInnerImagesCreate: React.FC = () => {
       setOpenSnackbar(true);
     } catch (error) {
       console.error(error);
+      toastMsg();
       setSnackbarMessage("GÖZLƏNİLMƏZ XƏTA...");
       setOpenSnackbar(true);
     }

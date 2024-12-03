@@ -4,6 +4,7 @@ import { TextField, Button, Snackbar, Alert, Typography, Box } from "@mui/materi
 import axios from "axios";
 import { URL } from "../../Base";
 import { useNavigate } from "react-router-dom";
+import { OptionWithFormData, toastMsg } from "../../App";
 
 const ImagespageCreate: React.FC = () => {
   const navigate = useNavigate();
@@ -34,11 +35,7 @@ const ImagespageCreate: React.FC = () => {
     });
 
     try {
-      const response = await axios.post(`${URL}/imagespage`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(`${URL}/imagespage`, formData, OptionWithFormData());
       if (response.data || response.status === 200) {
         navigate("/imagespage");
       }
@@ -48,6 +45,7 @@ const ImagespageCreate: React.FC = () => {
       console.error(error);
       setSnackbarMessage("GÖZLƏNİLMƏZ XƏTA...");
       setOpenSnackbar(true);
+      toastMsg();
     }
 
     if (!categoryName_az || !categoryName_en || !categoryName_ru || !categoryImg) {

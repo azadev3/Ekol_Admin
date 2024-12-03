@@ -4,6 +4,7 @@ import { TextField, Button, Snackbar, Alert, Typography, Box } from "@mui/materi
 import axios from "axios";
 import { URL } from "../../Base";
 import { useNavigate, useParams } from "react-router-dom";
+import { Option, OptionWithFormData, toastMsg } from "../../App";
 
 const ImagespageEdit: React.FC = () => {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ const ImagespageEdit: React.FC = () => {
     // Fetch existing data
     if (editid) {
       axios
-        .get(`${URL}/imagespage/${editid}`)
+        .get(`${URL}/imagespage/${editid}`, Option())
         .then((response) => {
           const data = response.data;
           setCategoryNameAz(data.categoryName.az || "");
@@ -62,11 +63,7 @@ const handleSubmit = async (e: React.FormEvent) => {
   });
 
   try {
-    const response = await axios.put(`${URL}/imagespage/${editid}`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    const response = await axios.put(`${URL}/imagespage/${editid}`, formData, OptionWithFormData());
     if (response.data || response.status === 200) {
       navigate("/imagespage");
     }
@@ -74,6 +71,7 @@ const handleSubmit = async (e: React.FormEvent) => {
     setOpenSnackbar(true);
   } catch (error) {
     console.error(error);
+    toastMsg();
     setSnackbarMessage("Error...");
     setOpenSnackbar(true);
   }

@@ -4,6 +4,7 @@ import { TextField, Button, Snackbar, Alert } from "@mui/material";
 import axios from "axios";
 import { URL } from "../../Base";
 import { useNavigate } from "react-router-dom";
+import { OptionWithFormData, toastMsg } from "../../App";
 
 const RecruitmentCreate: React.FC = () => {
   const navigate = useNavigate();
@@ -32,11 +33,7 @@ const RecruitmentCreate: React.FC = () => {
     formData.append("order", order);
     
     try {
-      const response = await axios.post(`${URL}/recruitmentprocess`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(`${URL}/recruitmentprocess`, formData, OptionWithFormData());
       if (response.data || response.status === 200) {
         navigate("/recruitmentprocess");
       }
@@ -44,6 +41,7 @@ const RecruitmentCreate: React.FC = () => {
       setOpenSnackbar(true);
     } catch (error) {
       console.error(error);
+      toastMsg();
       setSnackbarMessage("GÖZLƏNİLMƏZ XƏTA...");
       setOpenSnackbar(true);
     }

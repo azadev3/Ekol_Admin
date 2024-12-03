@@ -4,6 +4,7 @@ import { TextField, Button, Snackbar, Alert, Typography, Box } from "@mui/materi
 import axios from "axios";
 import { URL } from "../../Base";
 import { useNavigate } from "react-router-dom";
+import { OptionWithFormData, toastMsg } from "../../App";
 
 const SocialLifeCarouselCreate: React.FC = () => {
   const navigate = useNavigate();
@@ -29,11 +30,7 @@ const SocialLifeCarouselCreate: React.FC = () => {
     }
 
     try {
-      const response = await axios.post(`${URL}/sociallifecarousel`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(`${URL}/sociallifecarousel`, formData, OptionWithFormData());
       if (response.data || response.status === 200) {
         navigate("/sociallifecarousel");
       }
@@ -41,6 +38,7 @@ const SocialLifeCarouselCreate: React.FC = () => {
       setOpenSnackbar(true);
     } catch (error) {
       console.error(error);
+      toastMsg();
       setSnackbarMessage("GÖZLƏNİLMƏZ XƏTA...");
       setOpenSnackbar(true);
     }

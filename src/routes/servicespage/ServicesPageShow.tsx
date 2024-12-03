@@ -4,6 +4,7 @@ import Title from "../../uitils/Title";
 import axios from "axios";
 import { URL } from "../../Base";
 import { useNavigate } from "react-router-dom";
+import { Option, toastMsg } from "../../App";
 
 const ServicesPageShow: React.FC = () => {
   const [rows, setRows] = useState<any[]>([]);
@@ -15,6 +16,9 @@ const ServicesPageShow: React.FC = () => {
     { field: "title_az", headerName: "Title AZ", width: 150 },
     { field: "title_en", headerName: "Title EN", width: 150 },
     { field: "title_ru", headerName: "Title RU", width: 150 },
+    { field: "slogan_az", headerName: "Önizləmə mətni AZ", width: 150 },
+    { field: "slogan_en", headerName: "Önizləmə mətni EN", width: 150 },
+    { field: "slogan_ru", headerName: "Önizləmə mətni RU", width: 150 },
     { field: "description_az", headerName: "Description AZ", width: 200 },
     { field: "description_en", headerName: "Description EN", width: 200 },
     { field: "description_ru", headerName: "Description RU", width: 200 },
@@ -44,7 +48,7 @@ const ServicesPageShow: React.FC = () => {
   // DELETE
   const handleDelete = async (id: any) => {
     try {
-      const deleteitem = await axios.delete(`${URL}/servicespage/${id}`);
+      const deleteitem = await axios.delete(`${URL}/servicespage/${id}`, Option());
       if (deleteitem.data) {
         fetchData();
       } else {
@@ -52,18 +56,22 @@ const ServicesPageShow: React.FC = () => {
       }
     } catch (error) {
       console.log(error);
+      toastMsg();
     }
   };
 
   // GET DATA
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${URL}/servicespage`);
+      const response = await axios.get(`${URL}/servicespage`, Option());
       const rowsWithId = response.data.map((item: any) => ({
         id: item._id,
         title_az: item.title?.az || "",
         title_en: item.title?.en || "",
         title_ru: item.title?.ru || "",
+        slogan_az: item.slogan?.az || "",
+        slogan_en: item.slogan?.en || "",
+        slogan_ru: item.slogan?.ru || "",
         description_az: item.description?.az || "",
         description_en: item.description?.en || "",
         description_ru: item.description?.ru || "",

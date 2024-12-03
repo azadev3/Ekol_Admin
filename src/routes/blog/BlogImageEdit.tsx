@@ -6,6 +6,7 @@ import { URL } from "../../Base";
 import Title from "../../uitils/Title";
 import "react-quill/dist/quill.snow.css";
 import { FaDeleteLeft } from "react-icons/fa6";
+import { Option, toastMsg } from "../../App";
 
 const BlogImageEdit: React.FC = () => {
   const [blogs, setBlogs] = useState<[]>([]);
@@ -37,7 +38,7 @@ const BlogImageEdit: React.FC = () => {
     if (editid) {
       const fetchData = async () => {
         try {
-          const response = await axios.get(`${URL}/blogimage/${editid}`);
+          const response = await axios.get(`${URL}/blogimage/${editid}`, Option());
           const data = response.data;
           if (data.images && Array.isArray(data.images)) {
             const fetchedPreviews = data.images.map((img: string) => `https://ekol-server-1.onrender.com${img}`);
@@ -99,13 +100,14 @@ const BlogImageEdit: React.FC = () => {
     formData.append("selected_blog", selected_blog);
   
     try {
-      const response = await axios.put(`${URL}/blogimage/${editid}`, formData);
+      const response = await axios.put(`${URL}/blogimage/${editid}`, formData, Option());
       console.log(response.data);
       setSnackbarMessage("Düzəliş uğurludur!");
       setOpenSnackbar(true);
       navigate("/blogimage");
     } catch (error) {
       console.error(error);
+      toastMsg();
       setSnackbarMessage("Düzəlişdə bir xəta oldu yenidən yoxlayın");
       setOpenSnackbar(true);
     }

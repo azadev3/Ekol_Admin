@@ -1,4 +1,4 @@
-import React, { FormEvent } from "react";
+import React, { ChangeEvent, FormEvent } from "react";
 import "./styles/Login.scss";
 import { MdOutlineMailOutline, MdOutlinePassword } from "react-icons/md";
 import axios from "axios";
@@ -12,6 +12,23 @@ import { useRecoilState } from "recoil";
 const Login: React.FC = () => {
   const [_, setAuth] = useRecoilState(AuthState);
 
+  const [selectedOption, setSelectedOption] = React.useState<string>("");
+  const handleChangeSelectOption = (e: ChangeEvent<HTMLSelectElement>) => {
+    const { value } = e.target;
+    setSelectedOption(value);
+  };
+  const [isAdmin, setIsAdmin] = React.useState<boolean>(false);
+
+  React.useEffect(() => {
+    if (selectedOption && selectedOption === "admin") {
+      setIsAdmin(true);
+      localStorage.setItem("selected_role_for_login", selectedOption);
+    } else if (selectedOption && selectedOption === "user") {
+      setIsAdmin(false);
+      localStorage.setItem("selected_role_for_login", selectedOption);
+    }
+  }, [isAdmin, selectedOption]);
+
   const [email, setEmail] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
   const navigate = useNavigate();
@@ -24,33 +41,66 @@ const Login: React.FC = () => {
         password: password,
       };
 
-      const response = await axios.post(`${URL}/login`, values);
-      if (response.data && response.status === 200) {
-        console.log(response.data);
-        toast.success("Giriş uğurludur!", {
-          position: "top-center",
-        });
+      const apiEndpoint = isAdmin ? "/login" : "/login_new_user";
 
-        localStorage.setItem("tokenforadmin", response.data?.token);
-        localStorage.setItem("usermailforadmin", response.data?.user?.email);
-        localStorage.setItem("useridforadmin", response.data?.user?.id);
-        setAuth(true);
-        navigate("/", { replace: true });
-      } else if (response.status === 402) {
-        toast.error("Email və ya şifrə yanlışdır", {
-          position: "top-center",
-        });
-        console.log(response.data);
-      } else if (response.status === 401) {
-        toast.error("İstifadəçi tapılmadı", {
-          position: "top-center",
-        });
-        console.log(response.data);
+      const response = await axios.post(`${URL}${apiEndpoint}`, values);
+
+      if (isAdmin) {
+        if (response.data && response.status === 200) {
+          console.log(response.data);
+          toast.success("Giriş uğurludur!", {
+            position: "top-center",
+          });
+
+          localStorage.setItem("tokenforadmin", response.data?.token);
+          localStorage.setItem("usermailforadmin", response.data?.user?.email);
+          localStorage.setItem("useridforadmin", response.data?.user?.id);
+          setAuth(true);
+          navigate("/", { replace: true });
+        } else if (response.status === 402) {
+          toast.error("Email və ya şifrə yanlışdır", {
+            position: "top-center",
+          });
+          console.log(response.data);
+        } else if (response.status === 401) {
+          toast.error("İstifadəçi tapılmadı", {
+            position: "top-center",
+          });
+          console.log(response.data);
+        } else {
+          toast.warning("Bir problem oldu. Daha sonra yenidən yoxlayın", {
+            position: "top-center",
+          });
+          console.log(response.data);
+        }
       } else {
-        toast.warning("Bir problem oldu. Daha sonra yenidən yoxlayın", {
-          position: "top-center",
-        });
-        console.log(response.data);
+        if (response.data && response.status === 200) {
+          console.log(response.data);
+          toast.success("Giriş uğurludur!", {
+            position: "top-center",
+          });
+
+          localStorage.setItem("tokenforadmin", response.data?.token);
+          localStorage.setItem("usermailforadmin", response.data?.user?.email);
+          localStorage.setItem("useridforadmin", response.data?.user?.id);
+          setAuth(true);
+          navigate("/", { replace: true });
+        } else if (response.status === 401) {
+          toast.error("Email və ya şifrə yanlışdır", {
+            position: "top-center",
+          });
+          console.log(response.data);
+        } else if (response.status === 404) {
+          toast.error("İstifadəçi tapılmadı", {
+            position: "top-center",
+          });
+          console.log(response.data);
+        } else {
+          toast.warning("Bir problem oldu. Daha sonra yenidən yoxlayın", {
+            position: "top-center",
+          });
+          console.log(response.data);
+        }
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -75,7 +125,7 @@ const Login: React.FC = () => {
   return (
     <div className="login-page">
       <ToastContainer transition={Zoom} autoClose={1000} pauseOnHover={false} />
-      <form method="POST" onSubmit={handleSubmit}>
+      <form className={isAdmin ? "" : "changed"} method="POST" onSubmit={handleSubmit}>
         <img src="/166.svg" className="logo" alt="166" title="166Tech" />
         <div className="title-form">
           <h1>Sistemə giriş</h1>
@@ -84,7 +134,7 @@ const Login: React.FC = () => {
 
         <div className="inputs">
           <section className="input-field">
-            <label htmlFor="email">Email:</label>
+            <label htmlFor="email">{isAdmin ? "Email:" : "İstifadəçi Emailiniz:"}</label>
             <div className="input">
               <input
                 name="email"
@@ -98,7 +148,7 @@ const Login: React.FC = () => {
             </div>
           </section>
           <section className="input-field">
-            <label htmlFor="password">Şifrə:</label>
+            <label htmlFor="password">{isAdmin ? "Şifrə:" : "İstifadəçi Şifrəniz"}</label>
             <div className="input">
               <input
                 name="password"
@@ -111,6 +161,16 @@ const Login: React.FC = () => {
               <MdOutlinePassword className="email" />
             </div>
           </section>
+          {/* <section className="input-field">
+            <label htmlFor="role">Hansı rolda daxil olmaq istəyirsiniz?:</label>
+            <div className="input">
+              <select name="role" id="role" required onChange={handleChangeSelectOption} value={selectedOption}>
+                <option value="">Rol seçin</option>
+                <option value="admin">Admin</option>
+                <option value="user">Digər istifadəçilər</option>
+              </select>
+            </div>
+          </section> */}
           <section className="button">
             <button type="submit">Daxil ol</button>
           </section>

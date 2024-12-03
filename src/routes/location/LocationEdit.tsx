@@ -4,6 +4,7 @@ import { TextField, Button, Snackbar, Alert } from "@mui/material";
 import axios from "axios";
 import { URL } from "../../Base";
 import Title from "../../uitils/Title";
+import { Option, OptionWithFormData, toastMsg } from "../../App";
 
 const LocationEdit: React.FC = () => {
   const { editid } = useParams();
@@ -22,7 +23,7 @@ const LocationEdit: React.FC = () => {
     if (editid) {
       const fetchData = async () => {
         try {
-          const response = await axios.get(`${URL}/location/${editid}`);
+          const response = await axios.get(`${URL}/location/${editid}`, Option());
           const data = response.data;
           console.log(data, "salam");
           setTitleAz(data.title.az || "");
@@ -50,17 +51,14 @@ const LocationEdit: React.FC = () => {
     formData.append("mapUrl", mapUrl);
 
     try {
-      const response = await axios.put(`${URL}/location/${editid}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.put(`${URL}/location/${editid}`, formData, OptionWithFormData());
       console.log(response.data);
       setSnackbarMessage("Düzəliş uğurludur!");
       setOpenSnackbar(true);
       navigate("/location");
     } catch (error) {
       console.error(error);
+      toastMsg();
       setSnackbarMessage("Düzəlişdə bir xəta oldu yenidən yoxlayın");
       setOpenSnackbar(true);
     }

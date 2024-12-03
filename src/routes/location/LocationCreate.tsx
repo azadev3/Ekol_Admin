@@ -4,6 +4,7 @@ import { TextField, Button, Snackbar, Alert } from "@mui/material";
 import axios from "axios";
 import { URL } from "../../Base";
 import { useNavigate } from "react-router-dom";
+import { OptionWithFormData, toastMsg } from "../../App";
 
 const LocationCreate: React.FC = () => {
   const navigate = useNavigate();
@@ -26,11 +27,7 @@ const LocationCreate: React.FC = () => {
     formData.append("mapUrl", mapUrl);
 
     try {
-      const response = await axios.post(`${URL}/location`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(`${URL}/location`, formData, OptionWithFormData());
       if (response.data || response.status === 200) {
         navigate("/location");
       }
@@ -38,6 +35,7 @@ const LocationCreate: React.FC = () => {
       setOpenSnackbar(true);
     } catch (error) {
       console.error(error);
+      toastMsg();
       setSnackbarMessage("GÖZLƏNİLMƏZ XƏTA...");
       setOpenSnackbar(true);
     }

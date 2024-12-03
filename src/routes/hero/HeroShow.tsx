@@ -6,6 +6,7 @@ import { URL } from "../../Base";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../Loader";
 import { atom, useRecoilState } from "recoil";
+import { Option, toastMsg } from "../../App";
 
 export const LoadingState = atom<boolean>({
   key: "loadingStateKey",
@@ -53,7 +54,7 @@ const HeroShow: React.FC = () => {
   // DELETE
   const handleDelete = async (id: any) => {
     try {
-      const deleteitem = await axios.delete(`${URL}/hero/${id}`);
+      const deleteitem = await axios.delete(`${URL}/hero/${id}`, Option());
       if (deleteitem.data) {
         fetchData();
       } else {
@@ -61,6 +62,7 @@ const HeroShow: React.FC = () => {
       }
     } catch (error) {
       console.log(error);
+      toastMsg();
     }
   };
 
@@ -68,7 +70,7 @@ const HeroShow: React.FC = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`${URL}/hero`);
+      const response = await axios.get(`${URL}/hero`, Option());
       const rowsWithId = response.data.map((item: any) => ({
         id: item._id,
         title_az: item.title?.az || "",
@@ -88,7 +90,7 @@ const HeroShow: React.FC = () => {
       return () => clearTimeout(timeout);
     }
   };
-  
+
   useEffect(() => {
     fetchData();
   }, []);

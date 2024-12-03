@@ -5,6 +5,7 @@ import axios from "axios";
 import { URL } from "../../Base";
 import Title from "../../uitils/Title";
 import ReactQuill from "react-quill";
+import { Option, OptionWithFormData, toastMsg } from "../../App";
 
 const WhoareweEdit: React.FC = () => {
   const modules = {
@@ -51,7 +52,7 @@ const WhoareweEdit: React.FC = () => {
     if (editid) {
       const fetchData = async () => {
         try {
-          const response = await axios.get(`${URL}/whoarewe/${editid}`);
+          const response = await axios.get(`${URL}/whoarewe/${editid}`, Option());
           const data = response.data;
           console.log(data, "salam");
           setTitleAz(data.title.az || "");
@@ -87,17 +88,14 @@ const WhoareweEdit: React.FC = () => {
     }
 
     try {
-      const response = await axios.put(`${URL}/whoarewe/${editid}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.put(`${URL}/whoarewe/${editid}`, formData, OptionWithFormData());
       console.log(response.data);
       setSnackbarMessage("Düzəliş uğurludur!");
       setOpenSnackbar(true);
       navigate("/whoarewe");
     } catch (error) {
       console.error(error);
+      toastMsg();
       setSnackbarMessage("Düzəlişdə bir xəta oldu yenidən yoxlayın");
       setOpenSnackbar(true);
     }

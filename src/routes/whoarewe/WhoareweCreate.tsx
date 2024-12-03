@@ -5,6 +5,7 @@ import axios from "axios";
 import { URL } from "../../Base";
 import { useNavigate } from "react-router-dom";
 import ReactQuill from "react-quill";
+import { Option, toastMsg } from "../../App";
 
 const WhoareweCreate: React.FC = () => {
   const modules = {
@@ -61,11 +62,7 @@ const WhoareweCreate: React.FC = () => {
     }
 
     try {
-      const response = await axios.post(`${URL}/whoarewe`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(`${URL}/whoarewe`, formData, Option());
       if (response.data || response.status === 200) {
         navigate("/whoarewe");
       }
@@ -73,6 +70,7 @@ const WhoareweCreate: React.FC = () => {
       setOpenSnackbar(true);
     } catch (error) {
       console.error(error);
+      toastMsg();
       setSnackbarMessage("GÖZLƏNİLMƏZ XƏTA...");
       setOpenSnackbar(true);
     }

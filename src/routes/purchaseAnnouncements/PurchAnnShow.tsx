@@ -8,6 +8,7 @@ import moment from "moment";
 import { useRecoilState } from "recoil";
 import { LoadingState } from "../hero/HeroShow";
 import Loader from "../../Loader";
+import { Option, toastMsg } from "../../App";
 
 const PurchAnnShow: React.FC = () => {
   const [loading, setLoading] = useRecoilState(LoadingState);
@@ -76,13 +77,14 @@ const PurchAnnShow: React.FC = () => {
   // DELETE
   const handleDelete = async (id: any) => {
     try {
-      const deleteitem = await axios.delete(`${URL}/purchaseannouncement/${id}`);
+      const deleteitem = await axios.delete(`${URL}/purchaseannouncement/${id}`, Option());
       if (deleteitem.data) {
         fetchData();
       } else {
         console.log(deleteitem.status);
       }
     } catch (error) {
+      toastMsg();
       console.log(error);
     }
   };
@@ -92,7 +94,7 @@ const PurchAnnShow: React.FC = () => {
 const fetchData = async () => {
   setLoading(true);
   try {
-    const response = await axios.get(`${URL}/purchaseannouncement`);
+    const response = await axios.get(`${URL}/purchaseannouncement`, Option());
     const rowsWithId = response.data
       .reverse() 
       .map((item: any) => ({

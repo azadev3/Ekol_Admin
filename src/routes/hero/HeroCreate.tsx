@@ -4,6 +4,7 @@ import { TextField, Button, Snackbar, Alert, Typography, Box } from "@mui/materi
 import axios from "axios";
 import { URL } from "../../Base";
 import { useNavigate } from "react-router-dom";
+import { OptionWithFormData } from "../../App";
 
 const HeroCreate: React.FC = () => {
   const navigate = useNavigate();
@@ -33,11 +34,7 @@ const HeroCreate: React.FC = () => {
     formData.append("imgback", image ? image : "");
 
     try {
-      const response = await axios.post(`${URL}/hero`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(`${URL}/hero`, formData, OptionWithFormData());
       if (response.data || response.status === 200) {
         navigate("/hero");
       }

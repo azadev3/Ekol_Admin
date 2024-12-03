@@ -6,6 +6,7 @@ import { URL } from "../../Base";
 import Title from "../../uitils/Title";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { Option, OptionWithFormData, toastMsg } from "../../App";
 
 const BlogEdit: React.FC = () => {
   const modules = {
@@ -53,7 +54,7 @@ const BlogEdit: React.FC = () => {
     if (editid) {
       const fetchData = async () => {
         try {
-          const response = await axios.get(`${URL}/blog/${editid}`);
+          const response = await axios.get(`${URL}/blog/${editid}`, Option());
           const data = response.data;
           setTitleAz(data.title.az || "");
           setTitleEn(data.title.en || "");
@@ -87,16 +88,13 @@ const BlogEdit: React.FC = () => {
     formData.append("created_at", created_at);
 
     try {
-      const response = await axios.put(`${URL}/blog/${editid}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.put(`${URL}/blog/${editid}`, formData, OptionWithFormData());
       console.log(response.data);
       setSnackbarMessage("Düzəliş uğurludur!");
       setOpenSnackbar(true);
       navigate("/blog");
     } catch (error) {
+      toastMsg();
       console.error(error);
       setSnackbarMessage("Düzəlişdə bir xəta oldu yenidən yoxlayın");
       setOpenSnackbar(true);

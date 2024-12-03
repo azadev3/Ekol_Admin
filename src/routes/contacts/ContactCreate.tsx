@@ -4,6 +4,7 @@ import { TextField, Button, Snackbar, Alert } from "@mui/material";
 import axios from "axios";
 import { URL } from "../../Base";
 import { useNavigate } from "react-router-dom";
+import { OptionWithFormData, toastMsg } from "../../App";
 
 const ContactCreate: React.FC = () => {
   const navigate = useNavigate();
@@ -70,17 +71,14 @@ const ContactCreate: React.FC = () => {
     if (emailLogo) formData.append("email_logo", emailLogo);
 
     try {
-      const response = await axios.post(`${URL}/contact`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(`${URL}/contact`, formData, OptionWithFormData());
       if (response.data || response.status === 200) {
         navigate("/contact");
       }
       setSnackbarMessage("Uğurlu oldu!");
       setOpenSnackbar(true);
     } catch (error) {
+      toastMsg();
       console.error(error);
       setSnackbarMessage("Gözlənilməz xəta...");
       setOpenSnackbar(true);

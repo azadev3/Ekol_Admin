@@ -7,6 +7,7 @@ import Title from "../../uitils/Title";
 import { useRecoilState } from "recoil";
 import { LoadingState } from "../hero/HeroShow";
 import Loader from "../../Loader";
+import { Option, toastMsg } from "../../App";
 
 const ContactShow: React.FC = () => {
   const [loading, setLoading] = useRecoilState(LoadingState);
@@ -51,13 +52,14 @@ const ContactShow: React.FC = () => {
   // DELETE
   const handleDelete = async (id: any) => {
     try {
-      const deleteitem = await axios.delete(`${URL}/contact/${id}`);
+      const deleteitem = await axios.delete(`${URL}/contact/${id}`, Option());
       if (deleteitem.data) {
         fetchData();
       } else {
         console.log(deleteitem.status);
       }
     } catch (error) {
+      toastMsg();
       console.log(error);
     }
   };
@@ -66,7 +68,7 @@ const ContactShow: React.FC = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`${URL}/contact`);
+      const response = await axios.get(`${URL}/contact`, Option());
       const rowsWithId = response.data.map((item: any) => ({
         id: item._id,
         location_title_az: item.location?.title?.az || "",

@@ -6,6 +6,7 @@ import { URL } from "../../Base";
 import { useNavigate } from "react-router-dom";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { OptionWithFormData, toastMsg } from "../../App";
 
 const ToolsInnerCreate: React.FC = () => {
   const modules = {
@@ -56,11 +57,7 @@ const ToolsInnerCreate: React.FC = () => {
     formData.append("description_en", description_en);
     formData.append("description_ru", description_ru);
     try {
-      const response = await axios.post(`${URL}/toolsinner`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(`${URL}/toolsinner`, formData, OptionWithFormData());
       if (response.data || response.status === 200) {
         navigate("/toolsinner");
       }
@@ -70,6 +67,7 @@ const ToolsInnerCreate: React.FC = () => {
       console.error(error);
       setSnackbarMessage("GÖZLƏNİLMƏZ XƏTA...");
       setOpenSnackbar(true);
+      toastMsg();
     }
 
     if (!title_az || !title_en || !title_ru || !description_az || !description_en || !description_ru) {

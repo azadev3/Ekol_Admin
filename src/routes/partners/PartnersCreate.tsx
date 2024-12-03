@@ -4,6 +4,7 @@ import { TextField, Button, Snackbar, Alert, Box, Typography } from "@mui/materi
 import axios from "axios";
 import { URL } from "../../Base";
 import { useNavigate } from "react-router-dom";
+import { OptionWithFormData, toastMsg } from "../../App";
 
 const PartnersCreate: React.FC = () => {
   const navigate = useNavigate();
@@ -28,11 +29,7 @@ const PartnersCreate: React.FC = () => {
       formData.append("imgback", image);
     }
     try {
-      const response = await axios.post(`${URL}/partners`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(`${URL}/partners`, formData, OptionWithFormData());
       if (response.data || response.status === 200) {
         navigate("/partners");
       }
@@ -40,6 +37,7 @@ const PartnersCreate: React.FC = () => {
       setOpenSnackbar(true);
     } catch (error) {
       console.error(error);
+      toastMsg();
       setSnackbarMessage("GÖZLƏNİLMƏZ XƏTA...");
       setOpenSnackbar(true);
     }

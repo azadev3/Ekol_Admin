@@ -4,6 +4,7 @@ import { TextField, Button, Snackbar, Alert } from "@mui/material";
 import axios from "axios";
 import { URL } from "../../Base";
 import Title from "../../uitils/Title";
+import { Option, OptionWithFormData, toastMsg } from "../../App";
 
 const CalculationsEdit: React.FC = () => {
   const { editid } = useParams();
@@ -23,7 +24,7 @@ const CalculationsEdit: React.FC = () => {
     if (editid) {
       const fetchData = async () => {
         try {
-          const response = await axios.get(`${URL}/calculations/${editid}`);
+          const response = await axios.get(`${URL}/calculations/${editid}`, Option());
           const data = response.data;
           setTitleAz(data.title.az || "");
           setTitleEn(data.title.en || "");
@@ -51,17 +52,14 @@ const CalculationsEdit: React.FC = () => {
     }
 
     try {
-      const response = await axios.put(`${URL}/calculations/${editid}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.put(`${URL}/calculations/${editid}`, formData, OptionWithFormData());
       console.log(response.data);
       setSnackbarMessage("Düzəliş uğurludur!");
       setOpenSnackbar(true);
       navigate("/calculations");
     } catch (error) {
       console.error(error);
+      toastMsg();
       setSnackbarMessage("Düzəlişdə bir xəta oldu yenidən yoxlayın");
       setOpenSnackbar(true);
     }

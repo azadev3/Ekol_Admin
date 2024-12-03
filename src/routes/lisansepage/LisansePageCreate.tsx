@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { imageHandler } from "../../imageHandler";
+import { OptionWithFormData, toastMsg } from "../../App";
 
 const LisansePageCreate: React.FC = () => {
   const modules = {
@@ -62,11 +63,7 @@ const LisansePageCreate: React.FC = () => {
     formData.append("description_en", description_en);
     formData.append("description_ru", description_ru);
     try {
-      const response = await axios.post(`${URL}/lisansepage`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(`${URL}/lisansepage`, formData, OptionWithFormData());
       if (response.data || response.status === 200) {
         navigate("/lisansepage");
       }
@@ -74,6 +71,7 @@ const LisansePageCreate: React.FC = () => {
       setOpenSnackbar(true);
     } catch (error) {
       console.error(error);
+      toastMsg();
       setSnackbarMessage("GÖZLƏNİLMƏZ XƏTA...");
       setOpenSnackbar(true);
     }

@@ -4,6 +4,8 @@ import { TextField, Button, Snackbar, Alert, Typography, Box } from "@mui/materi
 import axios from "axios";
 import { URL } from "../../Base";
 import Title from "../../uitils/Title";
+import { toast } from "react-toastify";
+import { Option, OptionWithFormData } from "../../App";
 
 const HeroEdit: React.FC = () => {
   const { editid } = useParams();
@@ -26,7 +28,7 @@ const HeroEdit: React.FC = () => {
     if (editid) {
       const fetchData = async () => {
         try {
-          const response = await axios.get(`${URL}/hero/${editid}`);
+          const response = await axios.get(`${URL}/hero/${editid}`, Option());
           const data = response.data;
           console.log(data, "salam");
           setTitleAz(data.title.az || "");
@@ -62,11 +64,7 @@ const HeroEdit: React.FC = () => {
     }
 
     try {
-      const response = await axios.put(`${URL}/hero/${editid}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.put(`${URL}/hero/${editid}`, formData, OptionWithFormData());
       console.log(response.data);
       setSnackbarMessage("Düzəliş uğurludur!");
       setOpenSnackbar(true);
@@ -75,6 +73,9 @@ const HeroEdit: React.FC = () => {
       console.error(error);
       setSnackbarMessage("Düzəlişdə bir xəta oldu yenidən yoxlayın");
       setOpenSnackbar(true);
+      toast.error("Bu əməliyyat üçün icazəniz yoxdur.", {
+        position: "top-center"
+      })
     }
   };
 

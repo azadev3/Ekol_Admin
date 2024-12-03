@@ -4,6 +4,7 @@ import { TextField, Button, Snackbar, Alert } from "@mui/material";
 import axios from "axios";
 import { URL } from "../../Base";
 import Title from "../../uitils/Title";
+import { Option, OptionWithFormData, toastMsg } from "../../App";
 
 const YearlyCalculationsEdit: React.FC = () => {
   const { editid } = useParams();
@@ -23,7 +24,7 @@ const YearlyCalculationsEdit: React.FC = () => {
     if (editid) {
       const fetchData = async () => {
         try {
-          const response = await axios.get(`${URL}/yearly_calculations/${editid}`);
+          const response = await axios.get(`${URL}/yearly_calculations/${editid}`, Option());
           const data = response.data;
           console.log(data, "salam");
           setTitleAz(data.title.az || "");
@@ -52,17 +53,14 @@ const YearlyCalculationsEdit: React.FC = () => {
     }
 
     try {
-      const response = await axios.put(`${URL}/yearly_calculations/${editid}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.put(`${URL}/yearly_calculations/${editid}`, formData, OptionWithFormData());
       console.log(response.data);
       setSnackbarMessage("Düzəliş uğurludur!");
       setOpenSnackbar(true);
       navigate("/yearly_calculations");
     } catch (error) {
       console.error(error);
+      toastMsg();
       setSnackbarMessage("Düzəlişdə bir xəta oldu yenidən yoxlayın");
       setOpenSnackbar(true);
     }

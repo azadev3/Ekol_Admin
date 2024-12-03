@@ -6,6 +6,7 @@ import { URL } from "../../Base";
 import { useNavigate } from "react-router-dom";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { OptionWithFormData, toastMsg } from "../../App";
 
 const modules = {
   toolbar: [
@@ -61,11 +62,7 @@ const VacationsCreate: React.FC = () => {
     formData.append("start_date", startDate);
 
     try {
-      const response = await axios.post(`${URL}/vacations`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(`${URL}/vacations`, formData, OptionWithFormData());
       if (response.data || response.status === 200) {
         navigate("/vacations");
       }
@@ -73,6 +70,7 @@ const VacationsCreate: React.FC = () => {
       setOpenSnackbar(true);
     } catch (error) {
       console.error(error);
+      toastMsg();
       setSnackbarMessage("GÖZLƏNİLMƏZ XƏTA...");
       setOpenSnackbar(true);
     }

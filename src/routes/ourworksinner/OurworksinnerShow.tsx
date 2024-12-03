@@ -4,6 +4,7 @@ import Title from "../../uitils/Title";
 import axios from "axios";
 import { URL } from "../../Base";
 import { useNavigate } from "react-router-dom";
+import { Option, toastMsg } from "../../App";
 
 const OurworksinnerShow: React.FC = () => {
   const [rows, setRows] = useState<any[]>([]);
@@ -44,13 +45,14 @@ const OurworksinnerShow: React.FC = () => {
   // DELETE
   const handleDelete = async (id: any) => {
     try {
-      const deleteitem = await axios.delete(`${URL}/ourworksinner/${id}`);
+      const deleteitem = await axios.delete(`${URL}/ourworksinner/${id}`, Option());
       if (deleteitem.data) {
         fetchData();
       } else {
         console.log(deleteitem.status);
       }
     } catch (error) {
+      toastMsg();
       console.log(error);
     }
   };
@@ -58,7 +60,7 @@ const OurworksinnerShow: React.FC = () => {
   // GET DATA
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${URL}/ourworksinner`);
+      const response = await axios.get(`${URL}/ourworksinner`, Option());
       const rowsWithId = response.data.map((item: any) => ({
         id: item._id,
         title_az: item.title?.az || "",

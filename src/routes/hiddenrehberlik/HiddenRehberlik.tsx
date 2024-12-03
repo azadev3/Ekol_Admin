@@ -2,6 +2,7 @@ import axios from "axios";
 import React from "react";
 import { URL } from "../../Base";
 import { toast, ToastContainer } from "react-toastify";
+import { Option, toastMsg } from "../../App";
 
 const HiddenRehberlik: React.FC = () => {
   const [showRehberlik, setShowRehberlik] = React.useState<boolean>(false);
@@ -32,7 +33,7 @@ const HiddenRehberlik: React.FC = () => {
 
   const handleCheck = async () => {
     try {
-      const res = await axios.get(`${URL}/hidden-rehberlik-front`);
+      const res = await axios.get(`${URL}/hidden-rehberlik-front`, Option());
       if (res.data) {
         setShowRehberlik(res.data.showed);
         console.log("Güncel show durumu:", res.data.showed);
@@ -40,6 +41,7 @@ const HiddenRehberlik: React.FC = () => {
         console.log(res.status);
       }
     } catch (error) {
+      toastMsg();
       console.log(error);
     }
   };

@@ -3,6 +3,7 @@ import Title from "../../uitils/Title";
 import axios from "axios";
 import { URL } from "../../Base";
 import { useNavigate } from "react-router-dom";
+import { Option, OptionWithFormData, toastMsg } from "../../App";
 
 export interface ApplyVacationTypes {
   _id: string;
@@ -21,11 +22,7 @@ const ApplyVacationShow: React.FC = () => {
   const [applyVacations, setApplyVacations] = React.useState<ApplyVacationTypes[]>([]);
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${URL}/applyvacation`, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.get(`${URL}/applyvacation`, OptionWithFormData());
 
       if (response.data) {
         setApplyVacations(response.data?.data);
@@ -33,6 +30,7 @@ const ApplyVacationShow: React.FC = () => {
         console.log(response.status);
       }
     } catch (error) {
+      toastMsg();
       console.log(error);
     }
   };
@@ -56,7 +54,7 @@ const ApplyVacationShow: React.FC = () => {
   const handleDelete = async () => {
     if (selectedId) {
       try {
-        const response = await axios.delete(`${URL}/applyvacation/${selectedId}`);
+        const response = await axios.delete(`${URL}/applyvacation/${selectedId}`, Option());
         if (response.data) {
           setApplyVacations(applyVacations.filter((item) => item._id !== selectedId));
         } else {
@@ -64,6 +62,7 @@ const ApplyVacationShow: React.FC = () => {
         }
       } catch (error) {
         console.log(error);
+        toastMsg();
       }
       setAlert("");
       setSelectedId(null);

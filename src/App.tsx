@@ -10,6 +10,26 @@ import { atom, useRecoilState } from "recoil";
 import { ThemeProvider } from "@mui/material";
 import { darkTheme } from "./theme";
 import { lightTheme } from "./lightTheme";
+import { useUserInfos } from "./uitils/useUser";
+import { Bounce, toast, ToastContainer } from "react-toastify";
+
+export const toastMsg = () => {
+  return toast.error("Bu əməliyyat üçün icazəniz yoxdur", {
+    position: "top-center",
+  });
+};
+
+export const toastSuccess = () => {
+  return toast.success("Uğurlu!", {
+    position: "top-center",
+  });
+};
+
+export const toastError = () => {
+  return toast.error("Bir problem oldu, yenidən yoxlayın", {
+    position: "top-center",
+  });
+};
 
 export const AuthState = atom<boolean>({
   key: "authStateKeyForAuth",
@@ -20,6 +40,30 @@ export const DarkModeState = atom<boolean>({
   key: "modeState",
   default: false,
 });
+
+export const IsAdminEnteredState = atom<boolean>({
+  key: "adminEnteredState",
+  default: false,
+});
+
+const token = localStorage.getItem("tokenforadmin");
+
+export const Option = () => {
+  return {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+};
+
+export const OptionWithFormData = () => {
+  return {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+};
 
 const App: React.FC = () => {
 
@@ -37,8 +81,8 @@ const App: React.FC = () => {
   const [mode, setMode] = useRecoilState(DarkModeState);
 
   React.useEffect(() => {
-    const darkmode = localStorage.getItem('modeforadmin');
-    if (darkmode === 'true') {
+    const darkmode = localStorage.getItem("modeforadmin");
+    if (darkmode === "true") {
       setMode(true);
     } else {
       setMode(false);
@@ -46,29 +90,40 @@ const App: React.FC = () => {
   }, [setMode]);
 
   React.useEffect(() => {
-    localStorage.setItem('modeforadmin', JSON.stringify(mode));
+    localStorage.setItem("modeforadmin", JSON.stringify(mode));
   }, [mode]);
+
+  const { getUser, user } = useUserInfos();
+
+  React.useEffect(() => {
+    getUser();
+  }, []);
+
+  React.useEffect(() => {
+    console.log(user, "userrr");
+  }, [user]);
 
   return (
     <ThemeProvider theme={mode ? darkTheme : lightTheme}>
-      <div className={`admin ${mode ? 'dark-mode' : ""}`}>
-      <Routes>
-        <Route path="/login" element={auth ? <Navigate to="/" /> : <Login />} />
-        <Route
-          path="/*"
-          element={
-            auth ? (
-              <>
-                <Sidebarr />
-                <Content />
-              </>
-            ) : (
-              <Navigate to="/login" />
-            )
-          }
-        />
-      </Routes>
-    </div>
+      <ToastContainer transition={Bounce} autoClose={2000} />
+      <div className={`admin ${mode ? "dark-mode" : ""}`}>
+        <Routes>
+          <Route path="/login" element={auth ? <Navigate to="/" /> : <Login />} />
+          <Route
+            path="/*"
+            element={
+              auth ? (
+                <>
+                  <Sidebarr />
+                  <Content />
+                </>
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
+          />
+        </Routes>
+      </div>
     </ThemeProvider>
   );
 };

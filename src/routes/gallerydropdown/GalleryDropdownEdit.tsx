@@ -4,6 +4,7 @@ import { TextField, Button, Snackbar, Alert, Typography, Box } from "@mui/materi
 import axios from "axios";
 import { URL } from "../../Base";
 import Title from "../../uitils/Title";
+import { Option, OptionWithFormData, toastMsg } from "../../App";
 
 const GalleryDropdownEdit: React.FC = () => {
   const { editid } = useParams();
@@ -23,7 +24,7 @@ const GalleryDropdownEdit: React.FC = () => {
     if (editid) {
       const fetchData = async () => {
         try {
-          const response = await axios.get(`${URL}/gallerydropdown/${editid}`);
+          const response = await axios.get(`${URL}/gallerydropdown/${editid}`, Option());
           const data = response.data;
           console.log(data, "salam");
           setTitleAz(data.title.az || "");
@@ -53,17 +54,14 @@ const GalleryDropdownEdit: React.FC = () => {
     }
 
     try {
-      const response = await axios.put(`${URL}/gallerydropdown/${editid}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.put(`${URL}/gallerydropdown/${editid}`, formData, OptionWithFormData());
       console.log(response.data);
       setSnackbarMessage("Düzəliş uğurludur!");
       setOpenSnackbar(true);
       navigate("/gallerydropdown");
     } catch (error) {
       console.error(error);
+      toastMsg();
       setSnackbarMessage("Düzəlişdə bir xəta oldu yenidən yoxlayın");
       setOpenSnackbar(true);
     }

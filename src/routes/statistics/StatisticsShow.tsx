@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { LoadingState } from "../hero/HeroShow";
 import Loader from "../../Loader";
+import { Option, toastMsg } from "../../App";
 
 const StatisticsShow: React.FC = () => {
   const [loading, setLoading] = useRecoilState(LoadingState);
@@ -47,7 +48,7 @@ const StatisticsShow: React.FC = () => {
   // DELETE
   const handleDelete = async (id: any) => {
     try {
-      const deleteitem = await axios.delete(`${URL}/statistics/${id}`);
+      const deleteitem = await axios.delete(`${URL}/statistics/${id}`, Option());
       if (deleteitem.data) {
         fetchData();
       } else {
@@ -55,6 +56,7 @@ const StatisticsShow: React.FC = () => {
       }
     } catch (error) {
       console.log(error);
+      toastMsg();
     }
   };
 
@@ -62,7 +64,7 @@ const StatisticsShow: React.FC = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`${URL}/statistics`);
+      const response = await axios.get(`${URL}/statistics`, Option());
       const rowsWithId = response.data.map((item: any) => ({
         id: item._id,
         title_az: item.title?.az || "",

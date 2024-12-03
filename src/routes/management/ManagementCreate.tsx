@@ -6,6 +6,7 @@ import { URL } from "../../Base";
 import { useNavigate } from "react-router-dom";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { OptionWithFormData, toastMsg } from "../../App";
 
 const modules = {
   toolbar: [
@@ -62,11 +63,7 @@ const ManagementCreate: React.FC = () => {
     }
 
     try {
-      const response = await axios.post(`${URL}/management`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(`${URL}/management`, formData, OptionWithFormData());
       if (response.data || response.status === 200) {
         navigate("/management");
       }
@@ -74,6 +71,7 @@ const ManagementCreate: React.FC = () => {
       setOpenSnackbar(true);
     } catch (error) {
       console.error(error);
+      toastMsg();
       setSnackbarMessage("GÖZLƏNİLMƏZ XƏTA...");
       setOpenSnackbar(true);
     }

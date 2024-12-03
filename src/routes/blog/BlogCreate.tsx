@@ -6,6 +6,7 @@ import { URL } from "../../Base";
 import { useNavigate } from "react-router-dom";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { OptionWithFormData, toastMsg } from "../../App";
 
 const BlogCreate: React.FC = () => {
   const modules = {
@@ -64,11 +65,7 @@ const BlogCreate: React.FC = () => {
     formData.append("created_at", created_at);
     formData.append("updated", updated);
     try {
-      const response = await axios.post(`${URL}/blog`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(`${URL}/blog`, formData, OptionWithFormData());
       if (response.data || response.status === 200) {
         navigate("/blog");
       }
@@ -78,6 +75,7 @@ const BlogCreate: React.FC = () => {
       console.error(error);
       setSnackbarMessage("GÖZLƏNİLMƏZ XƏTA...");
       setOpenSnackbar(true);
+      toastMsg();
     }
   };
 

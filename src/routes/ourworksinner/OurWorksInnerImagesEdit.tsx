@@ -6,6 +6,7 @@ import { URL } from "../../Base";
 import Title from "../../uitils/Title";
 import "react-quill/dist/quill.snow.css";
 import { FaDeleteLeft } from "react-icons/fa6";
+import { Option, OptionWithFormData, toastMsg } from "../../App";
 
 const OurWorksInnerImagesEdit: React.FC = () => {
   const [ourworksdata, setOurWorksData] = useState<[]>([]);
@@ -37,7 +38,7 @@ const OurWorksInnerImagesEdit: React.FC = () => {
     if (editid) {
       const fetchData = async () => {
         try {
-          const response = await axios.get(`${URL}/ourworksimages/${editid}`);
+          const response = await axios.get(`${URL}/ourworksimages/${editid}`, Option());
           const data = response.data;
           if (data.images && Array.isArray(data.images)) {
             const fetchedPreviews = data.images.map((img: string) => `https://ekol-server-1.onrender.com${img}`);
@@ -99,12 +100,13 @@ const OurWorksInnerImagesEdit: React.FC = () => {
     formData.append("selected_ourworks", selected_ourworks);
   
     try {
-      const response = await axios.put(`${URL}/ourworksimages/${editid}`, formData);
+      const response = await axios.put(`${URL}/ourworksimages/${editid}`, formData, OptionWithFormData());
       console.log(response.data);
       setSnackbarMessage("Düzəliş uğurludur!");
       setOpenSnackbar(true);
       navigate("/ourworksimages");
     } catch (error) {
+      toastMsg();
       console.error(error);
       setSnackbarMessage("Düzəlişdə bir xəta oldu yenidən yoxlayın");
       setOpenSnackbar(true);

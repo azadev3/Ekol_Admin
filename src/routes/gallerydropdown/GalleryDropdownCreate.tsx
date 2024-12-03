@@ -4,6 +4,7 @@ import { TextField, Button, Snackbar, Alert, Typography, Box } from "@mui/materi
 import axios from "axios";
 import { URL } from "../../Base";
 import { useNavigate } from "react-router-dom";
+import { OptionWithFormData, toastMsg } from "../../App";
 
 const GalleryDropdownCreate: React.FC = () => {
   const navigate = useNavigate();
@@ -29,11 +30,7 @@ const GalleryDropdownCreate: React.FC = () => {
     }
 
     try {
-      const response = await axios.post(`${URL}/gallerydropdown`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(`${URL}/gallerydropdown`, formData, OptionWithFormData());
       if (response.data || response.status === 200) {
         navigate("/gallerydropdown");
       }
@@ -41,6 +38,7 @@ const GalleryDropdownCreate: React.FC = () => {
       setOpenSnackbar(true);
     } catch (error) {
       console.error(error);
+      toastMsg();
       setSnackbarMessage("GÖZLƏNİLMƏZ XƏTA...");
       setOpenSnackbar(true);
     }

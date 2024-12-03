@@ -4,6 +4,7 @@ import { Button, Snackbar, Alert, Typography, Box } from "@mui/material";
 import axios from "axios";
 import { URL } from "../../Base";
 import { useNavigate } from "react-router-dom";
+import { OptionWithFormData, toastMsg } from "../../App";
 
 const BlogImageCreate: React.FC = () => {
   const [blogs, setBlogs] = React.useState<[]>([]);
@@ -42,17 +43,14 @@ const BlogImageCreate: React.FC = () => {
     images.forEach((image) => formData.append("imgback", image));
     formData.append("selected_blog", selected_blog);
     try {
-      const response = await axios.post(`${URL}/blogimage`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(`${URL}/blogimage`, formData, OptionWithFormData());
       if (response.data || response.status === 200) {
         navigate("/blogimage");
       }
       setSnackbarMessage("UĞURLU!.");
       setOpenSnackbar(true);
     } catch (error) {
+      toastMsg();
       console.error(error);
       setSnackbarMessage("GÖZLƏNİLMƏZ XƏTA...");
       setOpenSnackbar(true);

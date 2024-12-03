@@ -2,6 +2,7 @@ import React from "react";
 import Title from "../../uitils/Title";
 import axios from "axios";
 import { URL } from "../../Base";
+import { Option, toastMsg } from "../../App";
 
 export interface EmailsInterface {
   _id: string;
@@ -13,7 +14,7 @@ const EmailsShow: React.FC = () => {
   const [emailsdata, setEmails] = React.useState<EmailsInterface[]>([]);
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${URL}/emails`);
+      const response = await axios.get(`${URL}/emails`, Option());
 
       if (response.data) {
         setEmails(response.data?.emails);
@@ -21,6 +22,7 @@ const EmailsShow: React.FC = () => {
         console.log(response.status);
       }
     } catch (error) {
+      toastMsg();
       console.log(error);
     }
   };

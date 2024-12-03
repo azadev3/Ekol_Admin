@@ -4,6 +4,7 @@ import { TextField, Button, Snackbar, Alert } from "@mui/material";
 import axios from "axios";
 import { URL } from "../../Base";
 import { useNavigate } from "react-router-dom";
+import { OptionWithFormData, toastMsg } from "../../App";
 
 const VideosCreate: React.FC = () => {
   const navigate = useNavigate();
@@ -19,11 +20,7 @@ const VideosCreate: React.FC = () => {
     const formData = new FormData();
     formData.append("video", video);
     try {
-      const response = await axios.post(`${URL}/videos`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(`${URL}/videos`, formData, OptionWithFormData());
       if (response.data || response.status === 200) {
         navigate("/videos");
       }
@@ -31,6 +28,7 @@ const VideosCreate: React.FC = () => {
       setOpenSnackbar(true);
     } catch (error) {
       console.error(error);
+      toastMsg();
       setSnackbarMessage("GÖZLƏNİLMƏZ XƏTA...");
       setOpenSnackbar(true);
     }

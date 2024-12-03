@@ -4,6 +4,7 @@ import Title from "../../uitils/Title";
 import axios from "axios";
 import { URL } from "../../Base";
 import { useNavigate } from "react-router-dom";
+import { Option, toastMsg } from "../../App";
 
 const ImagespageShow: React.FC = () => {
   const [rows, setRows] = useState<any[]>([]);
@@ -41,13 +42,14 @@ const ImagespageShow: React.FC = () => {
   // DELETE
   const handleDelete = async (id: any) => {
     try {
-      const deleteitem = await axios.delete(`${URL}/imagespage/${id}`);
+      const deleteitem = await axios.delete(`${URL}/imagespage/${id}`, Option());
       if (deleteitem.data) {
         fetchData();
       } else {
         console.log(deleteitem.status);
       }
     } catch (error) {
+      toastMsg();
       console.log(error);
     }
   };
@@ -55,7 +57,7 @@ const ImagespageShow: React.FC = () => {
   // GET DATA
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${URL}/imagespage`);
+      const response = await axios.get(`${URL}/imagespage`, Option());
       const rowsWithId = response.data.map((item: any) => ({
         id: item._id,
         categoryName_az: item.categoryName?.az || "",

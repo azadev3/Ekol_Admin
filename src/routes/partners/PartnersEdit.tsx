@@ -4,6 +4,7 @@ import { TextField, Button, Snackbar, Alert, Box, Typography } from "@mui/materi
 import axios from "axios";
 import { URL } from "../../Base";
 import Title from "../../uitils/Title";
+import { Option, OptionWithFormData, toastMsg } from "../../App";
 
 const PartnersEdit: React.FC = () => {
   const { editid } = useParams();
@@ -22,7 +23,7 @@ const PartnersEdit: React.FC = () => {
     if (editid) {
       const fetchData = async () => {
         try {
-          const response = await axios.get(`${URL}/partners/${editid}`);
+          const response = await axios.get(`${URL}/partners/${editid}`, Option());
           const data = response.data;
           setTitleAz(data.title.az || "");
           setTitleEn(data.title.en || "");
@@ -52,17 +53,14 @@ const PartnersEdit: React.FC = () => {
     }
 
     try {
-      const response = await axios.put(`${URL}/partners/${editid}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.put(`${URL}/partners/${editid}`, formData, OptionWithFormData());
       console.log(response.data);
       setSnackbarMessage("Düzəliş uğurludur!");
       setOpenSnackbar(true);
       navigate("/partners");
     } catch (error) {
       console.error(error);
+      toastMsg();
       setSnackbarMessage("Düzəlişdə bir xəta oldu yenidən yoxlayın");
       setOpenSnackbar(true);
     }

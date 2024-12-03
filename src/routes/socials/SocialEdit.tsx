@@ -4,6 +4,7 @@ import { TextField, Button, Snackbar, Alert, Typography, Box } from "@mui/materi
 import axios from "axios";
 import { URL } from "../../Base";
 import Title from "../../uitils/Title";
+import { Option, OptionWithFormData, toastMsg } from "../../App";
 
 const SocialEdit: React.FC = () => {
   const { editid } = useParams();
@@ -21,7 +22,7 @@ const SocialEdit: React.FC = () => {
     if (editid) {
       const fetchData = async () => {
         try {
-          const response = await axios.get(`${URL}/socials/${editid}`);
+          const response = await axios.get(`${URL}/socials/${editid}`, Option());
           const data = response.data;
           setLink(data.link || "");
           setImagePreview(`https://ekol-server-1.onrender.com${data.icon}` || "");
@@ -46,17 +47,14 @@ const SocialEdit: React.FC = () => {
     }
 
     try {
-      const response = await axios.put(`${URL}/socials/${editid}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.put(`${URL}/socials/${editid}`, formData, OptionWithFormData());
       console.log(response.data);
       setSnackbarMessage("Düzəliş uğurludur!");
       setOpenSnackbar(true);
       navigate("/socials");
     } catch (error) {
       console.error(error);
+      toastMsg();
       setSnackbarMessage("Düzəlişdə bir xəta oldu yenidən yoxlayın");
       setOpenSnackbar(true);
     }

@@ -4,6 +4,7 @@ import { TextField, Button, Snackbar, Alert } from "@mui/material";
 import axios from "axios";
 import { URL } from "../../Base";
 import Title from "../../uitils/Title";
+import { Option, OptionWithFormData, toastMsg } from "../../App";
 
 const VideosEdit: React.FC = () => {
   const { editid } = useParams();
@@ -20,7 +21,7 @@ const VideosEdit: React.FC = () => {
     if (editid) {
       const fetchData = async () => {
         try {
-          const response = await axios.get(`${URL}/videos/${editid}`);
+          const response = await axios.get(`${URL}/videos/${editid}`, Option());
           const data = response.data;
           setVideo(data.video || "");
           setVideoPreview(data.video || "");
@@ -43,17 +44,14 @@ const VideosEdit: React.FC = () => {
     formData.append("video", video);
 
     try {
-      const response = await axios.put(`${URL}/videos/${editid}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.put(`${URL}/videos/${editid}`, formData, OptionWithFormData());
       console.log(response.data);
       setSnackbarMessage("Düzəliş uğurludur!");
       setOpenSnackbar(true);
       navigate("/videos");
     } catch (error) {
       console.error(error);
+      toastMsg();
       setSnackbarMessage("Düzəlişdə bir xəta oldu yenidən yoxlayın");
       setOpenSnackbar(true);
     }

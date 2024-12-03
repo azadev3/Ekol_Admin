@@ -4,6 +4,7 @@ import { Button, Snackbar, Alert, Typography, Box } from "@mui/material";
 import axios from "axios";
 import { URL } from "../../Base";
 import Title from "../../uitils/Title";
+import { Option, OptionWithFormData, toastMsg } from "../../App";
 
 const LogoEdit: React.FC = () => {
   const { editid } = useParams();
@@ -20,7 +21,7 @@ const LogoEdit: React.FC = () => {
     if (editid) {
       const fetchData = async () => {
         try {
-          const response = await axios.get(`${URL}/logo/${editid}`);
+          const response = await axios.get(`${URL}/logo/${editid}`, Option());
           const data = response.data;
           setImagePreview(`https://ekol-server-1.onrender.com${data.logo}` || "");
           console.log(data, "salam");
@@ -44,17 +45,14 @@ const LogoEdit: React.FC = () => {
     }
 
     try {
-      const response = await axios.put(`${URL}/logo/${editid}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.put(`${URL}/logo/${editid}`, formData, OptionWithFormData());
       console.log(response.data);
       setSnackbarMessage("Düzəliş uğurludur!");
       setOpenSnackbar(true);
       navigate("/logo");
     } catch (error) {
       console.error(error);
+      toastMsg();
       setSnackbarMessage("Düzəlişdə bir xəta oldu yenidən yoxlayın");
       setOpenSnackbar(true);
     }

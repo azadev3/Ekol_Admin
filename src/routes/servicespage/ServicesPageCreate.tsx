@@ -6,6 +6,7 @@ import { URL } from "../../Base";
 import { useNavigate } from "react-router-dom";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { OptionWithFormData, toastMsg } from "../../App";
 
 const modules = {
   toolbar: [
@@ -32,6 +33,9 @@ const ServicesPageCreate: React.FC = () => {
   const [description_az, setDescriptionAz] = useState("");
   const [description_en, setDescriptionEn] = useState("");
   const [description_ru, setDescriptionRu] = useState("");
+  const [slogan_az, setSloganAz] = useState("");
+  const [slogan_en, setSloganEn] = useState("");
+  const [slogan_ru, setSloganRu] = useState("");
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string>("");
 
@@ -45,14 +49,13 @@ const ServicesPageCreate: React.FC = () => {
     formData.append("description_az", description_az);
     formData.append("description_en", description_en);
     formData.append("description_ru", description_ru);
+    formData.append("slogan_az", slogan_az);
+    formData.append("slogan_en", slogan_en);
+    formData.append("slogan_ru", slogan_ru);
     formData.append("imgback", image ? image : "");
 
     try {
-      const response = await axios.post(`${URL}/servicespage`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(`${URL}/servicespage`, formData, OptionWithFormData());
       if (response.data || response.status === 200) {
         navigate("/servicespage");
       }
@@ -62,6 +65,7 @@ const ServicesPageCreate: React.FC = () => {
       console.error(error);
       setSnackbarMessage("GÖZLƏNİLMƏZ XƏTA...");
       setOpenSnackbar(true);
+      toastMsg();
     }
   };
 
@@ -114,6 +118,34 @@ const ServicesPageCreate: React.FC = () => {
           value={title_ru}
           onChange={(e: ChangeEvent<HTMLInputElement>) => setTitleRu(e.target.value)}
           name="title_ru"
+        />
+
+        <TextField
+          label="Önizləmə mətni(AZ)"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={slogan_az}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => setSloganAz(e.target.value)}
+          name="slogan_az"
+        />
+        <TextField
+          label="Önizləmə mətni(EN)"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={slogan_en}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => setSloganEn(e.target.value)}
+          name="slogan_en"
+        />
+        <TextField
+          label="Önizləmə mətni(RU)"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={slogan_ru}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => setSloganRu(e.target.value)}
+          name="slogan_ru"
         />
 
         <Typography variant="h6" gutterBottom>

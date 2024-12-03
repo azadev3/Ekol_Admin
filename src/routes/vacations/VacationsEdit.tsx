@@ -6,6 +6,7 @@ import { URL } from "../../Base";
 import Title from "../../uitils/Title";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { Option, OptionWithFormData, toastMsg } from "../../App";
 
 const modules = {
   toolbar: [
@@ -47,7 +48,7 @@ const VacationsEdit: React.FC = () => {
     if (editid) {
       const fetchData = async () => {
         try {
-          const response = await axios.get(`${URL}/vacations/${editid}`);
+          const response = await axios.get(`${URL}/vacations/${editid}`, Option());
           const data = response.data;
           setTitleAz(data.title.az || "");
           setTitleEn(data.title.en || "");
@@ -94,17 +95,14 @@ const VacationsEdit: React.FC = () => {
     formData.append("start_date", startDate);
 
     try {
-      const response = await axios.put(`${URL}/vacations/${editid}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.put(`${URL}/vacations/${editid}`, formData, OptionWithFormData());
       console.log(response.data);
       setSnackbarMessage("Düzəliş uğurludur!");
       setOpenSnackbar(true);
       navigate("/vacations");
     } catch (error) {
       console.error(error);
+      toastMsg();
       setSnackbarMessage("Düzəlişdə bir xəta oldu yenidən yoxlayın");
       setOpenSnackbar(true);
     }

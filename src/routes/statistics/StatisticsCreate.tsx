@@ -4,6 +4,7 @@ import { TextField, Button, Snackbar, Alert } from "@mui/material";
 import axios from "axios";
 import { URL } from "../../Base";
 import { useNavigate } from "react-router-dom";
+import { OptionWithFormData, toastMsg } from "../../App";
 
 const StatisticsCreate: React.FC = () => {
   const navigate = useNavigate();
@@ -30,11 +31,7 @@ const StatisticsCreate: React.FC = () => {
     formData.append("count", count);
 
     try {
-      const response = await axios.post(`${URL}/statistics`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(`${URL}/statistics`, formData, OptionWithFormData());
       if (response.data || response.status === 200) {
         navigate("/statistics");
       }
@@ -44,6 +41,7 @@ const StatisticsCreate: React.FC = () => {
       console.error(error);
       setSnackbarMessage("GÖZLƏNİLMƏZ XƏTA...");
       setOpenSnackbar(true);
+      toastMsg();
     }
 
   

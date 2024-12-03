@@ -4,6 +4,7 @@ import { TextField, Button, Snackbar, Alert, Box } from "@mui/material";
 import axios from "axios";
 import { URL } from "../../Base";
 import { useNavigate, useParams } from "react-router-dom";
+import { Option, OptionWithFormData, toastMsg } from "../../App";
 
 const ContactEdit: React.FC = () => {
   const { editid } = useParams();
@@ -41,7 +42,7 @@ const ContactEdit: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${URL}/contact/${editid}`);
+        const response = await axios.get(`${URL}/contact/${editid}`, Option());
         const contact = response.data;
 
         const telephones = contact.telephones;
@@ -105,11 +106,7 @@ const ContactEdit: React.FC = () => {
     formData.append("iframemap", iframe);
 
     try {
-      const response = await axios.put(`${URL}/contact/${editid}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.put(`${URL}/contact/${editid}`, formData, OptionWithFormData());
       if (response.data || response.status === 200) {
         navigate("/contact");
       }
@@ -119,6 +116,7 @@ const ContactEdit: React.FC = () => {
       console.error(error);
       setSnackbarMessage("Gözlənilməz xəta...");
       setOpenSnackbar(true);
+      toastMsg();
     }
   };
 

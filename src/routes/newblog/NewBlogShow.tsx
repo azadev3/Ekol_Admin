@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { LoadingState } from "../hero/HeroShow";
 import { useRecoilState } from "recoil";
 import Loader from "../../Loader";
+import { Option, toastMsg } from "../../App";
 
 const NewBlogShow: React.FC = () => {
   const [loading, setLoading] = useRecoilState(LoadingState);
@@ -50,13 +51,14 @@ const NewBlogShow: React.FC = () => {
   // DELETE
   const handleDelete = async (id: any) => {
     try {
-      const deleteitem = await axios.delete(`${URL}/newblogs/${id}`);
+      const deleteitem = await axios.delete(`${URL}/newblogs/${id}`, Option());
       if (deleteitem.data) {
         fetchData();
       } else {
         console.log(deleteitem.status);
       }
     } catch (error) {
+      toastMsg();
       console.log(error);
     }
   };
@@ -65,7 +67,7 @@ const NewBlogShow: React.FC = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`${URL}/newblogs`);
+      const response = await axios.get(`${URL}/newblogs`, Option());
       const rowsWithId = response.data.map((item: any) => ({
         id: item._id,
         title_az: item.title?.az || "",

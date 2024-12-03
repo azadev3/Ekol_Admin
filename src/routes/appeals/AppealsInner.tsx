@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { AppealsInterface } from "./AppealsShow";
 import { URL } from "../../Base";
 import Title from "../../uitils/Title";
+import { Option } from "../../App";
 
 const AppealsInner: React.FC = () => {
   const { inneridappeals } = useParams<{ inneridappeals: string }>();
@@ -15,7 +16,7 @@ const AppealsInner: React.FC = () => {
   const [innerAppeals, setInnerAppeals] = React.useState<AppealsInterface>();
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${URL}/appealsfront`);
+      const response = await axios.get(`${URL}/appealsfront`, Option());
 
       if (response.data) {
         setAppeals(response.data);

@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { LoadingState } from "../hero/HeroShow";
 import { useRecoilState } from "recoil";
 import Loader from "../../Loader";
+import { Option, toastMsg } from "../../App";
 
 const OurWorksInnerImagesShow: React.FC = () => {
   const [loading, setLoading] = useRecoilState(LoadingState);
@@ -83,13 +84,14 @@ const OurWorksInnerImagesShow: React.FC = () => {
   // DELETE
   const handleDelete = async (id: any) => {
     try {
-      const deleteitem = await axios.delete(`${URL}/ourworksimages/${id}`);
+      const deleteitem = await axios.delete(`${URL}/ourworksimages/${id}`, Option());
       if (deleteitem.data) {
         fetchData();
       } else {
         console.log(deleteitem.status);
       }
     } catch (error) {
+      toastMsg();
       console.log(error);
     }
   };
@@ -98,7 +100,7 @@ const OurWorksInnerImagesShow: React.FC = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`${URL}/ourworksimages`);
+      const response = await axios.get(`${URL}/ourworksimages`, Option());
       const rowsWithId = response.data.map((item: any) => ({
         id: item._id,
         selected_ourworks: item.selected_ourworks,

@@ -6,6 +6,7 @@ import { URL } from "../../Base";
 import Title from "../../uitils/Title";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { Option, OptionWithFormData, toastMsg } from "../../App";
 
 const modules = {
   toolbar: [
@@ -47,7 +48,7 @@ const ManagementEdit: React.FC = () => {
     if (editid) {
       const fetchData = async () => {
         try {
-          const response = await axios.get(`${URL}/management/${editid}`);
+          const response = await axios.get(`${URL}/management/${editid}`, Option());
           const data = response.data;
           console.log(data, "salam");
           setNameSurname_az(data.nameSurname.az || "");
@@ -63,6 +64,7 @@ const ManagementEdit: React.FC = () => {
           setEducationEn(data.education.en || "");
           setEducationRu(data.education.ru || "");
         } catch (error) {
+          toastMsg();
           console.error("Error fetching data:", error);
         }
       };
@@ -94,17 +96,14 @@ const ManagementEdit: React.FC = () => {
     }
 
     try {
-      const response = await axios.put(`${URL}/management/${editid}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.put(`${URL}/management/${editid}`, formData, OptionWithFormData());
       console.log(response.data);
       setSnackbarMessage("Düzəliş uğurludur!");
       setOpenSnackbar(true);
       navigate("/management");
     } catch (error) {
       console.error(error);
+      toastMsg();
       setSnackbarMessage("Düzəlişdə bir xəta oldu yenidən yoxlayın");
       setOpenSnackbar(true);
     }

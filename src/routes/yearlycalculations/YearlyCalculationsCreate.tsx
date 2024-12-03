@@ -4,6 +4,7 @@ import { TextField, Button, Snackbar, Alert } from "@mui/material";
 import axios from "axios";
 import { URL } from "../../Base";
 import { useNavigate } from "react-router-dom";
+import { OptionWithFormData, toastMsg } from "../../App";
 
 const YearlyCalculationsCreate: React.FC = () => {
   const navigate = useNavigate();
@@ -35,11 +36,7 @@ const YearlyCalculationsCreate: React.FC = () => {
     }
 
     try {
-      const response = await axios.post(`${URL}/yearly_calculations`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(`${URL}/yearly_calculations`, formData, OptionWithFormData());
       if (response.data || response.status === 200) {
         navigate("/yearly_calculations");
         setSnackbarMessage("UĞURLU!");
@@ -47,6 +44,7 @@ const YearlyCalculationsCreate: React.FC = () => {
       }
     } catch (error) {
       console.error(error);
+      toastMsg();
       setSnackbarMessage("GÖZLƏNİLMƏZ XƏTA...");
       setOpenSnackbar(true);
     }

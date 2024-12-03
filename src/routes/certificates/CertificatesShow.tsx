@@ -4,6 +4,7 @@ import Title from "../../uitils/Title";
 import axios from "axios";
 import { URL } from "../../Base";
 import { useNavigate } from "react-router-dom";
+import { Option, toastMsg } from "../../App";
 
 const CertificatesShow: React.FC = () => {
   const [rows, setRows] = useState<any[]>([]);
@@ -44,13 +45,14 @@ const CertificatesShow: React.FC = () => {
   // DELETE
   const handleDelete = async (id: any) => {
     try {
-      const deleteitem = await axios.delete(`${URL}/certificates/${id}`);
+      const deleteitem = await axios.delete(`${URL}/certificates/${id}`, Option());
       if (deleteitem.data) {
         fetchData();
       } else {
         console.log(deleteitem.status);
       }
     } catch (error) {
+      toastMsg();
       console.log(error);
     }
   };
@@ -58,7 +60,7 @@ const CertificatesShow: React.FC = () => {
   // GET DATA
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${URL}/certificates`);
+      const response = await axios.get(`${URL}/certificates`, Option());
       const rowsWithId = response.data.map((item: any) => ({
         id: item._id,
         title_az: item.title?.az || "",

@@ -4,6 +4,7 @@ import { TextField, Button, Snackbar, Alert } from "@mui/material";
 import axios from "axios";
 import { URL } from "../../Base";
 import Title from "../../uitils/Title";
+import { Option, toastMsg } from "../../App";
 
 const TranslatesEdit: React.FC = () => {
   const { editid } = useParams();
@@ -21,7 +22,7 @@ const TranslatesEdit: React.FC = () => {
     if (editid) {
       const fetchData = async () => {
         try {
-          const response = await axios.get(`${URL}/translates/${editid}`);
+          const response = await axios.get(`${URL}/translates/${editid}`, Option());
           const data = response.data;
           setAzTitle(data.az || "");
           setEnTitle(data.en || "");
@@ -48,12 +49,13 @@ const TranslatesEdit: React.FC = () => {
     console.log(data, 'dataa')
 
     try {
-      const response = await axios.put(`${URL}/translates/${editid}`, data);
+      const response = await axios.put(`${URL}/translates/${editid}`, data, Option());
       console.log(response.data, 'geden data');
       setSnackbarMessage("Düzəliş uğurludur!");
       setOpenSnackbar(true);
       navigate("/translates");
     } catch (error) {
+      toastMsg();
       console.error(error);
       setSnackbarMessage("Düzəlişdə bir xəta oldu yenidən yoxlayın");
       setOpenSnackbar(true);

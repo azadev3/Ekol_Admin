@@ -6,6 +6,7 @@ import { URL } from "../../Base";
 import Title from "../../uitils/Title";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { Option, OptionWithFormData, toastMsg } from "../../App";
 
 const modules = {
   toolbar: [
@@ -47,7 +48,7 @@ const PurchAnnEdit: React.FC = () => {
     if (editid) {
       const fetchData = async () => {
         try {
-          const response = await axios.get(`${URL}/purchaseannouncement/${editid}`);
+          const response = await axios.get(`${URL}/purchaseannouncement/${editid}`, Option());
           const data = response.data;
           setTitleAz(data.title.az || "");
           setTitleEn(data.title.en || "");
@@ -89,17 +90,14 @@ const PurchAnnEdit: React.FC = () => {
     formData.append("pdf", pdf ? pdf : "");
 
     try {
-      const response = await axios.put(`${URL}/purchaseannouncement/${editid}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.put(`${URL}/purchaseannouncement/${editid}`, formData, OptionWithFormData());
       console.log(response.data);
       setSnackbarMessage("Düzəliş uğurludur!");
       setOpenSnackbar(true);
       navigate("/purchaseannouncement");
     } catch (error) {
       console.error(error);
+      toastMsg();
       setSnackbarMessage("Düzəlişdə bir xəta oldu yenidən yoxlayın");
       setOpenSnackbar(true);
     }

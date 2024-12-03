@@ -6,6 +6,7 @@ import { URL } from "../../Base";
 import { useNavigate } from "react-router-dom";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { OptionWithFormData, toastMsg } from "../../App";
 
 const NewBlogCreate: React.FC = () => {
   const modules = {
@@ -64,11 +65,7 @@ const NewBlogCreate: React.FC = () => {
     formData.append("imgback", image ? image : "");
 
     try {
-      const response = await axios.post(`${URL}/newblogs`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(`${URL}/newblogs`, formData, OptionWithFormData());
       if (response.data || response.status === 200) {
         navigate("/newblogs");
       }
@@ -76,6 +73,7 @@ const NewBlogCreate: React.FC = () => {
       setOpenSnackbar(true);
     } catch (error) {
       console.error(error);
+      toastMsg();
       setSnackbarMessage("GÖZLƏNİLMƏZ XƏTA...");
       setOpenSnackbar(true);
     }

@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ApplyVacationTypes } from "./ApplyVacationShow";
 import { URL } from "../../Base";
 import Title from "../../uitils/Title";
+import { OptionWithFormData, toastMsg } from "../../App";
 
 const ApplyVacationInner: React.FC = () => {
   const { innerid } = useParams<{ innerid: string }>();
@@ -15,11 +16,7 @@ const ApplyVacationInner: React.FC = () => {
   const [innerApply, setInnerApply] = React.useState<ApplyVacationTypes>();
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${URL}/applyvacation`, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.get(`${URL}/applyvacation`, OptionWithFormData());
 
       if (response.data) {
         setApplyVacations(response.data?.data);
@@ -27,6 +24,7 @@ const ApplyVacationInner: React.FC = () => {
         console.log(response.status);
       }
     } catch (error) {
+      toastMsg();
       console.log(error);
     }
   };

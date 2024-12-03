@@ -3,6 +3,7 @@ import Title from "../../uitils/Title";
 import axios from "axios";
 import { URL } from "../../Base";
 import { useNavigate } from "react-router-dom";
+import { Option, OptionWithFormData, toastMsg } from "../../App";
 
 export interface AppealsInterface {
   _id: string;
@@ -18,11 +19,7 @@ const AppealsShow: React.FC = () => {
   const [appealsdata, setAppeals] = React.useState<AppealsInterface[]>([]);
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${URL}/appealsfront`, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.get(`${URL}/appealsfront`, OptionWithFormData());
 
       if (response.data) {
         setAppeals(response.data);
@@ -30,6 +27,7 @@ const AppealsShow: React.FC = () => {
         console.log(response.status);
       }
     } catch (error) {
+      toastMsg();
       console.log(error);
     }
   };
@@ -53,7 +51,7 @@ const AppealsShow: React.FC = () => {
   const handleDelete = async () => {
     if (selectedId) {
       try {
-        const response = await axios.delete(`${URL}/appeals/${selectedId}`);
+        const response = await axios.delete(`${URL}/appeals/${selectedId}`, Option());
         if (response.data) {
           console.log(response.data, 'muracietler')
           setAppeals(appealsdata.filter((item) => item._id !== selectedId));
@@ -62,6 +60,7 @@ const AppealsShow: React.FC = () => {
         }
       } catch (error) {
         console.log(error);
+        toastMsg();
       }
       setAlert("");
       setSelectedId(null);

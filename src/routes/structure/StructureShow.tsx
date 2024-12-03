@@ -6,6 +6,7 @@ import { URL } from "../../Base";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../Loader";
 import { atom, useRecoilState } from "recoil";
+import { Option, toastMsg } from "../../App";
 
 export const LoadingState = atom<boolean>({
   key: "loadingStateKey",
@@ -47,13 +48,14 @@ const StructureShow: React.FC = () => {
   // DELETE
   const handleDelete = async (id: any) => {
     try {
-      const deleteitem = await axios.delete(`${URL}/structure/${id}`);
+      const deleteitem = await axios.delete(`${URL}/structure/${id}`, Option());
       if (deleteitem.data) {
         fetchData();
       } else {
         console.log(deleteitem.status);
       }
     } catch (error) {
+      toastMsg();
       console.log(error);
     }
   };
@@ -62,7 +64,7 @@ const StructureShow: React.FC = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`${URL}/structure`);
+      const response = await axios.get(`${URL}/structure`, Option());
       const rowsWithId = response.data.map((item: any) => ({
         id: item._id,
       }));

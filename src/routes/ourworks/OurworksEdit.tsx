@@ -4,6 +4,7 @@ import { TextField, Button, Snackbar, Alert, Typography, Box } from "@mui/materi
 import axios from "axios";
 import { URL } from "../../Base";
 import Title from "../../uitils/Title";
+import { Option, OptionWithFormData, toastMsg } from "../../App";
 
 const OurworksEdit: React.FC = () => {
   const { editid } = useParams();
@@ -26,7 +27,7 @@ const OurworksEdit: React.FC = () => {
     if (editid) {
       const fetchData = async () => {
         try {
-          const response = await axios.get(`${URL}/ourworks/${editid}`);
+          const response = await axios.get(`${URL}/ourworks/${editid}`, Option());
           const data = response.data;
           console.log(data, "salam");
           setTitleAz(data.title.az || "");
@@ -39,6 +40,7 @@ const OurworksEdit: React.FC = () => {
           
         } catch (error) {
           console.error("Error fetching data:", error);
+          toastMsg();
         }
       };
       fetchData();
@@ -63,11 +65,7 @@ const OurworksEdit: React.FC = () => {
     }
 
     try {
-      const response = await axios.put(`${URL}/ourworks/${editid}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.put(`${URL}/ourworks/${editid}`, formData, OptionWithFormData());
       console.log(response.data);
       setSnackbarMessage("Düzəliş uğurludur!");
       setOpenSnackbar(true);
@@ -76,6 +74,7 @@ const OurworksEdit: React.FC = () => {
       console.error(error);
       setSnackbarMessage("Düzəlişdə bir xəta oldu yenidən yoxlayın");
       setOpenSnackbar(true);
+      toastMsg();
     }
   };
 
