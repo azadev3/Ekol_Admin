@@ -41,12 +41,12 @@ const Login: React.FC = () => {
         password: password,
       };
 
-      const apiEndpoint = "/login_new_user";
-
-      const response = await axios.post(`${URL}${apiEndpoint}`, values);
+      const response = await axios.post(`${URL}/login_new_user`, values);
 
       if (response.data && response.status === 200) {
         console.log(response.data);
+        setEmail("");
+        setPassword("");
         toast.success("Giriş uğurludur!", {
           position: "top-center",
         });
@@ -104,11 +104,12 @@ const Login: React.FC = () => {
 
         <div className="inputs">
           <section className="input-field">
-            <label htmlFor="email">{"Email:"}</label>
+            <label htmlFor="email">Email:</label>
             <div className="input">
               <input
                 name="email"
                 id="email"
+                value={email}
                 type="email"
                 required
                 placeholder="example@gmail.com"
@@ -118,12 +119,13 @@ const Login: React.FC = () => {
             </div>
           </section>
           <section className="input-field">
-            <label htmlFor="password">{"Şifrə:"}</label>
+            <label htmlFor="password">Şifrə:</label>
             <div className="input">
               <input
                 name="password"
                 id="password"
                 type="password"
+                value={password}
                 required
                 placeholder="***********"
                 onChange={(e) => setPassword(e.target.value)}
