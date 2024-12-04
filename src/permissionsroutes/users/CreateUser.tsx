@@ -10,6 +10,7 @@ export type UserType = {
   name_surname: string;
   email: string;
   user_role: string;
+  status: boolean;
 };
 
 const CreateUser: React.FC = () => {
@@ -168,6 +169,14 @@ const CreateUser: React.FC = () => {
       console.log(error);
     }
   };
+
+  React.useEffect(() => {
+    const initialStatus: { [key: string]: boolean } = {};
+    users.forEach((user) => {
+      initialStatus[user._id] = user.status;
+    });
+    setUserStatus(initialStatus);
+  }, [users]);
 
   return (
     <div className="create-user-table">
@@ -334,7 +343,14 @@ const CreateUser: React.FC = () => {
                         <td>{user?.name_surname}</td>
                         <td>{user?.email}</td>
                         <td>{role?.name || "Bilinmir"}</td>
-                        <td style={{ color: "green", fontSize: "16px", fontWeight: "600", letterSpacing: "1px", pointerEvents: "none" }}>
+                        <td
+                          style={{
+                            color: "green",
+                            fontSize: "16px",
+                            fontWeight: "600",
+                            letterSpacing: "1px",
+                            pointerEvents: "none",
+                          }}>
                           <span>{userStatus[user._id] ? "Aktiv" : "Deaktiv"}</span>
                           <button
                             onClick={() => toggleStatus(user._id)}
