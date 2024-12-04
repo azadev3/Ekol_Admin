@@ -50,10 +50,8 @@ const Login: React.FC = () => {
         toast.success("Giriş uğurludur!", {
           position: "top-center",
         });
-
         localStorage.setItem("tokenforadmin", response.data?.token);
         localStorage.setItem("usermailforadmin", response.data?.user?.email);
-        localStorage.setItem("useridforadmin", response.data?.user?._id);
         setAuth(true);
         navigate("/", { replace: true });
       } else if (response.status === 401) {
