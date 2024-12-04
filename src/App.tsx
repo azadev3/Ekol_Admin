@@ -46,12 +46,10 @@ export const IsAdminEnteredState = atom<boolean>({
   default: false,
 });
 
-const token = localStorage.getItem("tokenforadmin");
-
 export const Option = () => {
   return {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${localStorage.getItem("tokenforadmin")?.toString()}`,
     },
   };
 };
@@ -60,7 +58,7 @@ export const OptionWithFormData = () => {
   return {
     headers: {
       "Content-Type": "multipart/form-data",
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${localStorage.getItem("tokenforadmin")?.toString()}`,
     },
   };
 };
