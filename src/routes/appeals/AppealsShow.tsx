@@ -80,8 +80,6 @@ const AppealsShow: React.FC = () => {
   return () => document.removeEventListener('mousedown', outsideClicked);
  }, []);
 
- console.log(appealsdata);
-
  return (
   <div className="apply-vacation-show">
    <div className={`alert-overlay ${alert ? 'active' : ''}`}>
