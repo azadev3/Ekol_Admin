@@ -17,12 +17,17 @@ export interface AppealsInterface {
 const AppealsShow: React.FC = () => {
  // fetch appeals
  const [appealsdata, setAppeals] = React.useState<AppealsInterface[]>([]);
+
  const fetchData = async () => {
   try {
    const response = await axios.get(`${URL}/appealsfront`, OptionWithFormData());
 
    if (response.data) {
-    setAppeals(response.data);
+    setAppeals(() => {
+     const newAppeals = [...response.data];
+     newAppeals.unshift(newAppeals.pop()!);
+     return newAppeals;
+    });
    } else {
     console.log(response.status);
    }
@@ -80,6 +85,10 @@ const AppealsShow: React.FC = () => {
   return () => document.removeEventListener('mousedown', outsideClicked);
  }, []);
 
+ React.useEffect(() => {
+  console.log(appealsdata, 'appealsdata');
+ }, [appealsdata]);
+
  return (
   <div className="apply-vacation-show">
    <div className={`alert-overlay ${alert ? 'active' : ''}`}>
@@ -99,7 +108,7 @@ const AppealsShow: React.FC = () => {
 
    <div className="container-showed">
     {appealsdata && appealsdata.length > 0
-     ? appealsdata.reverse().map((item: AppealsInterface) => (
+     ? appealsdata.map((item: AppealsInterface) => (
         <div key={item._id} className="card-apply-vacation">
          <div className="left">
           <div className="profile">

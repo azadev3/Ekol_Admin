@@ -170,6 +170,7 @@ const Sidebarr: React.FC = () => {
      { title: 'Satınalma Qaydaları', to: '/purchaserules' },
      { title: 'Satınalma Əlaqə', to: '/purchasecontact' },
      { title: 'Ölkə əlavə et', to: '/purchaseAddCountries' },
+     { title: 'Müəssisə adı əlavə et', to: '/addEnterprise' },
     ]}
    />
    <SidebarLinkWithDropdown
