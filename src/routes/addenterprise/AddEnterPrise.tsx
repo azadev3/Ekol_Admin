@@ -3,6 +3,7 @@ import React, { ChangeEvent } from 'react';
 import { FaDeleteLeft } from 'react-icons/fa6';
 import { MdOutlineDelete } from 'react-icons/md';
 import { toast } from 'react-toastify';
+import { URL } from '../../Base';
 
 const AddEnterPrise: React.FC = () => {
  const [enterprises, setEnterprises] = React.useState<{ name: string }[]>([]);
@@ -44,7 +45,7 @@ const AddEnterPrise: React.FC = () => {
  const [enterPriseOnDb, setEnterPriseOnDb] = React.useState<EnterpriseDB>();
  const handleGetEnterprises = async () => {
   try {
-   const res = await axios.get(`http://localhost:3000/api/add-enterprise`, {
+   const res = await axios.get(`${URL}/add-enterprise`, {
     headers: {
      'Content-Type': 'application/json',
     },
@@ -63,7 +64,7 @@ const AddEnterPrise: React.FC = () => {
  const sendDatabase = async () => {
   try {
    const data = JSON.stringify(enterprises);
-   const res = await axios.post(`http://localhost:3000/api/add-enterprise`, { data });
+   const res = await axios.post(`${URL}/add-enterprise`, { data });
    if (res.data) {
     handleGetEnterprises();
     setEnterprises([]);
@@ -80,7 +81,7 @@ const AddEnterPrise: React.FC = () => {
 
  const deleteOnDb = async (name: string) => {
   try {
-   const res = await axios.delete(`http://localhost:3000/api/add-enterprise/${name}`, {
+   const res = await axios.delete(`${URL}/add-enterprise/${name}`, {
     headers: {
      'Content-Type': 'application/json',
     },
