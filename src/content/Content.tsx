@@ -142,6 +142,7 @@ import CreatePermission from '../permissionsroutes/permissions/CreatePermission'
 import HiddenPurchase from '../routes/hiddenpurchase/HiddenPurchase';
 import HiddenCarier from '../routes/hiddencarier/HiddenCarier';
 import AddEnterPrise from '../routes/addenterprise/AddEnterPrise';
+import AddStage from '../routes/addstage/AddStage';
 
 const Content: React.FC = () => {
  const toggleSidebar = useRecoilValue(ToggleSidebarState);
@@ -432,6 +433,7 @@ const Content: React.FC = () => {
     <Route path="/create_permission" element={<CreatePermission />} />
 
     <Route path="/addEnterprise" element={<AddEnterPrise />} />
+    <Route path="/addStage" element={<AddStage />} />
    </Routes>
   </main>
  );
