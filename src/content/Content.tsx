@@ -143,6 +143,7 @@ import HiddenPurchase from '../routes/hiddenpurchase/HiddenPurchase';
 import HiddenCarier from '../routes/hiddencarier/HiddenCarier';
 import AddEnterPrise from '../routes/addenterprise/AddEnterPrise';
 import AddStage from '../routes/addstage/AddStage';
+import HiddenSocial from '../routes/hiddensocial/HiddenSocial';
 
 const Content: React.FC = () => {
  const toggleSidebar = useRecoilValue(ToggleSidebarState);
@@ -419,6 +420,7 @@ const Content: React.FC = () => {
     <Route path="/toolsinnerimages/:editid" element={<ToolsInnerImagesEdit />} />
     {/* Show - hidden */}
     <Route path="/hidden-rehberlik" element={<HiddenRehberlik />} />
+    <Route path="/hidden-social" element={<HiddenSocial />} />
     <Route path="/hidden-purchase" element={<HiddenPurchase />} />
     <Route path="/hidden-carier" element={<HiddenCarier />} />
 

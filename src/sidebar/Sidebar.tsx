@@ -194,6 +194,7 @@ const Sidebarr: React.FC = () => {
      { title: 'Rəhbərlik', to: '/hidden-rehberlik' },
      { title: 'Satınalma', to: '/hidden-purchase' },
      { title: 'Karyera imkanları', to: '/hidden-carier' },
+     { title: 'Sosial həyat', to: '/hidden-social' },
     ]}
    />
    <SidebarLinkWithDropdown to="/page" linkTitle="Sayta Dinamik Səhifə Əlavə Et" linkIcon={<MdOutlineContactPage />} />
