@@ -1,0 +1,169 @@
+.login-page {
+  width: 100%;
+  min-height: 100vh;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.login-page form {
+  transition: 500ms ease;
+  width: 100%;
+  max-width: 600px;
+  background-color: #f3f3f3;
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1019607843);
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.0588235294);
+  border-radius: 12px;
+  padding: 80px 36px;
+  gap: 42px;
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.login-page form .logo {
+  margin-bottom: 24px;
+  width: auto;
+  height: 60px;
+  position: absolute;
+  z-index: 1000;
+  left: 24px;
+  top: 24px;
+}
+.login-page form .title-form {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+}
+.login-page form .title-form h1 {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 600;
+  text-transform: capitalize;
+  color: #606060;
+}
+.login-page form .title-form p {
+  color: #505050;
+  max-width: 400px;
+  font-weight: 400;
+  line-height: 24px;
+  text-align: center;
+}
+.login-page form .inputs {
+  width: 70%;
+  height: auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 24px;
+}
+.login-page form .inputs .input-field {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+}
+.login-page form .inputs .input-field label {
+  color: rgba(80, 80, 80, 0.7843137255);
+  font-size: 15px;
+  padding-left: 8px;
+}
+.login-page form .inputs .input-field .input {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.login-page form .inputs .input-field .input input {
+  width: 100%;
+  height: 40px;
+  border: 2px solid rgba(144, 144, 144, 0.3843137255);
+  border-radius: 24px;
+  background-color: white;
+  padding-left: 55px;
+  transition: 100ms ease-in-out;
+  outline: none;
+}
+.login-page form .inputs .input-field .input input::-moz-placeholder {
+  color: #909090;
+  font-size: 15px;
+  font-weight: 300;
+}
+.login-page form .inputs .input-field .input input::placeholder {
+  color: #909090;
+  font-size: 15px;
+  font-weight: 300;
+}
+.login-page form .inputs .input-field .input input:focus {
+  border: 3px solid orange;
+}
+.login-page form .inputs .input-field .input .email {
+  position: absolute;
+  z-index: 100;
+  left: 16px;
+  font-size: 24px;
+  color: #404040;
+}
+.login-page form .inputs .input-field .input select {
+  width: 100%;
+  height: 40px;
+  border: 2px solid rgba(144, 144, 144, 0.3843137255);
+  border-radius: 24px;
+  padding-left: 12px;
+  background-color: white;
+  transition: 100ms ease-in-out;
+  outline: none;
+}
+.login-page form .inputs .input-field .input select::-moz-placeholder {
+  color: #909090;
+  font-size: 15px;
+  font-weight: 300;
+}
+.login-page form .inputs .input-field .input select::placeholder {
+  color: #909090;
+  font-size: 15px;
+  font-weight: 300;
+}
+.login-page form .inputs .input-field .input select:focus {
+  border: 3px solid orange;
+}
+.login-page form .button {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.login-page form .button button[type=submit] {
+  width: 100%;
+  height: 40px;
+  border: 2px solid transparent;
+  outline: none;
+  border-radius: 36px;
+  background-color: orange;
+  color: #404040;
+  font-size: 16px;
+  transition: background-color 90ms ease-in-out;
+  cursor: pointer;
+}
+.login-page form .button button[type=submit]:hover {
+  background-color: transparent;
+  color: black;
+  border: 3px solid orange;
+}
+.login-page form .button button[type=submit]:active {
+  transform: scale(0.99);
+}
+.login-page form.changed {
+  background-color: rgb(0, 0, 0);
+}/*# sourceMappingURL=Login.css.map */

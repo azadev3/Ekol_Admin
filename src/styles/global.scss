@@ -6,6 +6,250 @@
  font-family: 'Inter', sans-serif;
 }
 
+.about-page .ourworks-section .works .container-works .grid-works .navigation-description-content .description-content p, .about-page .ourworks-section .works .container-works .grid-works .navigation-description-content .description-content h1, .about-page .ourworks-section .works .container-works .grid-works .navigation-description-content .description-content h2, .about-page .ourworks-section .works .container-works .grid-works .navigation-description-content .description-content h3, .about-page .ourworks-section .works .container-works .grid-works .navigation-description-content .description-content h4, .about-page .ourworks-section .works .container-works .grid-works .navigation-description-content .description-content strong, .about-page .ourworks-section .works .container-works .grid-works .navigation-description-content .description-content li, .about-page .ourworks-section .works .container-works .grid-works .navigation-description-content .description-content ul, .about-page .ourworks-section .works .container-works .grid-works .navigation-description-content .description-content ol, .about-page .ourworks-section .works .container-works .grid-works .navigation-description-content .description-content span {
+  display: unset !important;
+}
+
+.editor {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 80px;
+  margin-top: 24px;
+  margin-bottom: 80px;
+  .text-editor-field {
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 12px;
+    label {
+      font-size: 16px;
+      font-weight: 400;
+      border-left: 6px solid #5f5f5fce;
+      padding-left: 12px;
+      color: #404040;
+    }
+    .ql-editor {
+      overflow: auto;
+      max-width: 1000px;
+      min-width: 1000px;
+      width: 100%;
+    }
+    .ql-editor h1 {
+      font-size: 80px;
+    }
+    .ql-editor h2 {
+      font-size: 70px;
+    }
+    .ql-editor h3 {
+      font-size: 50px;
+    }
+    .ql-editor h4 {
+      font-size: 36px;
+    }
+    .ql-editor h5 {
+      font-size: 28px;
+    }
+    .ql-editor h6 {
+      font-size: 20px;
+    }
+    .ql-editor p {
+      font-size: 18px;
+      line-height: 27px;
+    }
+  }
+}
+
+.my-custom-editor {
+  width: 100%;
+  min-width: 900px;
+  max-width: 900px;
+  height: auto;
+}
+
+.tiptap-toolbar button {
+  transition: 200ms ease-in-out;
+  background: #f0f0f0;
+  border: none;
+  padding: 8px;
+  margin-right: 5px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.tiptap-toolbar button.active {
+  background: #6200ea;
+  color: white;
+}
+
+.button-group button {
+  transition: 200ms ease-in-out;
+  padding: 10px;
+  margin-right: 5px;
+  border: none;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.button-group button.is-active {
+  background-color: #6200ea;
+  color: white;
+}
+.ProseMirror {
+  width: 100%;
+  min-width: 900px;
+  max-width: 900px;
+  height: 400px;
+  overflow-y: auto;
+  margin-top: 24px;
+  padding: 10px;
+  border-radius: 6px;
+  border: 3px solid rgba(147, 112, 216, 0.476);
+  outline: none;
+  transition: 200ms ease-in-out;
+  img {
+    max-width: 500px;
+    max-height: 500px;
+  }
+  &:focus {
+    border-radius: 12px;
+    border: 3px solid mediumpurple;
+  }
+}
+/* Basic editor styles */
+.tiptap {
+  :first-child {
+    margin-top: 0;
+  }
+
+  /* List styles */
+  ul,
+  ol {
+    padding: 0 1rem;
+    margin: 1.25rem 1rem 1.25rem 0.4rem;
+
+    li p {
+      margin-top: 0.25em;
+      margin-bottom: 0.25em;
+    }
+  }
+
+  /* Heading styles */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    line-height: 1.1;
+    margin-top: 2.5rem;
+    text-wrap: pretty;
+  }
+
+  h1,
+  h2 {
+    margin-top: 3.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  h1 {
+    font-size: 2.4rem;
+  }
+
+  h2 {
+    font-size: 1.7rem;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+  }
+
+  h4,
+  h5,
+  h6 {
+    font-size: 1.2rem;
+  }
+
+  /* Code and preformatted text styles */
+  code {
+    background-color: var(--purple-light);
+    border-radius: 0.4rem;
+    color: var(--black);
+    font-size: 0.85rem;
+    padding: 0.25em 0.3em;
+  }
+
+  pre {
+    background: #404040;
+    border-radius: 0.5rem;
+    color: #fff;
+    font-family: monospace;
+    margin: 1.5rem 0;
+    padding: 0.75rem 1rem;
+
+    code {
+      background: none;
+      color: inherit;
+      font-size: 0.8rem;
+      color: #ceffda;
+      padding: 0;
+    }
+  }
+
+  blockquote {
+    border-left: 6px solid rgb(202, 202, 202);
+    margin: 1.5rem 0;
+    padding-left: 1rem;
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid var(--gray-2);
+    margin: 2rem 0;
+  }
+}
+:fullscreen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+}
+.my-editor-component {
+  margin: 3rem 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 24px;
+  label {
+    font-size: 16px;
+    font-weight: 400;
+    border-left: 6px solid #5f5f5fce;
+    padding-left: 12px;
+    color: #404040;
+  }
+}
+
+
+/************ Draft.js Superscript ve Subscript Stil Tanımlamaları ***********/
+.public-DraftStyleDefault-superscript {
+  font-size: 0.75em;
+  vertical-align: super;
+}
+
+.public-DraftStyleDefault-subscript {
+  font-size: 0.75em;
+  vertical-align: sub;
+}
+
+
 .math-process {
  width: 100%;
  height: auto;

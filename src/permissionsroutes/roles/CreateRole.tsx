@@ -152,8 +152,8 @@ const CreateRole: React.FC = () => {
   const findedRoleModel: any =
     roleData && roleData?.length > 0
       ? roleData?.find((role: RoleData) => {
-          return roleModal === role?._id;
-        })
+        return roleModal === role?._id;
+      })
       : [];
 
   //UPDATE - Role Permission
@@ -188,6 +188,22 @@ const CreateRole: React.FC = () => {
       console.error("Error while deleting permission:", error);
     }
   };
+
+  React.useEffect(() => {
+    if (roleData && roleData.length > 0) {
+      const adminIndex = roleData.findIndex((data: RoleData) => data.name === "Admin");
+
+      if (adminIndex !== -1) {
+        const adminData = roleData[adminIndex];
+        const otherRoles = roleData.filter((_, index) => index !== adminIndex);
+
+        if (roleData[0]?.name !== "Admin") {
+          setRoleData([adminData, ...otherRoles]);
+        }
+      }
+    }
+  }, [roleData]);
+
 
   return (
     <div className="create-user-table">
@@ -231,9 +247,9 @@ const CreateRole: React.FC = () => {
               options={
                 permissionData && permissionData?.length > 0
                   ? permissionData?.map((perms: PermissionData) => ({
-                      value: perms?._id,
-                      label: perms?.name,
-                    }))
+                    value: perms?._id,
+                    label: perms?.name,
+                  }))
                   : []
               }
               value={selectedOptions}
@@ -258,14 +274,14 @@ const CreateRole: React.FC = () => {
             <div className="list-existing">
               {findedRoleModel && findedRoleModel?.role_permissions?.length > 0
                 ? findedRoleModel?.role_permissions?.map((exRole: RoleData) => (
-                    <div className="list" key={exRole._id}>
-                      <p>{exRole.name}</p>
-                      <MdDeleteOutline
-                        className="delete-icon"
-                        onClick={() => deletePermissionById(findedRoleModel._id, exRole._id)}
-                      />
-                    </div>
-                  ))
+                  <div className="list" key={exRole._id}>
+                    <p>{exRole.name}</p>
+                    <MdDeleteOutline
+                      className="delete-icon"
+                      onClick={() => deletePermissionById(findedRoleModel._id, exRole._id)}
+                    />
+                  </div>
+                ))
                 : null}
             </div>
           </div>
@@ -339,9 +355,9 @@ const CreateRole: React.FC = () => {
               options={
                 permissionData && permissionData?.length > 0
                   ? permissionData?.map((perms: PermissionData) => ({
-                      value: perms?._id,
-                      label: perms?.name,
-                    }))
+                    value: perms?._id,
+                    label: perms?.name,
+                  }))
                   : []
               }
               value={selectedOptions}
@@ -381,47 +397,47 @@ const CreateRole: React.FC = () => {
           <tbody>
             {roleData && roleData?.length > 0
               ? roleData?.map((roles: RoleData, i: number) => {
-                if(roles.name === "Admin") {
+                if (roles.name === "Admin") {
                   return (
                     <tr style={{ cursor: "no-drop" }} key={roles?._id}>
-                    <td>0{i + 1}</td>
-                    <td>{roles?.name}</td>
-                    <td
-                      style={{
-                        backgroundColor: "#cecece90",
-                        color: "black",
-                        fontWeight: "600",
-                        overflowX: "auto",
-                        maxWidth: "100px",
-                      }}>
-                      {roles?.role_permissions?.length > 0
-                        ? roles.role_permissions?.map((role) => role.name).join(", ")
-                        : ""}
-                    </td>
-                    <td>Adminə düzəliş edə bilməzsiniz</td>
-                  </tr>
+                      <td>0{i + 1}</td>
+                      <td>{roles?.name}</td>
+                      <td
+                        style={{
+                          backgroundColor: "#cecece90",
+                          color: "black",
+                          fontWeight: "600",
+                          overflowX: "auto",
+                          maxWidth: "100px",
+                        }}>
+                        {roles?.role_permissions?.length > 0
+                          ? roles.role_permissions?.map((role) => role.name).join(", ")
+                          : ""}
+                      </td>
+                      <td>Adminə düzəliş edə bilməzsiniz</td>
+                    </tr>
                   )
                 } else {
                   return (
                     <tr key={roles?._id}>
-                    <td>0{i + 1}</td>
-                    <td>{roles?.name}</td>
-                    <td
-                      style={{
-                        backgroundColor: "greenyellow",
-                        color: "black",
-                        fontWeight: "600",
-                        overflowX: "auto",
-                        maxWidth: "100px",
-                      }}>
-                      {roles?.role_permissions?.length > 0
-                        ? roles.role_permissions?.map((role) => role.name).join(", ")
-                        : ""}
-                    </td>
-                    <td className="editing">
-                      <button onClick={() => openModal(roles._id)}>Rola icazələr əlavə et vəya Sil</button>
-                    </td>
-                  </tr>
+                      <td>0{i + 1}</td>
+                      <td>{roles?.name}</td>
+                      <td
+                        style={{
+                          backgroundColor: "greenyellow",
+                          color: "black",
+                          fontWeight: "600",
+                          overflowX: "auto",
+                          maxWidth: "100px",
+                        }}>
+                        {roles?.role_permissions?.length > 0
+                          ? roles.role_permissions?.map((role) => role.name).join(", ")
+                          : ""}
+                      </td>
+                      <td className="editing">
+                        <button onClick={() => openModal(roles._id)}>Rola icazələr əlavə et vəya Sil</button>
+                      </td>
+                    </tr>
                   )
                 }
               })

@@ -116,7 +116,7 @@ const BlogImageEdit: React.FC = () => {
 
   return (
     <div className="component-edit">
-      <Title description="Dəyişiklik et" title="Xəbərlər" to="" />
+      <Title description="Dəyişiklik et" title="Xəbərlər üçün şəkillər" to="" />
 
       <form noValidate autoComplete="off" onSubmit={handleSubmit} style={{ marginTop: "16px" }}>
         <input

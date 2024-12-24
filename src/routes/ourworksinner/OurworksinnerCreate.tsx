@@ -1,77 +1,96 @@
-import React, { ChangeEvent, useState } from "react";
-import Title from "../../uitils/Title";
-import { TextField, Button, Snackbar, Alert, Typography } from "@mui/material";
-import axios from "axios";
-import { URL } from "../../Base";
-import { useNavigate } from "react-router-dom";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
-import { OptionWithFormData, toastMsg } from "../../App";
+import React, { ChangeEvent, useState } from 'react';
+import Title from '../../uitils/Title';
+import { TextField, Button, Snackbar, Alert } from '@mui/material';
+import axios from 'axios';
+import { URL } from '../../Base';
+import { useNavigate } from 'react-router-dom';
+import 'react-quill/dist/quill.snow.css';
+import { OptionWithFormData, toastMsg } from '../../App';
+import MyEditor from '../../TipTap';
+
+
+export const InitTiny = {
+  plugins: [
+    'anchor',
+    'autolink',
+    'charmap',
+    'codesample',
+    'emoticons',
+    'image',
+    'link',
+    'lists',
+    'media',
+    'searchreplace',
+    'table',
+    'visualblocks',
+    'wordcount',
+    'checklist',
+    'mediaembed',
+    'casechange',
+    'export',
+    'formatpainter',
+    'pageembed',
+    'permanentpen',
+    'powerpaste',
+    'advtable',
+    'advcode',
+    'editimage',
+    'advtemplate',
+    'mentions',
+    'tableofcontents',
+    'footnotes',
+    'mergetags',
+    'autocorrect',
+    'typography',
+    'inlinecss',
+    'markdown',
+    'importword',
+    'exportword',
+    'exportpdf',
+  ],
+  toolbar:
+    'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+};
 
 const OurworksinnerCreate: React.FC = () => {
-  const modules = {
-    toolbar: [
-      [{ header: "1" }, { header: "2" }, { font: [] }],
-      [{ list: "ordered" }, { list: "bullet" }],
-      ["bold", "italic", "underline"],
-      ["link", "image"],
-      [{ align: [] }],
-      ["clean"],
-    ],
-  };
-
-  const formats = [
-    "header",
-    "font",
-    "list",
-    "bullet",
-    "bold",
-    "italic",
-    "underline",
-    "link",
-    "image",
-    "align",
-    "clean",
-  ];
-
   const navigate = useNavigate();
 
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
-  const [snackbarMessage, setSnackbarMessage] = React.useState("");
+  const [snackbarMessage, setSnackbarMessage] = React.useState('');
 
-  const [title_az, setTitleAz] = useState("");
-  const [title_en, setTitleEn] = useState("");
-  const [title_ru, setTitleRu] = useState("");
-  const [description_az, setDescriptionAz] = useState("");
-  const [description_en, setDescriptionEn] = useState("");
-  const [description_ru, setDescriptionRu] = useState("");
+  const [title_az, setTitleAz] = useState('');
+  const [title_en, setTitleEn] = useState('');
+  const [title_ru, setTitleRu] = useState('');
+  const [description_az, setDescriptionAz] = useState('');
+  const [description_en, setDescriptionEn] = useState('');
+  const [description_ru, setDescriptionRu] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append("title_az", title_az);
-    formData.append("title_en", title_en);
-    formData.append("title_ru", title_ru);
-    formData.append("description_az", description_az);
-    formData.append("description_en", description_en);
-    formData.append("description_ru", description_ru);
+    formData.append('title_az', title_az);
+    formData.append('title_en', title_en);
+    formData.append('title_ru', title_ru);
+    formData.append('description_az', description_az);
+    formData.append('description_en', description_en);
+    formData.append('description_ru', description_ru);
     try {
       const response = await axios.post(`${URL}/ourworksinner`, formData, OptionWithFormData());
       if (response.data || response.status === 200) {
-        navigate("/ourworksinner");
+        navigate('/ourworksinner');
       }
-      setSnackbarMessage("UĞURLU!.");
+      setSnackbarMessage('UĞURLU!.');
       setOpenSnackbar(true);
     } catch (error) {
       console.error(error);
       toastMsg();
-      setSnackbarMessage("GÖZLƏNİLMƏZ XƏTA...");
+      setSnackbarMessage('GÖZLƏNİLMƏZ XƏTA...');
       setOpenSnackbar(true);
     }
 
     if (!title_az || !title_en || !title_ru || !description_az || !description_en || !description_ru) {
-      setSnackbarMessage("Bütün xanaları doldurun.");
+      setSnackbarMessage('Bütün xanaları doldurun.');
       setOpenSnackbar(true);
       return;
     }
@@ -85,7 +104,7 @@ const OurworksinnerCreate: React.FC = () => {
     <div className="component-create">
       <Title description="Əlavə et" title="Gördüyümüz işlər (daxili)" to="" />
 
-      <form noValidate autoComplete="off" style={{ marginTop: "16px" }}>
+      <form noValidate autoComplete="off" style={{ marginTop: '16px' }}>
         <TextField
           required
           label="Başlıq(AZ)"
@@ -119,33 +138,31 @@ const OurworksinnerCreate: React.FC = () => {
           name="title_ru"
         />
 
-        <Typography variant="h6" gutterBottom>
-          Açıqlama(AZ)
-        </Typography>
-        <ReactQuill value={description_az} onChange={setDescriptionAz} modules={modules} formats={formats} />
-
-        <Typography variant="h6" gutterBottom>
-          Açıqlama(EN)
-        </Typography>
-        <ReactQuill value={description_en} onChange={setDescriptionEn} modules={modules} formats={formats} />
-
-        <Typography variant="h6" gutterBottom>
-          Açıqlama(RU)
-        </Typography>
-        <ReactQuill value={description_ru} onChange={setDescriptionRu} modules={modules} formats={formats} />
+        <div className="my-editor-component">
+          <label>Açıqlama (AZ)</label>
+          <MyEditor value={description_az} handleChange={(html: string) => setDescriptionAz(html)} />
+        </div>
+        <div className="my-editor-component">
+          <label>Açıqlama (EN)</label>
+          <MyEditor value={description_en} handleChange={(html: string) => setDescriptionEn(html)} />
+        </div>
+        <div className="my-editor-component">
+          <label>Açıqlama (RU)</label>
+          <MyEditor value={description_ru} handleChange={(html: string) => setDescriptionRu(html)} />
+        </div>
 
         <Button
           variant="contained"
           color="success"
           onClick={handleSubmit}
-          style={{ marginTop: "16px", marginLeft: "24px" }}>
+          style={{ marginTop: '16px', marginLeft: '24px' }}>
           Göndər
         </Button>
       </form>
 
       {/* Snackbar for displaying messages */}
       <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleSnackbarClose}>
-        <Alert onClose={handleSnackbarClose} severity="info" sx={{ width: "100%", height: "50px" }}>
+        <Alert onClose={handleSnackbarClose} severity="info" sx={{ width: '100%', height: '50px' }}>
           {snackbarMessage}
         </Alert>
       </Snackbar>

@@ -1,0 +1,214 @@
+.overview {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  margin-bottom: 50px;
+}
+.overview .chart-component {
+  padding: 12px;
+  width: 100%;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: white;
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1019607843);
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.0588235294);
+}
+.overview .other-overviews {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 48px;
+  position: relative;
+}
+.overview .other-overviews span {
+  position: relative;
+  z-index: 100;
+  font-size: 36px;
+  font-weight: 500;
+  color: rgb(255, 166, 0);
+}
+.overview .other-overviews p {
+  color: #606060;
+  font-size: 18px;
+  font-weight: 400;
+}
+.overview .other-overviews::before {
+  content: "";
+  width: 100%;
+  max-width: 38%;
+  z-index: 0;
+  top: 24px;
+  height: 2px;
+  position: absolute;
+  background-color: rgb(245, 198, 111);
+  left: 0;
+}
+.overview .other-overviews::after {
+  z-index: 0;
+  content: "";
+  width: 100%;
+  max-width: 38%;
+  top: 24px;
+  height: 2px;
+  position: absolute;
+  background-color: rgb(245, 198, 111);
+  right: 0;
+}
+.overview .parts-for-apis {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  margin-top: 24px;
+}
+.overview .parts-for-apis .part {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 12px;
+}
+.overview .parts-for-apis .part .title-area {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.overview .parts-for-apis .part .title-area h1 {
+  color: #505050;
+  font-size: 24px;
+}
+.overview .parts-for-apis .part .wrapper-contain {
+  width: 100%;
+  height: 400px;
+  background: #ffffff;
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1019607843);
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.0588235294);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.overview .parts-for-apis .part .wrapper-contain .swiper {
+  width: 100%;
+  height: 100%;
+}
+.overview .parts-for-apis .part .wrapper-contain .swiper-pagination-bullets-dynamic .swiper-pagination-bullet-active {
+  background-color: orange;
+}
+.overview .parts-for-apis .part .wrapper-contain .swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #f3f4f6;
+  border-radius: 12px;
+  border: 3px solid transparent;
+  padding-left: 24px;
+  padding-right: 24px;
+  gap: 24px;
+  position: relative;
+  transition: all 200ms ease-in-out;
+}
+.overview .parts-for-apis .part .wrapper-contain .swiper-slide .contain {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 24px;
+}
+.overview .parts-for-apis .part .wrapper-contain .swiper-slide .contain .title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 100px;
+}
+.overview .parts-for-apis .part .wrapper-contain .swiper-slide .contain .title h2 {
+  font-size: 20px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+.overview .parts-for-apis .part .wrapper-contain .swiper-slide .contain .title p {
+  text-transform: capitalize;
+  color: #606060;
+  line-height: 24px;
+  font-size: 16px;
+  max-width: 250px;
+  text-align: center;
+  transition: all 200ms ease-in-out;
+}
+.overview .parts-for-apis .part .wrapper-contain .swiper-slide .contain .button {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.overview .parts-for-apis .part .wrapper-contain .swiper-slide .contain .button a {
+  padding: 6px 24px;
+  background-color: rgb(255, 206, 116);
+  border-radius: 6px;
+  text-decoration: none;
+  color: black;
+  font-weight: 500;
+  border: 2px solid transparent;
+  transition: background-color 100ms ease-in-out, transform 100ms ease-in-out, border 100ms ease-in-out;
+  cursor: pointer;
+}
+.overview .parts-for-apis .part .wrapper-contain .swiper-slide .contain .button a:hover {
+  transform: scale(1.05);
+  border: 2px solid orange;
+  background-color: transparent;
+  color: rgb(255, 166, 0);
+}
+.overview .parts-for-apis .part .wrapper-contain .swiper-slide .contain .button a:active {
+  transform: scale(0.99);
+}
+.overview .parts-for-apis .part .wrapper-contain .swiper-slide:hover {
+  transform: scale(1.01);
+  border: 3px solid orange;
+}
+.overview .parts-for-apis .part .wrapper-contain .swiper-slide .status {
+  top: 12px;
+  left: 12px;
+  background-color: rgba(215, 255, 215, 0.4156862745);
+  border-radius: 4px;
+  position: absolute;
+  z-index: 100;
+  padding: 4px 24px;
+  font-size: 16px;
+}
+.overview .parts-for-apis .part .wrapper-contain .swiper-slide .status strong {
+  font-size: 16px;
+  letter-spacing: 1px;
+  font-weight: 500;
+  color: green;
+}
+.overview .parts-for-apis .part .wrapper-contain .swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}/*# sourceMappingURL=Overview.css.map */

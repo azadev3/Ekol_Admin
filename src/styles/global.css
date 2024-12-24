@@ -1,0 +1,1051 @@
+@import url("https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+.math-process {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  margin: 24px 0;
+}
+.math-process .custom-ql {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  padding: 12px;
+  border: 1px solid rgba(206, 206, 206, 0.5647058824);
+  background-color: rgb(216, 216, 216);
+  border-radius: 7px;
+  color: rgb(26, 25, 25);
+  font-weight: 700;
+  cursor: pointer;
+  transition: 80ms ease;
+}
+.math-process .custom-ql:active {
+  transform: scale(0.95);
+}
+
+.toggle-status {
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 12px;
+  background-color: mediumseagreen;
+  border-radius: 6px;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  transition: 100ms ease;
+}
+.toggle-status span {
+  color: white;
+}
+.toggle-status:hover {
+  background-color: mediumslateblue;
+}
+.toggle-status:active {
+  transform: scale(0.96);
+}
+
+.admin {
+  width: 100%;
+  min-height: 100vh;
+  max-width: 1740px;
+  transition: all 150ms ease-in-out;
+  display: flex;
+  margin: auto;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.admin .loader-container {
+  width: 100%;
+  height: 100%;
+  min-height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.admin .loader-container .custom-loader {
+  width: 50px;
+  height: 50px;
+  display: grid;
+}
+.admin .loader-container .custom-loader::before,
+.admin .loader-container .custom-loader::after {
+  content: "";
+  grid-area: 1/1;
+  --c: radial-gradient(farthest-side, #1692f8 92%, rgba(179, 53, 53, 0));
+  background: var(--c) 50% 0, var(--c) 50% 100%, var(--c) 100% 50%, var(--c) 0 50%;
+  background-size: 12px 12px;
+  background-repeat: no-repeat;
+  animation: s2 1s infinite;
+}
+.admin .loader-container .custom-loader::before {
+  margin: 4px;
+  filter: hue-rotate(45deg);
+  background-size: 8px 8px;
+  animation-timing-function: linear;
+}
+@keyframes s2 {
+  100% {
+    transform: rotate(0.5turn);
+  }
+}
+.admin.dark-mode {
+  background-color: rgb(38, 38, 38);
+}
+.admin.dark-mode .overview .chart-component {
+  background-color: rgb(38, 38, 38);
+}
+.admin.dark-mode .content .header .left-logo .project-name {
+  color: #dddddd;
+}
+.admin.dark-mode .content .header .left-logo .right {
+  color: #dddddd;
+}
+.admin.dark-mode .content .header .right-user .name-and-surname span {
+  color: #dddddd;
+}
+.admin.dark-mode .overview .parts-for-apis .part .wrapper-contain {
+  background-color: transparent;
+}
+.admin.dark-mode .overview .parts-for-apis .part .wrapper-contain .swiper-slide {
+  background-color: transparent;
+  border: 1px solid rgba(206, 206, 206, 0.1019607843);
+  box-shadow: 0px 0px 3px 0px rgba(255, 255, 255, 0.13);
+}
+.admin.dark-mode .overview .parts-for-apis .part .wrapper-contain .swiper-slide .contain .title h2 {
+  color: #dddddd;
+}
+.admin.dark-mode .overview .parts-for-apis .part .wrapper-contain .swiper-slide .status {
+  background-color: transparent;
+  color: #dddddd;
+}
+.admin.dark-mode .sidebar {
+  background-color: rgb(24, 24, 24);
+}
+.admin.dark-mode .sidebar .overview-homepage.active {
+  background-color: rgb(38, 38, 40);
+}
+.admin.dark-mode .sidebar .link-area .dropdown-sidebar-item .left-title .linktitle,
+.admin.dark-mode .sidebar .link-area .dropdown-sidebar-item-inner .left-title .linktitle {
+  color: rgb(228, 160, 32);
+}
+.admin.dark-mode .sidebar .link-area .dropdown-sidebar-item.active,
+.admin.dark-mode .sidebar .link-area .dropdown-sidebar-item-inner.active {
+  background-color: rgb(38, 38, 40) !important;
+}
+.admin.dark-mode .sidebar .link-area .dropdown-sidebar-item .left-title .icon,
+.admin.dark-mode .sidebar .link-area .dropdown-sidebar-item-inner .left-title .icon {
+  color: rgb(228, 160, 32);
+}
+.admin.dark-mode .sidebar .link-area .submenu {
+  background-color: rgb(38, 38, 38);
+}
+.admin.dark-mode .sidebar .link-area .dropdown-sidebar-item.active-dropdown {
+  background-color: rgb(38, 38, 38) !important;
+}
+.admin.dark-mode .sidebar .link-area .dropdown-sidebar-item-inner {
+  color: rgb(230, 199, 141) !important;
+}
+.admin.dark-mode .sidebar .link-area .dropdown-sidebar-item .caret,
+.admin.dark-mode .sidebar .link-area .dropdown-sidebar-item-inner .caret {
+  color: rgb(228, 160, 32);
+}
+.admin.dark-mode .content .show-component .title .add-data-btn {
+  background-color: transparent;
+}
+.admin.dark-mode .content .show-component .title .texts h1 {
+  color: #dddddd;
+}
+.admin.dark-mode .content .show-component .title .texts p {
+  color: #909090;
+}
+.admin.dark-mode .content .component-create .title .texts h1,
+.admin.dark-mode .content .component-edit .title .texts h1 {
+  color: #dddddd;
+}
+.admin.dark-mode .content .component-create .title .texts p,
+.admin.dark-mode .content .component-edit .title .texts p {
+  color: #909090;
+}
+.admin.dark-mode .content .buttons-grid .edit {
+  background-color: transparent;
+  border: 2px solid #dddddd;
+}
+.admin.dark-mode .content .buttons-grid .edit:hover {
+  color: white;
+}
+.admin .purchase-contact {
+  width: 100%;
+  height: 550px;
+  background-color: rgba(206, 206, 206, 0.1019607843);
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+.admin .purchase-contact h1 {
+  color: #404040;
+  padding: 6px 24px;
+  border-radius: 12px;
+  font-size: 24px;
+  letter-spacing: -0.7px;
+  font-weight: 600;
+}
+.admin .purchase-contact .tabs-area {
+  width: 100%;
+  height: auto;
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  justify-items: center;
+  align-items: center;
+  gap: 24px;
+}
+.admin .purchase-contact .tabs-area .tablink {
+  border-radius: 12px;
+  width: 100%;
+  text-align: center;
+  padding: 10px 24px;
+  background-color: #e9dcff;
+  text-decoration: none;
+  color: black;
+  font-weight: 500;
+  font-size: 17px;
+  cursor: pointer;
+  transition: 70ms ease-in-out;
+}
+.admin .purchase-contact .tabs-area .tablink:hover {
+  background-color: rgba(95, 56, 162, 0.4078431373);
+  color: white;
+}
+.admin .purchase-contact .tabs-area .tablink:active {
+  transform: scale(0.999);
+}
+.admin .purchase-contact .tabs-area .tablink.active {
+  background-color: rgb(85, 133, 206);
+  color: white;
+  cursor: auto;
+}
+.admin .purchase-contact .tabs-area .tablink.active:nth-child(2) {
+  background-color: rgb(67, 155, 67);
+}
+.admin .purchase-contact .content-area {
+  width: 100%;
+  height: auto;
+  overflow-y: auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  margin-top: 24px;
+}
+.admin .purchase-contact .content-area .legal-form,
+.admin .purchase-contact .content-area .natural-form {
+  width: 100%;
+  height: auto;
+  background-color: transparent;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  justify-items: flex-start;
+  align-items: flex-start;
+  gap: 24px;
+}
+.admin .purchase-contact .content-area .legal-form .form-item-mini,
+.admin .purchase-contact .content-area .natural-form .form-item-mini {
+  transition: 100ms ease-in-out;
+  width: 100%;
+  height: 100px;
+  background-color: rgb(238, 238, 238);
+  border-radius: 24px;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.admin .purchase-contact .content-area .legal-form .form-item-mini:hover,
+.admin .purchase-contact .content-area .natural-form .form-item-mini:hover {
+  background-color: #c8c6c6;
+}
+.admin .purchase-contact .content-area .legal-form .form-item-mini .left,
+.admin .purchase-contact .content-area .natural-form .form-item-mini .left {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 24px;
+}
+.admin .purchase-contact .content-area .legal-form .form-item-mini .left .profile,
+.admin .purchase-contact .content-area .natural-form .form-item-mini .left .profile {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 50%;
+}
+.admin .purchase-contact .content-area .legal-form .form-item-mini .left .profile img,
+.admin .purchase-contact .content-area .natural-form .form-item-mini .left .profile img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+.admin .purchase-contact .content-area .legal-form .form-item-mini .left .name-area,
+.admin .purchase-contact .content-area .natural-form .form-item-mini .left .name-area {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  gap: 7px;
+}
+.admin .purchase-contact .content-area .legal-form .form-item-mini .left .name-area .name,
+.admin .purchase-contact .content-area .natural-form .form-item-mini .left .name-area .name {
+  color: black;
+  font-weight: 500;
+  font-size: 18px;
+}
+.admin .purchase-contact .content-area .legal-form .form-item-mini .left .name-area .company,
+.admin .purchase-contact .content-area .natural-form .form-item-mini .left .name-area .company {
+  font-size: 16px;
+  font-weight: 400;
+}
+.admin .purchase-contact .content-area .legal-form .form-item-mini .right,
+.admin .purchase-contact .content-area .natural-form .form-item-mini .right {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+}
+.admin .purchase-contact .content-area .legal-form .form-item-mini .right button,
+.admin .purchase-contact .content-area .natural-form .form-item-mini .right button {
+  cursor: pointer;
+  padding: 10px 46px;
+  background-color: mediumslateblue;
+  color: white;
+  border-radius: 12px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+}
+.admin .purchase-contact .content-area .legal-form .form-item-mini .right button:hover,
+.admin .purchase-contact .content-area .natural-form .form-item-mini .right button:hover {
+  background-color: mediumpurple;
+}
+.admin .purchase-contact .content-area .legal-form .form-item-mini .right button:active,
+.admin .purchase-contact .content-area .natural-form .form-item-mini .right button:active {
+  transform: scale(0.98);
+}
+.admin .purchase-contact .content-area .legal-form .form-item-mini .right button:nth-child(2),
+.admin .purchase-contact .content-area .natural-form .form-item-mini .right button:nth-child(2) {
+  position: relative;
+  top: 0.8rem;
+  font-size: 12px;
+  padding: 6px 16px;
+  background-color: rgb(199, 96, 96);
+}
+.admin .purchase-contact .content-area .legal-form .modal-for-all-data,
+.admin .purchase-contact .content-area .natural-form .modal-for-all-data {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  width: 100%;
+  min-height: 100vh;
+  background-color: rgba(40, 30, 95, 0.117);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.admin .purchase-contact .content-area .legal-form .modal-for-all-data .modal-content,
+.admin .purchase-contact .content-area .natural-form .modal-for-all-data .modal-content {
+  overflow-y: auto;
+  padding: 24px;
+  width: 80%;
+  height: 90vh;
+  background-color: white;
+  border-radius: 6px;
+  box-shadow: 0px 0px 50px 0px rgba(85, 133, 206, 0.111);
+  position: relative;
+}
+.admin .purchase-contact .content-area .legal-form .modal-for-all-data .modal-content .close,
+.admin .purchase-contact .content-area .natural-form .modal-for-all-data .modal-content .close {
+  position: absolute;
+  z-index: 100;
+  right: 20px;
+  top: 20px;
+  font-size: 36px;
+  cursor: pointer;
+}
+.admin .purchase-contact .content-area .legal-form .modal-for-all-data .modal-content .close:hover,
+.admin .purchase-contact .content-area .natural-form .modal-for-all-data .modal-content .close:hover {
+  color: red;
+}
+.admin .purchase-contact .content-area .legal-form .modal-for-all-data .modal-content h2,
+.admin .purchase-contact .content-area .natural-form .modal-for-all-data .modal-content h2 {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 21px;
+  color: #404040;
+  gap: 12px;
+  letter-spacing: -0.5px;
+}
+.admin .purchase-contact .content-area .legal-form .modal-for-all-data .modal-content h2 span,
+.admin .purchase-contact .content-area .natural-form .modal-for-all-data .modal-content h2 span {
+  color: mediumslateblue;
+}
+.admin .purchase-contact .content-area .legal-form .modal-for-all-data .modal-content .informations,
+.admin .purchase-contact .content-area .natural-form .modal-for-all-data .modal-content .informations {
+  width: 100%;
+  margin-top: 36px;
+  height: auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 24px;
+}
+.admin .purchase-contact .content-area .legal-form .modal-for-all-data .modal-content .informations .field,
+.admin .purchase-contact .content-area .natural-form .modal-for-all-data .modal-content .informations .field {
+  width: 100%;
+  height: auto;
+  gap: 16px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+.admin .purchase-contact .content-area .legal-form .modal-for-all-data .modal-content .informations .field .input-field,
+.admin .purchase-contact .content-area .natural-form .modal-for-all-data .modal-content .informations .field .input-field {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 12px;
+  background-color: rgba(243, 243, 243, 0.456);
+  padding: 12px 12px;
+}
+.admin .purchase-contact .content-area .legal-form .modal-for-all-data .modal-content .informations .field .input-field label,
+.admin .purchase-contact .content-area .natural-form .modal-for-all-data .modal-content .informations .field .input-field label {
+  font-size: 18px;
+  font-weight: 300;
+  background-color: rgba(113, 113, 113, 0.4666666667);
+  color: #000000;
+  font-weight: 500;
+  padding: 8px 40px;
+  border-radius: 5px;
+}
+.admin .purchase-contact .content-area .legal-form .modal-for-all-data .modal-content .informations .field .input-field input[type=number]::-webkit-inner-spin-button,
+.admin .purchase-contact .content-area .natural-form .modal-for-all-data .modal-content .informations .field .input-field input[type=number]::-webkit-inner-spin-button {
+  display: none;
+}
+.admin .purchase-contact .content-area .legal-form .modal-for-all-data .modal-content .informations .field .input-field input,
+.admin .purchase-contact .content-area .legal-form .modal-for-all-data .modal-content .informations .field .input-field select,
+.admin .purchase-contact .content-area .legal-form .modal-for-all-data .modal-content .informations .field .input-field textarea,
+.admin .purchase-contact .content-area .natural-form .modal-for-all-data .modal-content .informations .field .input-field input,
+.admin .purchase-contact .content-area .natural-form .modal-for-all-data .modal-content .informations .field .input-field select,
+.admin .purchase-contact .content-area .natural-form .modal-for-all-data .modal-content .informations .field .input-field textarea {
+  width: 100%;
+  height: 50px;
+  font-size: 21px;
+  font-weight: bold;
+  letter-spacing: -0.8px;
+  border-radius: 12px;
+  border: 4px solid rgba(206, 206, 206, 0.3764705882);
+  padding: 0px 12px;
+  outline: none;
+  transition: 70ms ease-in-out;
+  cursor: pointer;
+}
+.admin .purchase-contact .content-area .legal-form .modal-for-all-data .modal-content .informations .field .input-field input:hover,
+.admin .purchase-contact .content-area .legal-form .modal-for-all-data .modal-content .informations .field .input-field select:hover,
+.admin .purchase-contact .content-area .legal-form .modal-for-all-data .modal-content .informations .field .input-field textarea:hover,
+.admin .purchase-contact .content-area .natural-form .modal-for-all-data .modal-content .informations .field .input-field input:hover,
+.admin .purchase-contact .content-area .natural-form .modal-for-all-data .modal-content .informations .field .input-field select:hover,
+.admin .purchase-contact .content-area .natural-form .modal-for-all-data .modal-content .informations .field .input-field textarea:hover {
+  border: 2px solid rgba(206, 206, 206, 0.5647058824);
+}
+.admin .purchase-contact .content-area .legal-form .modal-for-all-data .modal-content .informations .field .input-field input:focus,
+.admin .purchase-contact .content-area .legal-form .modal-for-all-data .modal-content .informations .field .input-field select:focus,
+.admin .purchase-contact .content-area .legal-form .modal-for-all-data .modal-content .informations .field .input-field textarea:focus,
+.admin .purchase-contact .content-area .natural-form .modal-for-all-data .modal-content .informations .field .input-field input:focus,
+.admin .purchase-contact .content-area .natural-form .modal-for-all-data .modal-content .informations .field .input-field select:focus,
+.admin .purchase-contact .content-area .natural-form .modal-for-all-data .modal-content .informations .field .input-field textarea:focus {
+  border: 4px solid rgba(73, 126, 77, 0.655);
+  cursor: auto;
+}
+.admin .purchase-contact .content-area .legal-form .modal-for-all-data .modal-content .informations .m-person,
+.admin .purchase-contact .content-area .natural-form .modal-for-all-data .modal-content .informations .m-person {
+  padding: 24px 24px;
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  margin-top: 24px;
+  background-color: rgb(229, 229, 229);
+}
+.admin .purchase-contact .content-area .legal-form .modal-for-all-data .modal-content .informations .m-person span,
+.admin .purchase-contact .content-area .natural-form .modal-for-all-data .modal-content .informations .m-person span {
+  color: #404040;
+  font-size: 24px;
+  font-weight: 500;
+  padding-bottom: 24px;
+}
+.admin .purchase-contact .content-area .legal-form .modal-for-all-data .modal-content .informations .m-person .field,
+.admin .purchase-contact .content-area .natural-form .modal-for-all-data .modal-content .informations .m-person .field {
+  width: 100%;
+  height: auto;
+  gap: 16px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+.admin .purchase-contact .content-area .legal-form .modal-for-all-data .modal-content .informations .m-person .field .input-field,
+.admin .purchase-contact .content-area .natural-form .modal-for-all-data .modal-content .informations .m-person .field .input-field {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 12px;
+  background-color: rgba(243, 243, 243, 0.456);
+  padding: 12px 12px;
+}
+.admin .purchase-contact .content-area .legal-form .modal-for-all-data .modal-content .informations .m-person .field .input-field label,
+.admin .purchase-contact .content-area .natural-form .modal-for-all-data .modal-content .informations .m-person .field .input-field label {
+  font-size: 18px;
+  font-weight: 300;
+  background-color: rgba(113, 113, 113, 0.4666666667);
+  color: #000000;
+  font-weight: 500;
+  padding: 8px 40px;
+  border-radius: 5px;
+}
+.admin .purchase-contact .content-area .legal-form .modal-for-all-data .modal-content .informations .m-person .field .input-field input[type=number]::-webkit-inner-spin-button,
+.admin .purchase-contact .content-area .natural-form .modal-for-all-data .modal-content .informations .m-person .field .input-field input[type=number]::-webkit-inner-spin-button {
+  display: none;
+}
+.admin .purchase-contact .content-area .legal-form .modal-for-all-data .modal-content .informations .m-person .field .input-field input,
+.admin .purchase-contact .content-area .legal-form .modal-for-all-data .modal-content .informations .m-person .field .input-field select,
+.admin .purchase-contact .content-area .legal-form .modal-for-all-data .modal-content .informations .m-person .field .input-field textarea,
+.admin .purchase-contact .content-area .natural-form .modal-for-all-data .modal-content .informations .m-person .field .input-field input,
+.admin .purchase-contact .content-area .natural-form .modal-for-all-data .modal-content .informations .m-person .field .input-field select,
+.admin .purchase-contact .content-area .natural-form .modal-for-all-data .modal-content .informations .m-person .field .input-field textarea {
+  width: 100%;
+  height: 50px;
+  font-size: 21px;
+  font-weight: bold;
+  letter-spacing: -0.8px;
+  border-radius: 12px;
+  border: 4px solid rgba(206, 206, 206, 0.3764705882);
+  padding: 0px 12px;
+  outline: none;
+  transition: 70ms ease-in-out;
+  cursor: pointer;
+}
+.admin .purchase-contact .content-area .legal-form .modal-for-all-data .modal-content .informations .m-person .field .input-field input:hover,
+.admin .purchase-contact .content-area .legal-form .modal-for-all-data .modal-content .informations .m-person .field .input-field select:hover,
+.admin .purchase-contact .content-area .legal-form .modal-for-all-data .modal-content .informations .m-person .field .input-field textarea:hover,
+.admin .purchase-contact .content-area .natural-form .modal-for-all-data .modal-content .informations .m-person .field .input-field input:hover,
+.admin .purchase-contact .content-area .natural-form .modal-for-all-data .modal-content .informations .m-person .field .input-field select:hover,
+.admin .purchase-contact .content-area .natural-form .modal-for-all-data .modal-content .informations .m-person .field .input-field textarea:hover {
+  border: 2px solid rgba(206, 206, 206, 0.5647058824);
+}
+.admin .purchase-contact .content-area .legal-form .modal-for-all-data .modal-content .informations .m-person .field .input-field input:focus,
+.admin .purchase-contact .content-area .legal-form .modal-for-all-data .modal-content .informations .m-person .field .input-field select:focus,
+.admin .purchase-contact .content-area .legal-form .modal-for-all-data .modal-content .informations .m-person .field .input-field textarea:focus,
+.admin .purchase-contact .content-area .natural-form .modal-for-all-data .modal-content .informations .m-person .field .input-field input:focus,
+.admin .purchase-contact .content-area .natural-form .modal-for-all-data .modal-content .informations .m-person .field .input-field select:focus,
+.admin .purchase-contact .content-area .natural-form .modal-for-all-data .modal-content .informations .m-person .field .input-field textarea:focus {
+  border: 4px solid rgba(73, 126, 77, 0.655);
+  cursor: auto;
+}
+
+.quill {
+  width: 100%;
+}
+.quill img {
+  width: 300px;
+  height: 300px;
+}
+
+.purchase-add-countries {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+.purchase-add-countries h3 {
+  font-size: 28px;
+  font-weight: 500;
+  color: #303030;
+  letter-spacing: -0.8px;
+}
+.purchase-add-countries .buttons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+}
+.purchase-add-countries .buttons .add,
+.purchase-add-countries .buttons .send {
+  margin-top: 24px;
+  background-color: mediumslateblue;
+  padding: 7px 50px;
+  color: white;
+  font-weight: 500;
+  font-size: 18px;
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 200ms ease-in-out;
+}
+.purchase-add-countries .buttons .add:hover,
+.purchase-add-countries .buttons .send:hover {
+  background-color: rgb(146, 56, 168);
+}
+.purchase-add-countries .buttons .add:active,
+.purchase-add-countries .buttons .send:active {
+  transform: scale(0.99);
+}
+.purchase-add-countries .buttons .send {
+  text-transform: capitalize;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(20px);
+  transition: 200ms ease-in-out;
+  background-color: rgb(67, 189, 100);
+  color: rgb(255, 249, 249);
+  font-weight: 600;
+  font-size: 18px;
+}
+.purchase-add-countries .buttons .send:hover {
+  background-color: rgb(74, 122, 43);
+}
+.purchase-add-countries .buttons .send.actived {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: all;
+}
+.purchase-add-countries .buttons .send#disable-btn {
+  background-color: #909090 !important;
+  color: #303030 !important;
+  cursor: no-drop !important;
+}
+.purchase-add-countries .buttons .send#disable-btn:active {
+  transform: scale(1) !important;
+}
+.purchase-add-countries .buttons .send#disable-btn:hover {
+  background-color: #909090 !important;
+  color: #303030 !important;
+  cursor: no-drop !important;
+}
+.purchase-add-countries .container-for-countries {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  margin-top: 0;
+  opacity: 0;
+  height: 0;
+  pointer-events: none;
+  transform: translateY(-5px);
+  transition: 150ms ease-in-out;
+}
+.purchase-add-countries .container-for-countries .added-countries-basket {
+  width: 60%;
+  margin-bottom: 24px;
+  height: auto;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  justify-items: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+  background-color: transparent;
+}
+.purchase-add-countries .container-for-countries .added-countries-basket .country-item {
+  padding: 8px 24px;
+  width: 100%;
+  background-color: rgb(207, 208, 255);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border-radius: 12px;
+}
+.purchase-add-countries .container-for-countries .added-countries-basket .country-item span {
+  color: rgb(0, 0, 0);
+  font-weight: 600;
+  font-size: 17px;
+  letter-spacing: -0.5px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+.purchase-add-countries .container-for-countries .added-countries-basket .country-item .delete-item {
+  font-size: 21px;
+  color: rgb(0, 0, 0);
+  cursor: pointer;
+}
+.purchase-add-countries .container-for-countries .added-countries-basket .country-item .delete-item:hover {
+  color: red;
+}
+.purchase-add-countries .container-for-countries .added-countries-basket .country-item .delete-item:active {
+  transform: translateY(1px);
+}
+.purchase-add-countries .container-for-countries .input {
+  width: 100%;
+  max-width: 50%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 7px;
+}
+.purchase-add-countries .container-for-countries .input input {
+  width: 60%;
+  height: 100%;
+  border-radius: 24px;
+  border: 3px solid #cecece;
+  padding: 0px 18px;
+  color: #404040;
+  font-weight: 500;
+  font-size: 17px;
+  outline: none;
+  transition: 100ms ease-in-out;
+}
+.purchase-add-countries .container-for-countries .input input:focus {
+  border: 3px solid mediumslateblue;
+}
+.purchase-add-countries .container-for-countries .input button {
+  background-color: rgb(70, 179, 72);
+  color: white;
+  font-weight: 500;
+  font-size: 16px;
+  border: none;
+  padding: 8px 24px;
+  outline: none;
+  border-radius: 24px;
+  cursor: pointer;
+  transition: background-color 200ms ease-in-out;
+}
+.purchase-add-countries .container-for-countries .input button:hover {
+  background-color: rgb(146, 56, 168);
+}
+.purchase-add-countries .container-for-countries .input button:active {
+  transform: scale(0.99);
+}
+.purchase-add-countries .container-for-countries.active {
+  margin-top: 36px;
+  opacity: 1;
+  height: auto;
+  transform: translateY(0);
+  pointer-events: all;
+}
+.purchase-add-countries .current-countries {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  margin-top: 24px;
+  gap: 0px;
+}
+.purchase-add-countries .current-countries .country-item {
+  padding: 8px 24px;
+  width: 100%;
+  background-color: rgb(207, 208, 255);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border-radius: 12px;
+}
+.purchase-add-countries .current-countries .country-item span {
+  color: rgb(0, 0, 0);
+  font-weight: 600;
+  font-size: 17px;
+  letter-spacing: -0.5px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+.purchase-add-countries .current-countries .country-item .delete-item {
+  font-size: 21px;
+  color: rgb(0, 0, 0);
+  cursor: pointer;
+}
+.purchase-add-countries .current-countries .country-item .delete-item:hover {
+  color: red;
+}
+.purchase-add-countries .current-countries .country-item .delete-item:active {
+  transform: translateY(1px);
+}
+
+#checkbox {
+  display: none;
+}
+
+.switch {
+  position: relative;
+  width: 100%;
+  height: 40px;
+  padding: 10px 20px;
+  background-color: rgb(46, 46, 46);
+  border-radius: 50px;
+  z-index: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: white;
+  font-size: 0.9em;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.switch svg path {
+  fill: white;
+}
+
+#checkbox:checked + .switch {
+  background-color: rgb(174, 0, 255);
+  box-shadow: 0px 0px 40px rgba(174, 0, 255, 0.438);
+}
+
+.hidden-show-container {
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  padding: 6px 24px;
+}
+.hidden-show-container h2 {
+  color: #303030;
+  font-size: 21px;
+}
+.hidden-show-container .input-field-area {
+  width: 100%;
+  height: 100px;
+  background-color: rgba(175, 165, 255, 0.2392156863);
+  padding: 12px 24px;
+  border-radius: 6px;
+  margin-top: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.hidden-show-container .input-field-area h1 {
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  color: #404040;
+}
+.hidden-show-container .input-field-area .show-hidden-btn {
+  padding: 8px 48px;
+  border: 2px solid #cecece;
+  border-radius: 24px;
+  background-color: rgb(66, 196, 66);
+  color: white;
+  font-size: 16px;
+  outline: none;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 150ms ease;
+}
+.hidden-show-container .input-field-area .show-hidden-btn:hover {
+  background-color: rgb(40, 82, 29);
+}
+.hidden-show-container .input-field-area .show-hidden-btn:active {
+  transform: scale(0.95);
+}
+
+.add-enterprise {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  padding: 24px;
+}
+.add-enterprise .addenterprise {
+  padding: 6px 48px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  transition: 100ms ease;
+  background-color: mediumslateblue;
+  border-radius: 4px;
+  color: white;
+}
+.add-enterprise .addenterprise:hover {
+  background-color: rgb(164, 255, 164);
+  color: black;
+}
+.add-enterprise .addenterprise:active {
+  transform: scale(0.98);
+}
+.add-enterprise .input-area {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  margin-top: 24px;
+  opacity: 0;
+  height: 0;
+  pointer-events: none;
+  transition: 100ms ease;
+}
+.add-enterprise .input-area input {
+  height: 40px;
+  width: 100%;
+  max-width: 370px;
+  border-radius: 4px;
+  outline: none;
+  border: 1px solid #cecece;
+  padding: 0 12px;
+  transition: 100ms ease;
+}
+.add-enterprise .input-area input:focus {
+  border: 1px solid mediumslateblue;
+}
+.add-enterprise .input-area .add-btn {
+  width: 100%;
+  max-width: 120px;
+  height: 40px;
+  background-color: mediumpurple;
+  border: 1px solid transparent;
+  outline: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 100ms ease;
+  color: white;
+}
+.add-enterprise .input-area .add-btn:hover {
+  background-color: black;
+  color: white;
+}
+.add-enterprise .input-area .add-btn:active {
+  transform: scale(0.98);
+}
+.add-enterprise .input-area.actived {
+  opacity: 1;
+  pointer-events: all;
+  height: auto;
+}
+.add-enterprise .enterprise-area {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 7px;
+  margin: 24px 0;
+}
+.add-enterprise .enterprise-area .data-field {
+  padding: 8px 12px;
+  max-width: 600px;
+  background-color: #cecece;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 4px;
+}
+.add-enterprise .enterprise-area .data-field p {
+  font-weight: 500;
+  font-size: 16px;
+  color: black;
+}
+.add-enterprise .enterprise-area .data-field .del-icon {
+  color: rgb(255, 49, 49);
+  font-size: 24px;
+  cursor: pointer;
+}
+.add-enterprise .enterprise-area .data-field .del-icon:active {
+  transform: scale(0.98);
+}
+.add-enterprise .send-btn {
+  margin-top: 36px;
+  width: 100%;
+  max-width: 120px;
+  height: 40px;
+  background-color: green;
+  border: 1px solid transparent;
+  outline: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 100ms ease;
+  color: white;
+}
+.add-enterprise .send-btn:hover {
+  background-color: black;
+  color: white;
+}
+.add-enterprise .send-btn:active {
+  transform: scale(0.98);
+}
+.add-enterprise .existing-enterprises {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 36px;
+}
+.add-enterprise .existing-enterprises h2 {
+  color: #505050;
+  font-size: 20px;
+  margin-bottom: 24px;
+}
+.add-enterprise .existing-enterprises .item {
+  background-color: #cecece;
+  width: 100%;
+  padding: 10px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 4px;
+}
+.add-enterprise .existing-enterprises .item p {
+  color: black;
+  font-weight: 500;
+}
+.add-enterprise .existing-enterprises .item .delete-icon-db {
+  color: red;
+  font-size: 24px;
+  cursor: pointer;
+}
+.add-enterprise .existing-enterprises .item .delete-icon-db:active {
+  transform: scale(0.98);
+}/*# sourceMappingURL=global.css.map */
