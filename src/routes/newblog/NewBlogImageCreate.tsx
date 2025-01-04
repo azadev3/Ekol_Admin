@@ -26,7 +26,7 @@ const NewBlogImageCreate: React.FC = () => {
 
     React.useEffect(() => {
         getBlogs();
-    }, []);
+    }, [blogs]);
 
     const navigate = useNavigate();
 
@@ -176,11 +176,11 @@ const NewBlogImageCreate: React.FC = () => {
                         name="selected_new_blog"
                         style={{ width: '100%', maxWidth: '50%', height: '46px', borderRadius: '4px', margin: '24px 0px' }}>
                         <option value="">Bu şəkillər hansı bloqun tərkibində olacaq?</option>
-                        {blogs?.slice()?.map((blog: any) => (
+                        {blogs ? blogs?.reverse()?.map((blog: any) => (
                             <option key={blog?._id} value={blog?._id}>
                                 {blog?.title || ''}
                             </option>
-                        ))}
+                        )) : ''}
                     </select>
                 </div>
 

@@ -45,6 +45,9 @@ const NewBlogEdit: React.FC = () => {
   const [description_az, setDescriptionAz] = useState("");
   const [description_en, setDescriptionEn] = useState("");
   const [description_ru, setDescriptionRu] = useState("");
+  const [slogan_az, setSloganAz] = useState('');
+  const [slogan_en, setSloganEn] = useState('');
+  const [slogan_ru, setSloganRu] = useState('');
   const [created_at, setCreatedAt] = useState("");
   const [updated, setUpdated] = useState("");
   const [image, setImage] = useState<File | null>(null);
@@ -64,6 +67,9 @@ const NewBlogEdit: React.FC = () => {
           setDescriptionAz(data.description.az || "");
           setDescriptionEn(data.description.en || "");
           setDescriptionRu(data.description.ru || "");
+          setSloganAz(data.slogan.az || '');
+          setSloganEn(data.slogan.en || '');
+          setSloganRu(data.slogan.ru || '');
           setImagePreview(`https://ekol-server-1.onrender.com${data.image}` || "");
         } catch (error) {
           console.error("Error fetching data:", error);
@@ -89,6 +95,9 @@ const NewBlogEdit: React.FC = () => {
     formData.append("created_at", created_at);
     formData.append("update", updated);
     formData.append("imgback", image ? image : "");
+    formData.append("slogan_az", slogan_az);
+    formData.append("slogan_en", slogan_en);
+    formData.append("slogan_ru", slogan_ru);
 
     try {
       const response = await axios.put(`${URL}/newblogs/${editid}`, formData, OptionWithFormData());
@@ -153,6 +162,36 @@ const NewBlogEdit: React.FC = () => {
           value={title_ru}
           onChange={(e: ChangeEvent<HTMLInputElement>) => setTitleRu(e.target.value)}
           name="title_ru"
+        />
+
+        <TextField
+          label="Slogan(AZ)"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={slogan_az}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => setSloganAz(e.target.value)}
+          name="slogan_az"
+        />
+
+        <TextField
+          label="Slogan(EN)"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={slogan_en}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => setSloganEn(e.target.value)}
+          name="slogan_en"
+        />
+
+        <TextField
+          label="Slogan(RU)"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={slogan_ru}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => setSloganRu(e.target.value)}
+          name="slogan_ru"
         />
 
         <Typography variant="h6" gutterBottom>

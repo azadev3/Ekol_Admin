@@ -20,22 +20,20 @@ const AppealsShow: React.FC = () => {
 
  const fetchData = async () => {
   try {
-   const response = await axios.get(`${URL}/appealsfront`, OptionWithFormData());
+    const response = await axios.get(`${URL}/appealsfront`, OptionWithFormData());
 
-   if (response.data) {
-    setAppeals(() => {
-     const newAppeals = [...response.data];
-     newAppeals.unshift(newAppeals.pop()!);
-     return newAppeals;
-    });
-   } else {
-    console.log(response.status);
-   }
+    if (response.data) {
+      // Veriyi ters çevirerek en son gelenleri üste alıyoruz
+      setAppeals([...response.data].reverse());
+    } else {
+      console.log(response.status);
+    }
   } catch (error) {
-   toastMsg();
-   console.log(error);
+    toastMsg();
+    console.log(error);
   }
- };
+};
+
 
  React.useEffect(() => {
   fetchData();
@@ -84,10 +82,6 @@ const AppealsShow: React.FC = () => {
   document.addEventListener('mousedown', outsideClicked);
   return () => document.removeEventListener('mousedown', outsideClicked);
  }, []);
-
- React.useEffect(() => {
-  console.log(appealsdata, 'appealsdata');
- }, [appealsdata]);
 
  return (
   <div className="apply-vacation-show">

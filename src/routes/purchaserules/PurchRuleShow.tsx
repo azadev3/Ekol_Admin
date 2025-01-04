@@ -21,7 +21,9 @@ const PurchRuleShow: React.FC = () => {
     { field: "title_az", headerName: "Title AZ", width: 200 },
     { field: "title_en", headerName: "Title EN", width: 200 },
     { field: "title_ru", headerName: "Title RU", width: 200 },
-    { field: "pdf", headerName: "PDF FAYL", width: 200 },
+    { field: "pdfaz", headerName: "PDF AZ", width: 200 },
+    { field: "pdfen", headerName: "PDF EN", width: 200 },
+    { field: "pdfru", headerName: "PDF RU", width: 200 },
     { field: "createdAt", headerName: "Yaradılma Tarixi", width: 200 },
     {
       field: "actions",
@@ -70,7 +72,9 @@ const PurchRuleShow: React.FC = () => {
         title_az: item.title?.az || "",
         title_en: item.title?.en || "",
         title_ru: item.title?.ru || "",
-        pdf: item.pdf || "",
+        pdfaz: item.pdf?.az || "",
+        pdfen: item.pdf?.en || "",
+        pdfru: item.pdf?.ru || "",
         createdAt: moment(item.createdAt).locale("").format("DD.MM.YYYY / HH:mm") || "",
       }));
       setRows(rowsWithId);

@@ -36,8 +36,10 @@ const ProcedureShow: React.FC = () => {
     // COLUMNS
     const columns: GridColDef[] = [
         { field: "status", headerName: "Status", width: 80 },
-        { field: "pdf", headerName: "PDF", width: 200 },
-    {
+        { field: "pdfaz", headerName: "PDF AZ", width: 200 },
+        { field: "pdfen", headerName: "PDF EN", width: 200 },
+        { field: "pdfru", headerName: "PDF RU", width: 200 },
+        {
             field: "actions",
             headerName: "Actions",
             width: 300,
@@ -89,7 +91,9 @@ const ProcedureShow: React.FC = () => {
                 .map((item: any) => ({
                     id: item._id,
                     status: item.status || "",
-                    pdf: item?.pdf,
+                    pdfaz: item.pdf?.az || "",
+                    pdfen: item.pdf?.en || "",
+                    pdfru: item.pdf?.ru || "",
                 }));
             setRows(rowsWithId);
 

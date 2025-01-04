@@ -74,27 +74,6 @@ const VacationsCreate: React.FC = () => {
       setSnackbarMessage("GÖZLƏNİLMƏZ XƏTA...");
       setOpenSnackbar(true);
     }
-
-    if (
-      !title_az ||
-      !title_en ||
-      !title_ru ||
-      !description_az ||
-      !description_en ||
-      !description_ru ||
-      !location_az ||
-      !location_en ||
-      !location_ru ||
-      !workRegime_az ||
-      !workRegime_en ||
-      !workRegime_ru ||
-      !endDate ||
-      !startDate
-    ) {
-      setSnackbarMessage("Bütün xanaları doldurun.");
-      setOpenSnackbar(true);
-      return;
-    }
   };
 
   const handleSnackbarClose = () => {

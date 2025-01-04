@@ -23,9 +23,22 @@ const ApplyVacationShow: React.FC = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(`${URL}/applyvacation`, OptionWithFormData());
-
+  
       if (response.data) {
-        setApplyVacations(response.data?.data);
+        // Gelen veriyi kopyalayıp işliyoruz
+        const newVacations = [...response.data?.data];
+  
+        // Son elemanı pop edip başa ekliyoruz
+        const lastVac = newVacations.pop();
+        if (lastVac) {
+          newVacations.unshift(lastVac);
+        }
+  
+        // Tarihe göre sıralama yapıyoruz
+        const sortedVacations = sortVacationsByDate(newVacations);
+  
+        // Sonuçları state'e atıyoruz
+        setApplyVacations(sortedVacations);
       } else {
         console.log(response.status);
       }
@@ -34,7 +47,13 @@ const ApplyVacationShow: React.FC = () => {
       console.log(error);
     }
   };
-
+  const sortVacationsByDate = (vacations: ApplyVacationTypes[]) => {
+    return vacations.sort((a, b) => {
+      const dateA = new Date(isNaN(Date.parse(a.applyDate)) ? new Date() : a.applyDate); 
+      const dateB = new Date(isNaN(Date.parse(b.applyDate)) ? new Date() : b.applyDate);
+      return dateB.getTime() - dateA.getTime(); // En yeni tarih en başta olacak
+    });
+  };
   React.useEffect(() => {
     fetchData();
   }, []);

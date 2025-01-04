@@ -45,6 +45,9 @@ const NewBlogCreate: React.FC = () => {
   const [description_az, setDescriptionAz] = useState("");
   const [description_en, setDescriptionEn] = useState("");
   const [description_ru, setDescriptionRu] = useState("");
+  const [slogan_az, setSloganAz] = useState('');
+  const [slogan_en, setSloganEn] = useState('');
+  const [slogan_ru, setSloganRu] = useState('');
   const [created_at, setCreatedAt] = useState("");
   const [updated, setUpdated] = useState("");
   const [image, setImage] = useState<File | null>(null);
@@ -60,6 +63,9 @@ const NewBlogCreate: React.FC = () => {
     formData.append("description_az", description_az);
     formData.append("description_en", description_en);
     formData.append("description_ru", description_ru);
+    formData.append('slogan_az', slogan_az);
+    formData.append('slogan_en', slogan_en);
+    formData.append('slogan_ru', slogan_ru);
     formData.append("created_at", created_at);
     formData.append("updated", updated);
     formData.append("imgback", image ? image : "");
@@ -128,6 +134,36 @@ const NewBlogCreate: React.FC = () => {
           value={title_ru}
           onChange={(e: ChangeEvent<HTMLInputElement>) => setTitleRu(e.target.value)}
           name="title_ru"
+        />
+
+        <TextField
+          label="Slogan(AZ)"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={slogan_az}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => setSloganAz(e.target.value)}
+          name="slogan_az"
+        />
+
+        <TextField
+          label="Slogan(EN)"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={slogan_en}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => setSloganEn(e.target.value)}
+          name="slogan_en"
+        />
+
+        <TextField
+          label="Slogan(RU)"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={slogan_ru}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => setSloganRu(e.target.value)}
+          name="slogan_ru"
         />
 
         <Typography variant="h6" gutterBottom>

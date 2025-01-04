@@ -15,8 +15,12 @@ const PurchRuleCreate: React.FC = () => {
   const [title_en, setTitleEn] = useState("");
   const [title_ru, setTitleRu] = useState("");
 
-  const [pdf, setPdf] = useState<File | null>(null);
-  const [pdfPreview, setPdfPreview] = useState<string>("");
+  const [pdfaz, setPdfAz] = useState<File | null>(null);
+  const [pdfen, setPdfEn] = useState<File | null>(null);
+  const [pdfru, setPdfRu] = useState<File | null>(null);
+  const [pdfPreviewAz, setPdfPreviewAz] = useState<string>("");
+  const [pdfPreviewEn, setPdfPreviewEn] = useState<string>("");
+  const [pdfPreviewRu, setPdfPreviewRu] = useState<string>("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,8 +28,7 @@ const PurchRuleCreate: React.FC = () => {
     if (
       !title_az ||
       !title_en ||
-      !title_ru ||
-      !pdf
+      !title_ru
     ) {
       setSnackbarMessage("Bütün xanaları doldurun.");
       setOpenSnackbar(true);
@@ -37,8 +40,14 @@ const PurchRuleCreate: React.FC = () => {
     formData.append("title_en", title_en);
     formData.append("title_ru", title_ru);
 
-    if (pdf) {
-      formData.append("pdf", pdf);
+    if (pdfaz) {
+      formData.append("pdfaz", pdfaz);
+    }
+    if (pdfen) {
+      formData.append("pdfen", pdfen);
+    }
+    if (pdfru) {
+      formData.append("pdfru", pdfru);
     }
 
     try {
@@ -64,17 +73,42 @@ const PurchRuleCreate: React.FC = () => {
     setOpenSnackbar(false);
   };
 
-  const handlePdfChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handlePdfChangeAz = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
-      setPdf(file);
+      setPdfAz(file);
       const reader = new FileReader();
       reader.onloadend = () => {
-        setPdfPreview(reader.result as string);
+        setPdfPreviewAz(reader.result as string);
       };
       reader.readAsDataURL(file);
     }
   };
+
+  const handlePdfChangeEn = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0];
+      setPdfEn(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPdfPreviewEn(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handlePdfChangeRu = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0];
+      setPdfRu(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPdfPreviewRu(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
 
   return (
     <div className="component-create">
@@ -113,26 +147,66 @@ const PurchRuleCreate: React.FC = () => {
           onChange={(e: ChangeEvent<HTMLInputElement>) => setTitleRu(e.target.value)}
           name="title_ru"
         />
+
+
         {/* upload PDF area */}
         <input
           accept=".pdf, .doc, .docx"
           style={{ display: "none" }}
-          id="upload-pdf"
+          id="upload-pdfaz"
           type="file"
-          name="pdf"
-          onChange={handlePdfChange}
+          name="pdfaz"
+          onChange={handlePdfChangeAz}
         />
-        <label htmlFor="upload-pdf">
+        <input
+          accept=".pdf, .doc, .docx"
+          style={{ display: "none" }}
+          id="upload-pdfen"
+          type="file"
+          name="pdfen"
+          onChange={handlePdfChangeEn}
+        />
+        <input
+          accept=".pdf, .doc, .docx"
+          style={{ display: "none" }}
+          id="upload-pdfru"
+          type="file"
+          name="pdfru"
+          onChange={handlePdfChangeRu}
+        />
+        <label htmlFor="upload-pdfaz">
           <Button
             variant="contained"
             component="span"
             style={{ marginTop: "16px", backgroundColor: "mediumslateblue" }}>
-            PDF əlavə et
+            (AZ) PDF əlavə et
+          </Button>
+        </label>
+        <label htmlFor="upload-pdfen">
+          <Button
+            variant="contained"
+            component="span"
+            style={{ marginTop: "16px", backgroundColor: "mediumslateblue" }}>
+            (EN) PDF əlavə et
+          </Button>
+        </label>
+        <label htmlFor="upload-pdfru">
+          <Button
+            variant="contained"
+            component="span"
+            style={{ marginTop: "16px", backgroundColor: "mediumslateblue" }}>
+            (RU) PDF əlavə et
           </Button>
         </label>
 
-        {pdfPreview && (
-          <iframe src={pdfPreview} title="PDF Preview" style={{ marginTop: "16px", width: "100%", height: "500px" }} />
+        {pdfPreviewAz && (
+          <iframe src={pdfPreviewAz} title="PDF Preview" style={{ marginTop: "16px", width: "100%", height: "500px" }} />
+        )}
+        {pdfPreviewEn && (
+          <iframe src={pdfPreviewEn} title="PDF Preview" style={{ marginTop: "16px", width: "100%", height: "500px" }} />
+        )}
+        {pdfPreviewRu && (
+          <iframe src={pdfPreviewRu} title="PDF Preview" style={{ marginTop: "16px", width: "100%", height: "500px" }} />
         )}
 
         <Button variant="contained" color="success" type="submit" style={{ marginTop: "16px", marginLeft: "24px" }}>

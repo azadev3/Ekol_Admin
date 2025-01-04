@@ -9,7 +9,7 @@ import { atom, useRecoilState } from "recoil";
 import { Option, toastMsg } from "../../App";
 
 export const LoadingState = atom<boolean>({
-  key: 'loadingStateKey', 
+  key: 'loadingStateKey',
   default: false,
 });
 
@@ -25,7 +25,9 @@ const CalculationsShow: React.FC = () => {
     { field: "title_az", headerName: "Title AZ", width: 150 },
     { field: "title_en", headerName: "Title EN", width: 150 },
     { field: "title_ru", headerName: "Title RU", width: 150 },
-    { field: "pdf", headerName: "PDF", width: 200 },
+    { field: "pdfaz", headerName: "PDF AZ", width: 200 },
+    { field: "pdfen", headerName: "PDF EN", width: 200 },
+    { field: "pdfru", headerName: "PDF RU", width: 200 },
     {
       field: "actions",
       headerName: "Actions",
@@ -74,7 +76,9 @@ const CalculationsShow: React.FC = () => {
         title_az: item.title?.az || "",
         title_en: item.title?.en || "",
         title_ru: item.title?.ru || "",
-        pdf: item.pdf || "",
+        pdfaz: item.pdf?.az || "",
+        pdfen: item.pdf?.en || "",
+        pdfru: item.pdf?.ru || "",
       }));
       setRows(rowsWithId);
     } catch (error) {

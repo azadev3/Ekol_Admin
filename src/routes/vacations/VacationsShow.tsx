@@ -10,6 +10,24 @@ const VacationsShow: React.FC = () => {
   const [rows, setRows] = useState<any[]>([]);
 
   const navigate = useNavigate();
+  const [statusActive, setStatusActive] = useState<{ [key: string]: boolean }>({});
+  const toggleStatus = async (id: string | number) => {
+    const newStatus = !statusActive[id];
+    setStatusActive((prevStatus) => ({
+      ...prevStatus,
+      [id]: newStatus,
+    }));
+
+    try {
+      await axios.put(`${URL}/vacations/status/${id}`, { statusActive: newStatus });
+    } catch (error) {
+      console.error('Status güncellenirken hata oluştu:', error);
+      setStatusActive((prevStatus) => ({
+        ...prevStatus,
+        [id]: !newStatus,
+      }));
+    }
+  };
 
   // COLUMNS
   const columns: GridColDef[] = [
@@ -30,7 +48,7 @@ const VacationsShow: React.FC = () => {
     {
       field: "actions",
       headerName: "Actions",
-      width: 200,
+      width: 300,
       renderCell: (params) => (
         <div className="buttons-grid">
           <button
@@ -45,6 +63,9 @@ const VacationsShow: React.FC = () => {
           >
             Sil
           </button>
+          <div className="toggle-status" onClick={() => toggleStatus(params?.row?.id)}>
+            <span>{statusActive[params?.row?.id] ? 'Deaktiv et' : 'Aktiv et'}</span>
+          </div>
         </div>
       ),
     },
@@ -85,8 +106,15 @@ const VacationsShow: React.FC = () => {
         workRegime_ru: item.workRegime?.ru || "",
         start_date: item.startDate || "",
         end_date: item.endDate || "",
+        statusActive: item.statusActive || '',
       }));
       setRows(rowsWithId);
+
+      const initialStatusActive: { [key: string]: boolean } = {};
+      response.data.forEach((item: any) => {
+        initialStatusActive[item._id] = item.statusActive;
+      });
+      setStatusActive(initialStatusActive);
     } catch (error) {
       console.error("Error fetching data:", error);
     }

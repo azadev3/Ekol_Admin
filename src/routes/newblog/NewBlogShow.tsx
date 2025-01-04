@@ -24,6 +24,9 @@ const NewBlogShow: React.FC = () => {
     { field: "description_az", headerName: "Description AZ", width: 200 },
     { field: "description_en", headerName: "Description EN", width: 200 },
     { field: "description_ru", headerName: "Description RU", width: 200 },
+    { field: "slogan_az", headerName: "Slogan AZ", width: 200 },
+    { field: "slogan_en", headerName: "Slogan EN", width: 200 },
+    { field: "slogan_ru", headerName: "Slogan RU", width: 200 },
     { field: "created_at", headerName: "Yaranma tarixi", width: 200 },
     {
       field: "actions",
@@ -76,8 +79,12 @@ const NewBlogShow: React.FC = () => {
         description_az: item.description?.az || "",
         description_en: item.description?.en || "",
         description_ru: item.description?.ru || "",
+        slogan_az: item.slogan.az || "",
+        slogan_en: item.slogan.en || "",
+        slogan_ru: item.slogan.ru || "",
         created_at: item.created_at || "",
       }));
+      rowsWithId.sort((a: any, b: any) => b.id.localeCompare(a.id));
       setRows(rowsWithId);
     } catch (error) {
       console.error("Error fetching data:", error);

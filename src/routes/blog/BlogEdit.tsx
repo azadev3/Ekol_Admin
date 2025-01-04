@@ -6,7 +6,7 @@ import { URL } from "../../Base";
 import Title from "../../uitils/Title";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { toastMsg } from "../../App";
+import { Option, toastMsg } from "../../App";
 
 const BlogEdit: React.FC = () => {
   const modules = {
@@ -88,7 +88,7 @@ const BlogEdit: React.FC = () => {
     formData.append("created_at", created_at);
 
     try {
-      const response = await axios.put(`${URL}/blog/${editid}`, formData);
+      const response = await axios.put(`${URL}/blog/${editid}`, formData, Option());
       console.log(response.data);
       setSnackbarMessage("Düzəliş uğurludur!");
       setOpenSnackbar(true);
