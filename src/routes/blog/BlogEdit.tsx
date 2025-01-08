@@ -4,35 +4,12 @@ import { TextField, Button, Snackbar, Alert, Typography, Box } from "@mui/materi
 import axios from "axios";
 import { URL } from "../../Base";
 import Title from "../../uitils/Title";
-import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { Option, toastMsg } from "../../App";
+import MyEditor from "../../TipTap";
 
 const BlogEdit: React.FC = () => {
-  const modules = {
-    toolbar: [
-      [{ header: "1" }, { header: "2" }, { font: [] }],
-      [{ list: "ordered" }, { list: "bullet" }],
-      ["bold", "italic", "underline"],
-      ["link", "image"],
-      [{ align: [] }],
-      ["clean"],
-    ],
-  };
 
-  const formats = [
-    "header",
-    "font",
-    "list",
-    "bullet",
-    "bold",
-    "italic",
-    "underline",
-    "link",
-    "image",
-    "align",
-    "clean",
-  ];
   const { editid } = useParams();
   const navigate = useNavigate();
 
@@ -45,10 +22,14 @@ const BlogEdit: React.FC = () => {
   const [description_az, setDescriptionAz] = useState("");
   const [description_en, setDescriptionEn] = useState("");
   const [description_ru, setDescriptionRu] = useState("");
+  const [slogan_az, setSloganAz] = useState('');
+  const [slogan_en, setSloganEn] = useState('');
+  const [slogan_ru, setSloganRu] = useState('');
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string>("");
   const [created_at, setCreatedAt] = useState("");
   const [updated, setUpdated] = useState("");
+
   // Fetch data
   useEffect(() => {
     if (editid) {
@@ -62,6 +43,9 @@ const BlogEdit: React.FC = () => {
           setDescriptionAz(data.description.az || "");
           setDescriptionEn(data.description.en || "");
           setDescriptionRu(data.description.ru || "");
+          setSloganAz(data.slogan.az || "");
+          setSloganEn(data.slogan.en || "");
+          setSloganRu(data.slogan.ru || "");
           setImagePreview(`https://ekol-server-1.onrender.com${data.image}` || "");
         } catch (error) {
           console.error("Error fetching data:", error);
@@ -84,6 +68,9 @@ const BlogEdit: React.FC = () => {
     formData.append("description_az", description_az);
     formData.append("description_en", description_en);
     formData.append("description_ru", description_ru);
+    formData.append("slogan_az", slogan_az);
+    formData.append("slogan_en", slogan_en);
+    formData.append("slogan_ru", slogan_ru);
     formData.append("imgback", image ? image : "");
     formData.append("created_at", created_at);
 
@@ -132,6 +119,7 @@ const BlogEdit: React.FC = () => {
           name="title_az"
         />
 
+
         <TextField
           label="Başlıq(EN)"
           variant="outlined"
@@ -152,20 +140,48 @@ const BlogEdit: React.FC = () => {
           name="title_ru"
         />
 
-        <Typography variant="h6" gutterBottom>
-          Açıqlama(AZ)
-        </Typography>
-        <ReactQuill value={description_az} onChange={setDescriptionAz} modules={modules} formats={formats} />
+        <TextField
+          label="Slogan(AZ)"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={slogan_az}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => setSloganAz(e.target.value)}
+          name="slogan_az"
+        />
 
-        <Typography variant="h6" gutterBottom>
-          Açıqlama(EN)
-        </Typography>
-        <ReactQuill value={description_en} onChange={setDescriptionEn} modules={modules} formats={formats} />
+        <TextField
+          label="Slogan(EN)"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={slogan_en}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => setSloganEn(e.target.value)}
+          name="slogan_en"
+        />
 
-        <Typography variant="h6" gutterBottom>
-          Açıqlama(RU)
-        </Typography>
-        <ReactQuill value={description_ru} onChange={setDescriptionRu} modules={modules} formats={formats} />
+        <TextField
+          label="Slogan(RU)"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={slogan_ru}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => setSloganRu(e.target.value)}
+          name="slogan_ru"
+        />
+
+        <div className="my-editor-component">
+          <label>Açıqlama (AZ)</label>
+          <MyEditor value={description_az} handleChange={(html: string) => setDescriptionAz(html)} />
+        </div>
+        <div className="my-editor-component">
+          <label>Açıqlama (EN)</label>
+          <MyEditor value={description_en} handleChange={(html: string) => setDescriptionEn(html)} />
+        </div>
+        <div className="my-editor-component">
+          <label>Açıqlama (RU)</label>
+          <MyEditor value={description_ru} handleChange={(html: string) => setDescriptionRu(html)} />
+        </div>
 
         <TextField
           label="Yaradılma tarixini istədiyiniz formatta yazın məsələn: (03.10.2024)"

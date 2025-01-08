@@ -103,7 +103,6 @@ const App: React.FC = () => {
 
   return (
     <ThemeProvider theme={mode ? darkTheme : lightTheme}>
-      <ToastContainer transition={Bounce} autoClose={2000} />
       <div className={`admin ${mode ? "dark-mode" : ""}`}>
         <Routes>
           <Route path="/login" element={auth ? <Navigate to="/" /> : <Login />} />

@@ -43,6 +43,9 @@ const BlogShow: React.FC = () => {
     { field: "description_az", headerName: "Description AZ", width: 200 },
     { field: "description_en", headerName: "Description EN", width: 200 },
     { field: "description_ru", headerName: "Description RU", width: 200 },
+    { field: "slogan_az", headerName: "Slogan AZ", width: 200 },
+    { field: "slogan_en", headerName: "Slogan EN", width: 200 },
+    { field: "slogan_ru", headerName: "Slogan RU", width: 200 },
     {
       field: "actions",
       headerName: "Actions",
@@ -91,6 +94,9 @@ const BlogShow: React.FC = () => {
         description_az: item.description?.az || "",
         description_en: item.description?.en || "",
         description_ru: item.description?.ru || "",
+        slogan_az: item.slogan?.az || "",
+        slogan_en: item.slogan?.en || "",
+        slogan_ru: item.slogan?.ru || "",
         status: item.status,
       }));
 

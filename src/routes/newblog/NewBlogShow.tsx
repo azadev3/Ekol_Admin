@@ -16,6 +16,28 @@ const NewBlogShow: React.FC = () => {
 
   const navigate = useNavigate();
 
+  
+  const [status, setStatus] = React.useState<{ [key: string]: boolean }>({});
+
+  const toggleStatus = async (id: string | number) => {
+    const newStatus = !status[id];
+    setStatus((prevStatus) => ({
+      ...prevStatus,
+      [id]: newStatus,
+    }));
+
+    try {
+      await axios.put(`${URL}/newblog/status/${id}`, { status: newStatus });
+      fetchData();
+    } catch (error) {
+      console.error("Status güncellenirken hata oluştu:", error);
+      setStatus((prevStatus) => ({
+        ...prevStatus,
+        [id]: !newStatus,
+      }));
+    }
+  };
+
   // COLUMNS
   const columns: GridColDef[] = [
     { field: "title_az", headerName: "Title AZ", width: 150 },
@@ -31,7 +53,7 @@ const NewBlogShow: React.FC = () => {
     {
       field: "actions",
       headerName: "Actions",
-      width: 200,
+      width: 300,
       renderCell: (params) => (
         <div className="buttons-grid">
           <button
@@ -46,6 +68,9 @@ const NewBlogShow: React.FC = () => {
           >
             Sil
           </button>
+          <div className="toggle-status" onClick={() => toggleStatus(params?.row?.id)}>
+            <span>{status[params.row.id] ? "Deaktiv et" : "Aktiv et"}</span>
+          </div>
         </div>
       ),
     },
@@ -83,9 +108,18 @@ const NewBlogShow: React.FC = () => {
         slogan_en: item.slogan.en || "",
         slogan_ru: item.slogan.ru || "",
         created_at: item.created_at || "",
+        status: item.status,
       }));
+
+      const statusMap: any = {};
+      rowsWithId.forEach((row: any) => {
+        statusMap[row.id] = row.status;
+      });
+      setStatus(statusMap);
+
       rowsWithId.sort((a: any, b: any) => b.id.localeCompare(a.id));
       setRows(rowsWithId);
+
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {

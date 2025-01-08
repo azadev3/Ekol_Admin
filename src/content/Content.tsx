@@ -150,6 +150,15 @@ import ProcedureEdit from '../routes/procedure/ProcedureEdit';
 import NewBlogImageShow from '../routes/newblog/NewBlogImageShow';
 import NewBlogImageCreate from '../routes/newblog/NewBlogImageCreate';
 import NewBlogImageEdit from '../routes/newblog/NewBlogImageEdit';
+import HiddenHero from '../routes/hiddenhero/HiddenHero';
+import HiddenOurWorksHome from '../routes/hiddenourworkshome/HiddenOurWorksHome';
+import HiddenAbout from '../routes/hiddenabout/HiddenAbout';
+import HiddenActivity from '../routes/hiddenactivity/HiddenActivity';
+import HiddenMedia from '../routes/hiddenmedia/HiddenMedia';
+import MainPage from '../routes/seo/MainPage';
+import MetaTags from '../routes/seo/metatags/MetaTags';
+import HiddenContact from '../routes/hiddencontact/HiddenContact';
+import AddFavicon from '../routes/seo/addfavicon/AddFavicon';
 
 const Content: React.FC = () => {
     const toggleSidebar = useRecoilValue(ToggleSidebarState);
@@ -432,6 +441,17 @@ const Content: React.FC = () => {
                 <Route path="/hidden-social" element={<HiddenSocial />} />
                 <Route path="/hidden-purchase" element={<HiddenPurchase />} />
                 <Route path="/hidden-carier" element={<HiddenCarier />} />
+                <Route path="/hidden-hero" element={<HiddenHero />} />
+                <Route path="/hidden-ourworkshome" element={<HiddenOurWorksHome />} />
+                <Route path="/hidden-about" element={<HiddenAbout />} />
+                <Route path="/hidden-activity" element={<HiddenActivity />} />
+                <Route path="/hidden-media" element={<HiddenMedia />} />
+                <Route path="/hidden-contact" element={<HiddenContact />} />
+
+                {/* SEO */}
+                <Route path='/seo-optimizations' element={<MainPage />} />
+                <Route path='/seo-optimizations-meta-tags' element={<MetaTags />} />
+                <Route path='/seo-optimizations-favicon' element={<AddFavicon />} />
 
                 {/* DYNAMIC PAGES */}
                 <Route path="/page" element={<PageShow />} />

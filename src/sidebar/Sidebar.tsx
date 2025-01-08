@@ -15,6 +15,7 @@ import { AiOutlineRise } from 'react-icons/ai';
 import { GiMovementSensor, GiReceiveMoney } from 'react-icons/gi';
 import { GoEyeClosed } from 'react-icons/go';
 import { MdOutlineContactPage } from 'react-icons/md';
+import { RiSeoLine } from 'react-icons/ri';
 
 export const SidebarLinkLengthState = atom<string>({
     key: 'lengthStateKeySidebarLink',
@@ -82,6 +83,7 @@ const Sidebarr: React.FC = () => {
                 <span>Əsas</span>
             </NavLink>
             {/* links */}
+            <SidebarLinkWithDropdown to="/seo-optimizations" linkTitle="SEO" linkIcon={<RiSeoLine />} />
             <SidebarLinkWithDropdown to="/hero" linkTitle="Hero" linkIcon={<SiApacherocketmq />} />
             <SidebarLinkWithDropdown
                 to="/ourworks"
@@ -197,6 +199,12 @@ const Sidebarr: React.FC = () => {
                     { title: 'Satınalma', to: '/hidden-purchase' },
                     { title: 'Karyera imkanları', to: '/hidden-carier' },
                     { title: 'Sosial həyat', to: '/hidden-social' },
+                    { title: 'Hero', to: '/hidden-hero' },
+                    { title: 'Gördüyümüz İşlər (ana səhifə)', to: '/hidden-ourworkshome' },
+                    { title: 'Haqqımızda', to: '/hidden-about' },
+                    { title: 'Fəaliyyət', to: '/hidden-activity' },
+                    { title: 'Media', to: '/hidden-media' },
+                    { title: 'Əlaqə', to: '/hidden-contact' },
                 ]}
             />
             <SidebarLinkWithDropdown to="/page" linkTitle="Sayta Dinamik Səhifə Əlavə Et" linkIcon={<MdOutlineContactPage />} />

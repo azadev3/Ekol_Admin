@@ -13,6 +13,7 @@ import Blockquote from "@tiptap/extension-blockquote";
 import Superscript from '@tiptap/extension-superscript'
 import ImageResize from 'tiptap-extension-resize-image';
 import { URL } from "./Base";
+import { Extension, RawCommands } from '@tiptap/core';
 
 type Props = {
     handleChange: (html: string) => void;
@@ -21,16 +22,40 @@ type Props = {
 
 const MyEditor: React.FC<Props> = ({ handleChange, value }) => {
 
+    const AddNbsp = Extension.create({
+        name: "addNbsp",
+
+        addCommands(): any {
+            return {
+                addNbsp: () => ({ commands }: { commands: RawCommands }) => {
+                    return commands.insertContent(" "); // Non-breaking space character
+                },
+            };
+        },
+    });
 
     const editor = useEditor({
         onUpdate: ({ editor }) => {
             const html = editor.getHTML();
             handleChange(html);
         },
-        content: value || '',
-        extensions: [StarterKit, TextStyle, Color, Document, Paragraph, Dropcursor, Image, Text, Blockquote, Subscript, Superscript, ImageResize],
+        content: value || "",
+        extensions: [
+            StarterKit,
+            TextStyle,
+            Color,
+            Document,
+            Paragraph,
+            Dropcursor,
+            Image,
+            Text,
+            Blockquote,
+            Subscript,
+            Superscript,
+            ImageResize,
+            AddNbsp
+        ],
     });
-
 
     const addImages = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
@@ -39,6 +64,7 @@ const MyEditor: React.FC<Props> = ({ handleChange, value }) => {
         fileInput.type = "file";
         fileInput.accept = "image/*";
         fileInput.multiple = true;
+
         fileInput.onchange = async (event) => {
             const files = (event.target as HTMLInputElement).files;
 
@@ -51,19 +77,17 @@ const MyEditor: React.FC<Props> = ({ handleChange, value }) => {
                         const response = await fetch(`${URL}/uploadForEditor`, {
                             method: "POST",
                             body: formData,
-                            headers: {
-                                "Content-Type": 'multipart/form-data',
-                            }
                         });
 
                         if (!response.ok) {
-                            throw new Error("Image upload unsuccess!");
+                            throw new Error("Image upload failed");
                         }
 
                         const data = await response.json();
-                        const imageUrl = data.url;
+                        const imageUrl = `https://ekol-server-1.onrender.com${data.data.url}`;
 
                         editor?.chain().focus().setImage({ src: imageUrl }).run();
+                        console.log("Resim editöre eklendi:", imageUrl);
                     } catch (error) {
                         console.error("Image upload error:", error);
                     }
@@ -73,6 +97,7 @@ const MyEditor: React.FC<Props> = ({ handleChange, value }) => {
 
         fileInput.click();
     };
+
 
 
     const handleButtonsClick = (e: ChangeEvent<HTMLButtonElement>) => {
@@ -110,6 +135,16 @@ const MyEditor: React.FC<Props> = ({ handleChange, value }) => {
                         toggleFullScreen();
                         handleButtonsClick(e);
                     }}>Full Screen</button>
+                    <button
+                        onClick={(e: any) => {
+                            e.preventDefault();
+                            editor.chain().focus().addNbsp().run();
+                        }}
+                    >
+                        Add &nbsp;
+                    </button>
+
+
                     <button
                         onClick={(e: any) => {
                             handleButtonsClick(e);

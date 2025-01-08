@@ -4,35 +4,12 @@ import { TextField, Button, Snackbar, Alert, Typography, Box } from "@mui/materi
 import axios from "axios";
 import { URL } from "../../Base";
 import Title from "../../uitils/Title";
-import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { Option, OptionWithFormData, toastMsg } from "../../App";
+import MyEditor from "../../TipTap";
 
 const ServicesPageEdit: React.FC = () => {
-  const modules = {
-    toolbar: [
-      [{ header: "1" }, { header: "2" }, { font: [] }],
-      [{ list: "ordered" }, { list: "bullet" }],
-      ["bold", "italic", "underline"],
-      ["link", "image"],
-      [{ align: [] }],
-      ["clean"],
-    ],
-  };
 
-  const formats = [
-    "header",
-    "font",
-    "list",
-    "bullet",
-    "bold",
-    "italic",
-    "underline",
-    "link",
-    "image",
-    "align",
-    "clean",
-  ];
   const { editid } = useParams();
   const navigate = useNavigate();
 
@@ -187,20 +164,18 @@ const ServicesPageEdit: React.FC = () => {
           name="slogan_ru"
         />
 
-        <Typography variant="h6" gutterBottom>
-          Açıqlama(AZ)
-        </Typography>
-        <ReactQuill value={description_az} onChange={setDescriptionAz} modules={modules} formats={formats} />
-
-        <Typography variant="h6" gutterBottom>
-          Açıqlama(EN)
-        </Typography>
-        <ReactQuill value={description_en} onChange={setDescriptionEn} modules={modules} formats={formats} />
-
-        <Typography variant="h6" gutterBottom>
-          Açıqlama(RU)
-        </Typography>
-        <ReactQuill value={description_ru} onChange={setDescriptionRu} modules={modules} formats={formats} />
+        <div className="my-editor-component">
+          <label>Açıqlama (AZ)</label>
+          <MyEditor value={description_az} handleChange={(html: string) => setDescriptionAz(html)} />
+        </div>
+        <div className="my-editor-component">
+          <label>Açıqlama (EN)</label>
+          <MyEditor value={description_en} handleChange={(html: string) => setDescriptionEn(html)} />
+        </div>
+        <div className="my-editor-component">
+          <label>Açıqlama (RU)</label>
+          <MyEditor value={description_ru} handleChange={(html: string) => setDescriptionRu(html)} />
+        </div>
 
         {/* upload image area */}
         <input
