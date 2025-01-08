@@ -32,7 +32,7 @@ export const TooltipForLinkState = atom<{ [key: string]: boolean }>({
     default: {},
 });
 
-const Sidebarr: React.FC = () => {
+const Sidebar: React.FC = () => {
     const [toggleSidebar, setToggleSidebar] = useRecoilState(ToggleSidebarState);
 
     const [mobileSidebar, setMobileSidebar] = React.useState<boolean>(false);
@@ -212,4 +212,4 @@ const Sidebarr: React.FC = () => {
     );
 };
 
-export default Sidebarr;
+export default Sidebar;
