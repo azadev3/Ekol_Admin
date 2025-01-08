@@ -11,7 +11,7 @@ import { ThemeProvider } from "@mui/material";
 import { darkTheme } from "./theme";
 import { lightTheme } from "./lightTheme";
 import { useUserInfos } from "./uitils/useUser";
-import { Bounce, toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 export const toastMsg = () => {
   return toast.error("Bu əməliyyat üçün icazəniz yoxdur", {

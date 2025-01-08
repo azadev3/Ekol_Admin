@@ -138,6 +138,7 @@ const MyEditor: React.FC<Props> = ({ handleChange, value }) => {
                     <button
                         onClick={(e: any) => {
                             e.preventDefault();
+                            //@ts-ignore
                             editor.chain().focus().addNbsp().run();
                         }}
                     >
