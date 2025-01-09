@@ -34,9 +34,17 @@ const CreateUser: React.FC = () => {
   const getUsers = async () => {
     try {
       const res = await axios.get(`${URL}/create_new_user`);
+
       if (res.data) {
-        console.log(res.data);
-        setUsers(res.data);
+        const sortedUsers = res.data?.sort((a: UserType, b: UserType) => {
+          if (a.email === "superuser@gmail.com") return -1;
+          if (b.email === "superuser@gmail.com") return 1;
+          return 0;
+        });
+        console.log(res.data, 'resss')
+        console.log(sortedUsers);
+        setUsers(sortedUsers);
+
       } else {
         console.log(res.status);
       }
@@ -121,8 +129,8 @@ const CreateUser: React.FC = () => {
   const findedUser: any =
     users && users?.length > 0
       ? users?.find((user: UserType) => {
-          return userModal === user?._id;
-        })
+        return userModal === user?._id;
+      })
       : [];
 
   const deleteUser = async (id: string) => {
@@ -336,66 +344,66 @@ const CreateUser: React.FC = () => {
           <tbody>
             {users && users?.length > 0
               ? users?.map((user: UserType) => {
-                  const role = roleData.find((role: RoleData) => role._id === user.user_role);
-                  if (role?.name === "Admin") {
-                    return (
-                      <tr key={user._id}>
-                        <td>{user?.name_surname}</td>
-                        <td>{user?.email}</td>
-                        <td>{role?.name || "Bilinmir"}</td>
-                        <td
+                const role = roleData.find((role: RoleData) => role._id === user.user_role);
+                if (role?.name === "Superadmin") {
+                  return (
+                    <tr key={user._id}>
+                      <td>{user?.name_surname}</td>
+                      <td>{user?.email}</td>
+                      <td>{role?.name || "Bilinmir"}</td>
+                      <td
+                        style={{
+                          color: "green",
+                          fontSize: "16px",
+                          fontWeight: "600",
+                          letterSpacing: "1px",
+                          pointerEvents: "none",
+                        }}>
+                        <span>{userStatus[user._id] ? "Aktiv" : "Deaktiv"}</span>
+                        <button
+                          onClick={() => toggleStatus(user._id)}
                           style={{
-                            color: "green",
-                            fontSize: "16px",
-                            fontWeight: "600",
-                            letterSpacing: "1px",
-                            pointerEvents: "none",
+                            padding: "4px 8px",
+                            marginLeft: "24px",
+                            cursor: "pointer",
                           }}>
-                          <span>{userStatus[user._id] ? "Aktiv" : "Deaktiv"}</span>
-                          <button
-                            onClick={() => toggleStatus(user._id)}
-                            style={{
-                              padding: "4px 8px",
-                              marginLeft: "24px",
-                              cursor: "pointer",
-                            }}>
-                            {userStatus[user._id] ? "Deaktiv et" : "Aktiv et"}
-                          </button>
-                        </td>
-                        <td className="editing" style={{ pointerEvents: "none" }}>
-                          <button type="button" onClick={() => openModal(user._id)}>
-                            Adminə düzəliş oluna bilməz
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  } else {
-                    return (
-                      <tr key={user._id}>
-                        <td>{user?.name_surname}</td>
-                        <td>{user?.email}</td>
-                        <td>{role?.name || "Bilinmir"}</td>
-                        <td style={{ color: "green", fontSize: "16px", fontWeight: "600", letterSpacing: "1px" }}>
-                          <span>{userStatus[user._id] ? "Aktiv" : "Deaktiv"}</span>
-                          <button
-                            onClick={() => toggleStatus(user._id)}
-                            style={{
-                              padding: "4px 8px",
-                              marginLeft: "24px",
-                              cursor: "pointer",
-                            }}>
-                            {userStatus[user._id] ? "Deaktiv et" : "Aktiv et"}
-                          </button>
-                        </td>
-                        <td className="editing">
-                          <button type="button" onClick={() => openModal(user._id)}>
-                            İstifadəçini sil və ya rolunu dəyiş
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  }
-                })
+                          {userStatus[user._id] ? "Deaktiv et" : "Aktiv et"}
+                        </button>
+                      </td>
+                      <td className="editing" style={{ pointerEvents: "none" }}>
+                        <button type="button" onClick={() => openModal(user._id)}>
+                          Superadmin'ə düzəliş oluna bilməz
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                } else {
+                  return (
+                    <tr key={user._id}>
+                      <td>{user?.name_surname}</td>
+                      <td>{user?.email}</td>
+                      <td>{role?.name || "Bilinmir"}</td>
+                      <td style={{ color: "green", fontSize: "16px", fontWeight: "600", letterSpacing: "1px" }}>
+                        <span>{userStatus[user._id] ? "Aktiv" : "Deaktiv"}</span>
+                        <button
+                          onClick={() => toggleStatus(user._id)}
+                          style={{
+                            padding: "4px 8px",
+                            marginLeft: "24px",
+                            cursor: "pointer",
+                          }}>
+                          {userStatus[user._id] ? "Deaktiv et" : "Aktiv et"}
+                        </button>
+                      </td>
+                      <td className="editing">
+                        <button type="button" onClick={() => openModal(user._id)}>
+                          İstifadəçini sil və ya rolunu dəyiş
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                }
+              })
               : null}
           </tbody>
         </table>

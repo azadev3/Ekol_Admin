@@ -191,13 +191,13 @@ const CreateRole: React.FC = () => {
 
   React.useEffect(() => {
     if (roleData && roleData.length > 0) {
-      const adminIndex = roleData.findIndex((data: RoleData) => data.name === "Admin");
+      const adminIndex = roleData.findIndex((data: RoleData) => data.name === "Superadmin");
 
       if (adminIndex !== -1) {
         const adminData = roleData[adminIndex];
         const otherRoles = roleData.filter((_, index) => index !== adminIndex);
 
-        if (roleData[0]?.name !== "Admin") {
+        if (roleData[0]?.name !== "Superadmin") {
           setRoleData([adminData, ...otherRoles]);
         }
       }
@@ -397,7 +397,7 @@ const CreateRole: React.FC = () => {
           <tbody>
             {roleData && roleData?.length > 0
               ? roleData?.map((roles: RoleData, i: number) => {
-                if (roles.name === "Admin") {
+                if (roles.name === "Superadmin") {
                   return (
                     <tr style={{ cursor: "no-drop" }} key={roles?._id}>
                       <td>0{i + 1}</td>
@@ -414,7 +414,7 @@ const CreateRole: React.FC = () => {
                           ? roles.role_permissions?.map((role) => role.name).join(", ")
                           : ""}
                       </td>
-                      <td>Adminə düzəliş edə bilməzsiniz</td>
+                      <td>Superadmin'ə düzəliş edə bilməzsiniz</td>
                     </tr>
                   )
                 } else {

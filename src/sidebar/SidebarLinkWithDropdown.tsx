@@ -40,7 +40,7 @@ const SidebarLinkWithDropdown: React.FC<props> = (props) => {
     {props.to && !props.isDropdown ? (
      <NavLink
       onMouseEnter={() => {
-       if (!props.isDropdown && toggleSidebar) {
+       if (!props.isDropdown && !toggleSidebar) {
         setTooltip(() => ({
          [props.linkTitle]: true,
         }));

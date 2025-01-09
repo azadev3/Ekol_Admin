@@ -159,6 +159,8 @@ import MainPage from '../routes/seo/MainPage';
 import MetaTags from '../routes/seo/metatags/MetaTags';
 import HiddenContact from '../routes/hiddencontact/HiddenContact';
 import AddFavicon from '../routes/seo/addfavicon/AddFavicon';
+import PurchRuleEdit from '../routes/purchaserules/PurchRuleEdit';
+import SmtpCreate from '../routes/smtpconfig/SmtpCreate';
 
 const Content: React.FC = () => {
     const toggleSidebar = useRecoilValue(ToggleSidebarState);
@@ -178,7 +180,7 @@ const Content: React.FC = () => {
     };
 
     return (
-        <main className="content" style={{ width: toggleSidebar ? '95%' : '' }}>
+        <main className="content" style={{ width: !toggleSidebar ? '95%' : '' }}>
             <header className="header">
                 <div className="left-logo">
                     <FaRegHandPointRight className="right" />
@@ -388,6 +390,7 @@ const Content: React.FC = () => {
                 {/* PURCHASE RULES (NEW FEATURE) */}
                 <Route path="/purchaserules" element={<PurchRuleShow />} />
                 <Route path="/purchaserules/create" element={<PurchRuleCreate />} />
+                <Route path="/purchaserules/:editid" element={<PurchRuleEdit />} />
                 {/* PURCHASE CONTACT (NEW FEATURE) */}
                 <Route path="/purchasecontact" element={<PurchaseContact />} />
                 <Route path="/purchaseAddCountries" element={<PurchaseAddCountries />} />
@@ -469,6 +472,8 @@ const Content: React.FC = () => {
                 <Route path='/procedure' element={<ProcedureShow />} />
                 <Route path='/procedure/create' element={<ProcedureCreate />} />
                 <Route path='/procedure/:editid' element={<ProcedureEdit />} />
+
+                <Route path='/smtp-config' element={<SmtpCreate />} />
 
 
             </Routes>

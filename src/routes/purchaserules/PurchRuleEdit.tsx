@@ -1,18 +1,23 @@
 import React, { useEffect, useState, ChangeEvent } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Button, Snackbar, Alert } from "@mui/material";
+import { TextField, Button, Snackbar, Alert, Typography } from "@mui/material";
 import axios from "axios";
 import { URL } from "../../Base";
 import Title from "../../uitils/Title";
 import "react-quill/dist/quill.snow.css";
 import { Option, OptionWithFormData, toastMsg } from "../../App";
 
-const ProcedureEdit: React.FC = () => {
+const PurchRuleEdit: React.FC = () => {
     const { editid } = useParams();
     const navigate = useNavigate();
 
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState("");
+
+
+    const [title_az, setTitleAz] = useState("");
+    const [title_en, setTitleEn] = useState("");
+    const [title_ru, setTitleRu] = useState("");
 
     const [pdfaz, setPdfAz] = useState<File | null>(null);
     const [pdfen, setPdfEn] = useState<File | null>(null);
@@ -27,11 +32,14 @@ const ProcedureEdit: React.FC = () => {
         if (editid) {
             const fetchData = async () => {
                 try {
-                    const response = await axios.get(`${URL}/procedure/${editid}`, Option());
+                    const response = await axios.get(`${URL}/purchaserules/${editid}`, Option());
                     const data = response.data;
-                    setPdfPreviewAz(`https://ekol-server-1.onrender.com${data.pdf.az}` || "");
-                    setPdfPreviewEn(`https://ekol-server-1.onrender.com${data.pdf.en}` || "");
-                    setPdfPreviewRu(`https://ekol-server-1.onrender.com${data.pdf.ru}` || "");
+                    setTitleAz(data.title.az || "");
+                    setTitleEn(data.title.en || "");
+                    setTitleRu(data.title.ru || "");
+                    setPdfPreviewAz(`https://ekol-server-1.onrender.com${data.pdf.az}` || '');
+                    setPdfPreviewEn(`https://ekol-server-1.onrender.com${data.pdf.en}` || '');
+                    setPdfPreviewRu(`https://ekol-server-1.onrender.com${data.pdf.ru}` || '');
                 } catch (error) {
                     console.error("Error fetching data:", error);
                 }
@@ -47,6 +55,9 @@ const ProcedureEdit: React.FC = () => {
         if (!editid) return;
 
         const formData = new FormData();
+        formData.append("title_az", title_az);
+        formData.append("title_en", title_en);
+        formData.append("title_ru", title_ru);
         if (pdfaz) {
             formData.append("pdfaz", pdfaz);
         }
@@ -56,13 +67,12 @@ const ProcedureEdit: React.FC = () => {
         if (pdfru) {
             formData.append("pdfru", pdfru);
         }
-
         try {
-            const response = await axios.put(`${URL}/procedure/${editid}`, formData, OptionWithFormData());
+            const response = await axios.put(`${URL}/purchaserules/${editid}`, formData, OptionWithFormData());
             console.log(response.data);
             setSnackbarMessage("Düzəliş uğurludur!");
             setOpenSnackbar(true);
-            navigate("/procedure");
+            navigate("/purchaserules");
         } catch (error) {
             console.error(error);
             toastMsg();
@@ -74,8 +84,6 @@ const ProcedureEdit: React.FC = () => {
     const handleSnackbarClose = () => {
         setOpenSnackbar(false);
     };
-
-
 
     const handlePdfChangeAz = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files[0]) {
@@ -114,13 +122,45 @@ const ProcedureEdit: React.FC = () => {
     };
 
 
-
     return (
         <div className="component-edit">
-            <Title description="Dəyişiklik et" title="Şikayətlər proseduru" to="" />
+            <Title description="Dəyişiklik et" title="Satınalma Qaydaları" to="" />
 
             <form noValidate autoComplete="off" onSubmit={handleSubmit} style={{ marginTop: "16px" }}>
+                <TextField
+                    label="Başlıq(AZ)"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    value={title_az}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => setTitleAz(e.target.value)}
+                    name="title_az"
+                />
 
+                <TextField
+                    label="Başlıq(EN)"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    value={title_en}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => setTitleEn(e.target.value)}
+                    name="title_en"
+                />
+
+                <TextField
+                    label="Başlıq(RU)"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    value={title_ru}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => setTitleRu(e.target.value)}
+                    name="title_ru"
+                />
+
+
+                <Typography variant="h6" style={{ color: "mediumslateblue", marginTop: "24px" }}>
+                    Aşağıdakılardan birini işarələyin*
+                </Typography>
 
                 {/* upload PDF area */}
                 <input
@@ -197,4 +237,4 @@ const ProcedureEdit: React.FC = () => {
     );
 };
 
-export default ProcedureEdit;
+export default PurchRuleEdit;

@@ -16,6 +16,8 @@ import { GiMovementSensor, GiReceiveMoney } from 'react-icons/gi';
 import { GoEyeClosed } from 'react-icons/go';
 import { MdOutlineContactPage } from 'react-icons/md';
 import { RiSeoLine } from 'react-icons/ri';
+import { FcDataConfiguration } from "react-icons/fc";
+
 
 export const SidebarLinkLengthState = atom<string>({
     key: 'lengthStateKeySidebarLink',
@@ -24,7 +26,7 @@ export const SidebarLinkLengthState = atom<string>({
 
 export const ToggleSidebarState = atom<boolean>({
     key: 'togglesideStateKey',
-    default: false,
+    default: true,
 });
 
 export const TooltipForLinkState = atom<{ [key: string]: boolean }>({
@@ -61,18 +63,12 @@ const Sidebar: React.FC = () => {
         return () => window.removeEventListener('resize', controlMobilesidebar);
     }, []);
 
-    React.useEffect(() => {
-        if (!toggleSidebar) {
-            setToggleSidebar(true);
-        }
-    }, []);
-
     return (
-        <aside className={`sidebar ${toggleSidebar ? 'collapsed' : mobileSidebar ? 'mobile-sidebar' : ''}`} ref={sidebarRef}>
+        <aside className={`sidebar ${!toggleSidebar ? 'collapsed' : mobileSidebar ? 'mobile-sidebar' : ''}`} ref={sidebarRef}>
             <section className="top-area">
                 <img src="/166.svg" alt="" />
                 <PiCaretLeftFill
-                    className={`toggle-sidebar-icon ${toggleSidebar ? 'collapsedicon' : ''}`}
+                    className={`toggle-sidebar-icon ${!toggleSidebar ? 'collapsedicon' : ''}`}
                     onClick={() => {
                         setToggleSidebar((prevSidebar) => !prevSidebar);
                     }}
@@ -83,13 +79,14 @@ const Sidebar: React.FC = () => {
                 <span>Əsas</span>
             </NavLink>
             {/* links */}
+            <SidebarLinkWithDropdown to="/smtp-config" linkTitle="Mail / SMTP Config" linkIcon={<FcDataConfiguration />} />
             <SidebarLinkWithDropdown to="/seo-optimizations" linkTitle="SEO" linkIcon={<RiSeoLine />} />
             <SidebarLinkWithDropdown to="/hero" linkTitle="Hero" linkIcon={<SiApacherocketmq />} />
-            <SidebarLinkWithDropdown
+            {/* <SidebarLinkWithDropdown
                 to="/ourworks"
                 linkTitle="Gördüyümüz işlər (Ana səhifə)"
                 linkIcon={<PiNewspaperClipping />}
-            />
+            /> */}
             <SidebarLinkWithDropdown to="/statistics" linkTitle="Statistikalar" linkIcon={<BiPulse />} />
             <SidebarLinkWithDropdown
                 to=""

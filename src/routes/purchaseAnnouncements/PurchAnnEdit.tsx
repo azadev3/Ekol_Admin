@@ -65,6 +65,9 @@ const PurchAnnEdit: React.FC = () => {
           setPredmetRu(data.predmet.ru || "");
           setEndDate(data.end_date.ru || "");
           setSelectedStatus(data.status || "");
+          setPdfPreviewAz(`https://ekol-server-1.onrender.com${data.pdf.az}` || '');
+          setPdfPreviewEn(`https://ekol-server-1.onrender.com${data.pdf.en}` || '');
+          setPdfPreviewRu(`https://ekol-server-1.onrender.com${data.pdf.ru}` || '');
         } catch (error) {
           console.error("Error fetching data:", error);
         }
@@ -313,7 +316,7 @@ const PurchAnnEdit: React.FC = () => {
         {pdfPreviewRu && (
           <iframe src={pdfPreviewRu} title="PDF Preview" style={{ marginTop: "16px", width: "100%", height: "500px" }} />
         )}
-        
+
         <Button type="submit" variant="contained" color="success" style={{ marginTop: "16px", marginLeft: "24px" }}>
           Düzəliş et
         </Button>
