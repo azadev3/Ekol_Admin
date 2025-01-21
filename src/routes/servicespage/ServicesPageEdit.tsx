@@ -35,16 +35,16 @@ const ServicesPageEdit: React.FC = () => {
         try {
           const response = await axios.get(`${URL}/servicespage/${editid}`, Option());
           const data = response.data;
+          console.log(data.description, 'bu data descdir')
           setTitleAz(data.title.az || "");
           setTitleEn(data.title.en || "");
           setTitleRu(data.title.ru || "");
           setSloganAz(data.slogan.az || "");
           setSloganEn(data.slogan.en || "");
           setSloganRu(data.slogan.ru || "");
-          setDescriptionAz(data.description.az || "");
-          setDescriptionEn(data.description.en || "");
-          setDescriptionRu(data.description.ru || "");
           setImagePreview(`https://ekol-server-1.onrender.com${data.image}` || "");
+          console.log("Description AZ:", data.description.az);
+
         } catch (error) {
           console.error("Error fetching data:", error);
         }
@@ -52,6 +52,24 @@ const ServicesPageEdit: React.FC = () => {
       fetchData();
     }
   }, [editid]);
+
+  useEffect(() => {
+    if (editid) {
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(`${URL}/servicespage/${editid}`, Option());
+
+          setDescriptionAz(response.data?.description?.az || "");
+          setDescriptionEn(response.data?.description?.en || "");
+          setDescriptionRu(response.data?.description?.ru || "");
+
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      };
+      fetchData();
+    }
+  }, []);
 
   // UPDATE
   const handleSubmit = async (e: React.FormEvent) => {
