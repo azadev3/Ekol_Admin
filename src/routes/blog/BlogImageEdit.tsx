@@ -28,7 +28,7 @@ const BlogImageEdit: React.FC = () => {
         },
       });
       if (response.data) {
-        setBlogs(response.data);
+        setBlogs(response.data?.reverse());
       }
     };
     getBlogs();
