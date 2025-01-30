@@ -61,6 +61,7 @@ const PurchAnnCreate: React.FC = () => {
     formData.append("predmet_ru", predmet_ru);
     formData.append("end_date", end_date);
     formData.append("status", selectedStatus);
+    
     if (pdfaz) {
       formData.append("pdfaz", pdfaz);
     }

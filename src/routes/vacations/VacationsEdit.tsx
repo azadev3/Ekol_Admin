@@ -50,6 +50,16 @@ const VacationsEdit: React.FC = () => {
         try {
           const response = await axios.get(`${URL}/vacations/${editid}`, Option());
           const data = response.data;
+
+          const formatDate = (dateStr: string) => {
+            if (!dateStr) return "";
+            const parts = dateStr.split(".");
+            if (parts.length === 3) {
+              return `${parts[2]}-${parts[1]}-${parts[0]}`;
+            }
+            return dateStr;
+          };
+
           setTitleAz(data.title.az || "");
           setTitleEn(data.title.en || "");
           setTitleRu(data.title.ru || "");
@@ -62,8 +72,8 @@ const VacationsEdit: React.FC = () => {
           setWorkRegimeAz(data.workRegime.az || "");
           setWorkRegimeEn(data.workRegime.en || "");
           setWorkRegimeRu(data.workRegime.ru || "");
-          setEndDate(data.endDate || "");
-          setStartDate(data.startDate || "");
+          setEndDate(formatDate(data.endDate));
+          setStartDate(formatDate(data.startDate));
         } catch (error) {
           console.error("Error fetching data:", error);
         }
@@ -228,24 +238,31 @@ const VacationsEdit: React.FC = () => {
         />
         <TextField
           required
-          label="Başlanğıc tarixi məsələn: 12.05.2024 vəya 12 May 2024"
+          label="Başlanğıc tarixi"
+          type="date"
           variant="outlined"
           fullWidth
           margin="normal"
           value={startDate}
           onChange={(e: ChangeEvent<HTMLInputElement>) => setStartDate(e.target.value)}
           name="start_date"
+          InputLabelProps={{ shrink: true }}
         />
+
         <TextField
           required
-          label="Bitiş tarixi məsələn: 12.06.2024 vəya 12 İyun 2024"
+          label="Bitiş tarixi"
+          type="date"
           variant="outlined"
           fullWidth
           margin="normal"
           value={endDate}
           onChange={(e: ChangeEvent<HTMLInputElement>) => setEndDate(e.target.value)}
           name="end_date"
+          InputLabelProps={{ shrink: true }}
         />
+
+
 
         <Button type="submit" variant="contained" color="success" style={{ marginTop: "16px", marginLeft: "24px" }}>
           Düzəliş et

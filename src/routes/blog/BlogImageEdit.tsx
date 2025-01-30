@@ -13,8 +13,8 @@ const BlogImageEdit: React.FC = () => {
   const [images, setImages] = useState<File[]>([]);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const [selected_blog, setSelectBlog] = useState<string>("");
-  const [existingImages, setExistingImages] = useState<string[]>([]); 
-  const [imagesToDelete, setImagesToDelete] = useState<string[]>([]); 
+  const [existingImages, setExistingImages] = useState<string[]>([]);
+  const [imagesToDelete, setImagesToDelete] = useState<string[]>([]);
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const { editid } = useParams();
@@ -51,6 +51,7 @@ const BlogImageEdit: React.FC = () => {
       fetchData();
     }
   }, [editid]);
+  
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       const newFiles = Array.from(event.target.files);
@@ -85,20 +86,20 @@ const BlogImageEdit: React.FC = () => {
   };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-  
+
     if (!editid) return;
-  
+
     const formData = new FormData();
     const updatedExistingImages = existingImages.filter((img) => !imagesToDelete.includes(img));
-  
+
     images.forEach((image) => formData.append("newImages", image));
-    
+
     formData.append("existingImages", JSON.stringify(updatedExistingImages));
-    
+
     formData.append("deletedImages", JSON.stringify(imagesToDelete));
-  
+
     formData.append("selected_blog", selected_blog);
-  
+
     try {
       const response = await axios.put(`${URL}/blogimage/${editid}`, formData, Option());
       console.log(response.data);
@@ -112,7 +113,7 @@ const BlogImageEdit: React.FC = () => {
       setOpenSnackbar(true);
     }
   };
-  
+
 
   return (
     <div className="component-edit">

@@ -36,7 +36,6 @@ const ProcedureCreate: React.FC = () => {
             formData.append("pdfru", pdfru);
         }
 
-
         try {
             const response = await axios.post(`${URL}/procedure`, formData, OptionWithFormData());
             console.log(response.data);

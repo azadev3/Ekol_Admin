@@ -121,6 +121,8 @@ const Sidebar: React.FC = () => {
                     { title: 'Gördüyümüz işlər - Şəkil yüklə', to: '/ourworksimages' },
                     { title: 'İllik hesabatlar', to: '/yearly_calculations' },
                     { title: 'Rüblük hesabatlar', to: '/calculations' },
+                    { title: 'Hesabatlar - Kateqoriya Əlavə Et', to: '/dynamic-category' },
+                    { title: 'Hesabatlar - Kateqoriyaya Məlumat Əlavə Et', to: '/dynamic-category-content' },
                 ]}
             />
             <SidebarLinkWithDropdown

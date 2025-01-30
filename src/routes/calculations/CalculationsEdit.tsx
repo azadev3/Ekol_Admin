@@ -33,6 +33,9 @@ const CalculationsEdit: React.FC = () => {
           setTitleAz(data.title.az || "");
           setTitleEn(data.title.en || "");
           setTitleRu(data.title.ru || "");
+          setPdfPreviewAz(`https://ekol-server-1.onrender.com${data.pdf.az}` || "");
+          setPdfPreviewEn(`https://ekol-server-1.onrender.com${data.pdf.en}` || "");
+          setPdfPreviewRu(`https://ekol-server-1.onrender.com${data.pdf.ru}` || "");
         } catch (error) {
           console.error("Error fetching data:", error);
         }

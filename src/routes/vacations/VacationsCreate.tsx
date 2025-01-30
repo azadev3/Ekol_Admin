@@ -196,24 +196,31 @@ const VacationsCreate: React.FC = () => {
         />
         <TextField
           required
-          label="Başlanğıc tarixi məsələn: 12.05.2024 vəya 12 May 2024"
+          label="Başlanğıc tarixi"
+          type="date"
           variant="outlined"
           fullWidth
           margin="normal"
           value={startDate}
           onChange={(e: ChangeEvent<HTMLInputElement>) => setStartDate(e.target.value)}
           name="start_date"
+          InputLabelProps={{ shrink: true }}
         />
+
         <TextField
           required
-          label="Bitiş tarixi məsələn: 12.06.2024 vəya 12 İyun 2024"
+          label="Bitiş tarixi"
+          type="date"
           variant="outlined"
           fullWidth
           margin="normal"
           value={endDate}
           onChange={(e: ChangeEvent<HTMLInputElement>) => setEndDate(e.target.value)}
           name="end_date"
+          InputLabelProps={{ shrink: true }}
         />
+
+
 
         <Button
           variant="contained"

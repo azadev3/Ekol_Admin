@@ -161,6 +161,12 @@ import HiddenContact from '../routes/hiddencontact/HiddenContact';
 import AddFavicon from '../routes/seo/addfavicon/AddFavicon';
 import PurchRuleEdit from '../routes/purchaserules/PurchRuleEdit';
 import SmtpCreate from '../routes/smtpconfig/SmtpCreate';
+import DynamicCategoryShow from '../routes/dynamiccalculations/DynamicCategoryShow';
+import DynamicCategoryCreate from '../routes/dynamiccalculations/DynamicCategoryCreate';
+import DynamicCategoryEdit from '../routes/dynamiccalculations/DynamicCategoryEdit';
+import DynamicCategoryContentShow from '../routes/dynamiccalculationcontent/DynamicCategoryContentShow';
+import DynamicCategoryContentCreate from '../routes/dynamiccalculationcontent/DynamicCategoryContentCreate';
+import DynamicCategoryContentEdit from '../routes/dynamiccalculationcontent/DynamicCategoryContentEdit';
 
 const Content: React.FC = () => {
     const toggleSidebar = useRecoilValue(ToggleSidebarState);
@@ -426,6 +432,13 @@ const Content: React.FC = () => {
                 <Route path="/yearly_calculations" element={<YearlyCalculationsShow />} />
                 <Route path="/yearly_calculations/create" element={<YearlyCalculationsCreate />} />
                 <Route path="/yearly_calculations/:editid" element={<YearlyCalculationsEdit />} />
+                <Route path="/dynamic-category" element={<DynamicCategoryShow />} />
+                <Route path="/dynamic-category/create" element={<DynamicCategoryCreate />} />
+                <Route path="/dynamic-category/:editid" element={<DynamicCategoryEdit />} />
+
+                <Route path="/dynamic-category-content" element={<DynamicCategoryContentShow />} />
+                <Route path="/dynamic-category-content/create" element={<DynamicCategoryContentCreate />} />
+                <Route path="/dynamic-category-content/:editid" element={<DynamicCategoryContentEdit />} />
 
                 {/* structure categories */}
                 {/* <Route path="/departmentscategories" element={<StructureCategoriesShow />} /> */}

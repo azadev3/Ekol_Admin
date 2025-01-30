@@ -22,9 +22,9 @@ const CobCreate: React.FC = () => {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append("title_az", title_az);
-    formData.append("title_en", title_en);
-    formData.append("title_ru", title_ru);
+    formData.append("title_az", title_az || '');
+    formData.append("title_en", title_en || '');
+    formData.append("title_ru", title_ru || '');
     if (image) {
       formData.append("imgback", image);
     }
@@ -41,12 +41,6 @@ const CobCreate: React.FC = () => {
       toastMsg();
       setSnackbarMessage("GÖZLƏNİLMƏZ XƏTA...");
       setOpenSnackbar(true);
-    }
-
-    if (!title_az || !title_en || !title_ru || !image) {
-      setSnackbarMessage("Bütün xanaları doldurun.");
-      setOpenSnackbar(true);
-      return;
     }
   };
 
