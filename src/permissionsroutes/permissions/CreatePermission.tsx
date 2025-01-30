@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { ChangeEvent } from "react";
+import React from "react";
 import { URL } from "../../Base";
 import { BsFillInfoCircleFill } from "react-icons/bs";
 
@@ -9,8 +9,8 @@ export type PermissionData = {
 };
 
 const CreatePermission: React.FC = () => {
-  const [loading, setLoading] = React.useState<boolean>(false);
-  const [permissionName, setPermissionName] = React.useState<string>("");
+  // const [loading, setLoading] = React.useState<boolean>(false);
+  // const [permissionName, setPermissionName] = React.useState<string>("");
 
   const [permissionData, setPermissionData] = React.useState<PermissionData[]>([]);
   const getPerms = async () => {
@@ -28,26 +28,26 @@ const CreatePermission: React.FC = () => {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      const res = await axios.post(`${URL}/create_permission`, {
-        permission_name: permissionName,
-      });
+  // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   setLoading(true);
+  //   try {
+  //     const res = await axios.post(`${URL}/create_permission`, {
+  //       permission_name: permissionName,
+  //     });
 
-      if (res.data) {
-        setPermissionName("");
-        getPerms();
-      } else {
-        console.log(res.status);
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  //     if (res.data) {
+  //       setPermissionName("");
+  //       getPerms();
+  //     } else {
+  //       console.log(res.status);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   React.useEffect(() => {
     getPerms();
@@ -55,7 +55,7 @@ const CreatePermission: React.FC = () => {
 
   return (
     <div className="create-user-table">
-      <h1>İcazə yarat</h1>
+      {/* <h1>İcazə yarat</h1>
       <form onSubmit={handleSubmit} acceptCharset="UTF-8">
         <div className="inputs">
           <div className="input-field">
@@ -74,7 +74,7 @@ const CreatePermission: React.FC = () => {
         <button type="submit" className="create-btn">
           {loading ? "Gözləyin..." : "Yarat"}
         </button>
-      </form>
+      </form> */}
 
       <div
         className="existing-users"
