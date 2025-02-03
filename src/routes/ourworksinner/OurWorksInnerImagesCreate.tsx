@@ -157,7 +157,7 @@ const OurWorksInnerImagesCreate: React.FC = () => {
             style={{ width: "100%", maxWidth: "50%", height: "46px", borderRadius: "4px", margin: "24px 0px" }}>
             <option value="">Bu şəkillər hansı xəbərin tərkibində olacaq?</option>
             {ourworksdata
-              ? ourworksdata?.map((ourworksinner: any) => (
+              ? [...ourworksdata]?.reverse()?.map((ourworksinner: any) => (
                   <option value={ourworksinner?._id || ""}>{ourworksinner?.title || ""}</option>
                 ))
               : ""}

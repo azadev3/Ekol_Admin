@@ -101,7 +101,7 @@ const OurWorksInnerImagesShow: React.FC = () => {
     setLoading(true);
     try {
       const response = await axios.get(`${URL}/ourworksimages`, Option());
-      const rowsWithId = response.data.map((item: any) => ({
+      const rowsWithId = [...response.data]?.reverse()?.map((item: any) => ({
         id: item._id,
         selected_ourworks: item.selected_ourworks,
       }));

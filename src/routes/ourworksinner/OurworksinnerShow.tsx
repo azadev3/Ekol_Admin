@@ -82,7 +82,7 @@ const OurworksinnerShow: React.FC = () => {
  const fetchData = async () => {
   try {
    const response = await axios.get(`${URL}/ourworksinner`, Option());
-   const rowsWithId = response.data.map((item: any) => ({
+   const rowsWithId = [...response.data]?.reverse()?.map((item: any) => ({
     id: item._id,
     title_az: item.title?.az || '',
     title_en: item.title?.en || '',
