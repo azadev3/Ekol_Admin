@@ -27,8 +27,6 @@ const BlogCreate: React.FC = () => {
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string>("");
   const [created_at, setCreatedAt] = useState("");
-  const [updated, setUpdated] = useState("");
-
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -45,7 +43,7 @@ const BlogCreate: React.FC = () => {
     formData.append('slogan_ru', slogan_ru);
     formData.append("imgback", image ? image : "");
     formData.append("created_at", created_at);
-    formData.append("updated", updated);
+    formData.append("updated", "");
     try {
       const response = await axios.post(`${URL}/blog`, formData, OptionWithFormData());
       if (response.data || response.status === 200) {
@@ -157,23 +155,14 @@ const BlogCreate: React.FC = () => {
         </div>
 
         <TextField
-          label="Yaradılma tarixini istədiyiniz formatta yazın məsələn: (03.10.2024)"
+          label="Yaradılma tarixi"
           variant="outlined"
           fullWidth
+          type="date"
           margin="normal"
           value={created_at}
           onChange={(e: ChangeEvent<HTMLInputElement>) => setCreatedAt(e.target.value)}
           name="created_at"
-        />
-
-        <TextField
-          label="İstəyə uyğun yenilənmə tarixini qeyd edə və ya boş saxlaya bilərsiniz"
-          variant="outlined"
-          fullWidth
-          margin="normal"
-          value={updated}
-          onChange={(e: ChangeEvent<HTMLInputElement>) => setUpdated(e.target.value)}
-          name="updated"
         />
 
         {/* upload image area */}

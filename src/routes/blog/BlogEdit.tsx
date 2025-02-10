@@ -28,7 +28,6 @@ const BlogEdit: React.FC = () => {
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string>("");
   const [created_at, setCreatedAt] = useState("");
-  const [updated, setUpdated] = useState("");
 
   // Fetch data
   useEffect(() => {
@@ -37,6 +36,16 @@ const BlogEdit: React.FC = () => {
         try {
           const response = await axios.get(`${URL}/blog/${editid}`);
           const data = response.data;
+
+          const formatDate = (dateStr: string) => {
+            if (!dateStr) return "";
+            const parts = dateStr.split(".");
+            if (parts.length === 3) {
+              return `${parts[2]}-${parts[1]}-${parts[0]}`;
+            }
+            return dateStr;
+          };
+
           setTitleAz(data.title.az || "");
           setTitleEn(data.title.en || "");
           setTitleRu(data.title.ru || "");
@@ -47,6 +56,7 @@ const BlogEdit: React.FC = () => {
           setSloganEn(data.slogan.en || "");
           setSloganRu(data.slogan.ru || "");
           setImagePreview(`https://ekol-server-1.onrender.com${data.image}` || "");
+          setCreatedAt(formatDate(data.created_at));
         } catch (error) {
           console.error("Error fetching data:", error);
         }
@@ -184,23 +194,14 @@ const BlogEdit: React.FC = () => {
         </div>
 
         <TextField
-          label="Yaradılma tarixini istədiyiniz formatta yazın məsələn: (03.10.2024)"
+          label="Yaradılma tarixi"
           variant="outlined"
           fullWidth
+          type="date"
           margin="normal"
           value={created_at}
           onChange={(e: ChangeEvent<HTMLInputElement>) => setCreatedAt(e.target.value)}
           name="created_at"
-        />
-
-        <TextField
-          label="İstəyə uyğun yenilənmə tarixini qeyd edə və ya boş saxlaya bilərsiniz"
-          variant="outlined"
-          fullWidth
-          margin="normal"
-          value={updated}
-          onChange={(e: ChangeEvent<HTMLInputElement>) => setUpdated(e.target.value)}
-          name="updated"
         />
 
         {/* upload image area */}
