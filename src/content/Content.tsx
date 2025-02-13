@@ -167,6 +167,10 @@ import DynamicCategoryEdit from '../routes/dynamiccalculations/DynamicCategoryEd
 import DynamicCategoryContentShow from '../routes/dynamiccalculationcontent/DynamicCategoryContentShow';
 import DynamicCategoryContentCreate from '../routes/dynamiccalculationcontent/DynamicCategoryContentCreate';
 import DynamicCategoryContentEdit from '../routes/dynamiccalculationcontent/DynamicCategoryContentEdit';
+import AddIcons from '../routes/addicons/AddIcons';
+import AddFooterIconShow from '../routes/addicons/uitils/AddFooterIconShow';
+import AddFooterIconEdit from '../routes/addicons/uitils/AddFooterIconEdit';
+import AddMapIconEdit from '../routes/addicons/uitils/addicon-map/AddMapIconEdit';
 
 const Content: React.FC = () => {
     const toggleSidebar = useRecoilValue(ToggleSidebarState);
@@ -487,6 +491,11 @@ const Content: React.FC = () => {
                 <Route path='/procedure/:editid' element={<ProcedureEdit />} />
 
                 <Route path='/smtp-config' element={<SmtpCreate />} />
+
+                <Route path='/icon-add' element={<AddFooterIconShow />} />
+                <Route path='/icon-add/create' element={<AddIcons />} />
+                <Route path='/icon-add/edit/:id' element={<AddFooterIconEdit />} />
+                <Route path='/icon-add-map/edit/:id' element={<AddMapIconEdit />} />
 
 
             </Routes>

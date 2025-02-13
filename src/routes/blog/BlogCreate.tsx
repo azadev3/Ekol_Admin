@@ -163,7 +163,15 @@ const BlogCreate: React.FC = () => {
           value={created_at}
           onChange={(e: ChangeEvent<HTMLInputElement>) => setCreatedAt(e.target.value)}
           name="created_at"
+          InputProps={{
+            onKeyDown: (e) => e.preventDefault(), 
+            onPaste: (e) => e.preventDefault(), 
+          }}
+          onClick={(e) => (e.target as HTMLInputElement).showPicker()}
+          style={{ userSelect: 'none' }}
+          InputLabelProps={{ shrink: true }}
         />
+
 
         {/* upload image area */}
         <input

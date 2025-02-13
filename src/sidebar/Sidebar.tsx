@@ -17,6 +17,7 @@ import { GoEyeClosed } from 'react-icons/go';
 import { MdOutlineContactPage } from 'react-icons/md';
 import { RiSeoLine } from 'react-icons/ri';
 import { FcDataConfiguration } from "react-icons/fc";
+import { FaIcons } from 'react-icons/fa6';
 
 
 export const SidebarLinkLengthState = atom<string>({
@@ -82,6 +83,7 @@ const Sidebar: React.FC = () => {
             <SidebarLinkWithDropdown to="/smtp-config" linkTitle="Mail / SMTP Config" linkIcon={<FcDataConfiguration />} />
             <SidebarLinkWithDropdown to="/seo-optimizations" linkTitle="SEO" linkIcon={<RiSeoLine />} />
             <SidebarLinkWithDropdown to="/hero" linkTitle="Hero" linkIcon={<SiApacherocketmq />} />
+            <SidebarLinkWithDropdown to="/icon-add" linkTitle="İkon yerləşdir" linkIcon={<FaIcons />} />
             {/* <SidebarLinkWithDropdown
                 to="/ourworks"
                 linkTitle="Gördüyümüz işlər (Ana səhifə)"
