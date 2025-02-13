@@ -39,6 +39,11 @@ const AddFooterIcon: React.FC = () => {
         }
     }
 
+    const handleColorChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const newColor = e.target.value;
+        setColor(newColor);
+    };
+
     const handleFetch = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
@@ -90,7 +95,20 @@ const AddFooterIcon: React.FC = () => {
             </div>
             <div className="field">
                 <label>İkon arxa fon rəngi: <span style={{ color: "#606060" }}>(qeyd edilməzsə, arxa fon logonun rəngində olacaq)</span></label>
-                <HexColorPicker color={color} onChange={(newColor: string) => setColor(newColor)} />
+                <HexColorPicker color={color} onChange={setColor} />
+                <input
+                    type="text"
+                    value={color}
+                    onChange={handleColorChange}
+                    placeholder="#ff0000"
+                    style={{
+                        width: '100%',
+                        padding: '8px',
+                        marginTop: '10px',
+                        border: '1px solid #ccc',
+                        borderRadius: '5px',
+                    }}
+                />
                 <p style={{ margin: '1rem 0' }}>Göndəriləcək rəng: <strong>{color}</strong></p>
             </div>
             <div className="field">

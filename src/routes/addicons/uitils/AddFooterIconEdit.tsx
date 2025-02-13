@@ -39,7 +39,7 @@ const AddFooterIconEdit: React.FC = () => {
                 setTitle(findedData.title);
                 setUrl(findedData.url);
                 setColor(findedData.color);
-                setIconPreview(findedData.icon); 
+                setIconPreview(findedData.icon);
             }
         }
     }, [id, data]);
@@ -56,6 +56,11 @@ const AddFooterIconEdit: React.FC = () => {
             reader.readAsDataURL(file);
             setIcon(file);
         }
+    };
+
+    const handleColorChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const newColor = e.target.value;
+        setColor(newColor);
     };
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -96,7 +101,7 @@ const AddFooterIconEdit: React.FC = () => {
             toast.error('Proses zamanı bir xəta oldu');
         }
     };
-    
+
 
     return (
         <div className='edit-icon'>
@@ -122,6 +127,19 @@ const AddFooterIconEdit: React.FC = () => {
                 <div className="field">
                     <label>İkon Arka Fon Rəngi:</label>
                     <HexColorPicker color={color} onChange={setColor} />
+                    <input
+                        type="text"
+                        value={color}
+                        onChange={handleColorChange}
+                        placeholder="#ff0000"
+                        style={{
+                            width: '100%',
+                            padding: '8px',
+                            marginTop: '10px',
+                            border: '1px solid #ccc',
+                            borderRadius: '5px',
+                        }}
+                    />
                     <p>Göndəriləcək rəng: <strong>{color}</strong></p>
                 </div>
                 <div className="field">
