@@ -126,11 +126,11 @@ const CreatePermission: React.FC = () => {
           <tbody className="perm-body">
             {permissionData && permissionData?.length > 0
               ? permissionData?.map((perms: PermissionData, i: number) => (
-                  <tr key={perms?._id}>
-                    <td>0{i + 1}</td>
-                    <td>{perms?.name}</td>
-                  </tr>
-                ))
+                <tr key={perms?._id}>
+                  <td>0{i + 1}</td>
+                  <td>{perms?.name}</td>
+                </tr>
+              ))
               : null}
           </tbody>
         </table>

@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import "react-quill/dist/quill.snow.css";
 import { OptionWithFormData, toastMsg } from "../../App";
 import MyEditor from "../../TipTap";
+import slugify from 'slugify';
 
 const BlogCreate: React.FC = () => {
 
@@ -18,6 +19,9 @@ const BlogCreate: React.FC = () => {
   const [title_az, setTitleAz] = useState("");
   const [title_en, setTitleEn] = useState("");
   const [title_ru, setTitleRu] = useState("");
+  const [slugAz, setSlugAz] = useState("");
+  const [slugEn, setSlugEn] = useState("");
+  const [slugRu, setSlugRu] = useState("");
   const [description_az, setDescriptionAz] = useState("");
   const [description_en, setDescriptionEn] = useState("");
   const [description_ru, setDescriptionRu] = useState("");
@@ -28,6 +32,20 @@ const BlogCreate: React.FC = () => {
   const [imagePreview, setImagePreview] = useState<string>("");
   const [created_at, setCreatedAt] = useState("");
 
+  const generateSlug = (title: string) => {
+    return slugify(title, { replacement: '-', lower: true, strict: true });
+  }
+
+  React.useEffect(() => {
+    setSlugAz(generateSlug(title_az));
+  }, [title_az]);
+  React.useEffect(() => {
+    setSlugEn(generateSlug(title_en));
+  }, [title_en]);
+  React.useEffect(() => {
+    setSlugRu(generateSlug(title_ru));
+  }, [title_ru]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -35,6 +53,9 @@ const BlogCreate: React.FC = () => {
     formData.append("title_az", title_az);
     formData.append("title_en", title_en);
     formData.append("title_ru", title_ru);
+    formData.append("slug_az", slugAz);
+    formData.append("slug_en", slugEn);
+    formData.append("slug_ru", slugRu);
     formData.append("description_az", description_az);
     formData.append("description_en", description_en);
     formData.append("description_ru", description_ru);
@@ -91,6 +112,16 @@ const BlogCreate: React.FC = () => {
         />
 
         <TextField
+          label="Slug(AZ)"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={slugAz}
+          name="slug_az"
+          disabled
+        />
+
+        <TextField
           label="Başlıq(EN)"
           variant="outlined"
           fullWidth
@@ -98,6 +129,15 @@ const BlogCreate: React.FC = () => {
           value={title_en}
           onChange={(e: ChangeEvent<HTMLInputElement>) => setTitleEn(e.target.value)}
           name="title_en"
+        />
+        <TextField
+          label="Slug(EN)"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={slugEn}
+          disabled
+          name="slug_en"
         />
 
         <TextField
@@ -109,6 +149,17 @@ const BlogCreate: React.FC = () => {
           onChange={(e: ChangeEvent<HTMLInputElement>) => setTitleRu(e.target.value)}
           name="title_ru"
         />
+        <TextField
+          label="Slug(RU)"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={slugRu}
+          name="slug_ru"
+          disabled
+        />
+
+
 
 
         <TextField
@@ -164,8 +215,8 @@ const BlogCreate: React.FC = () => {
           onChange={(e: ChangeEvent<HTMLInputElement>) => setCreatedAt(e.target.value)}
           name="created_at"
           InputProps={{
-            onKeyDown: (e) => e.preventDefault(), 
-            onPaste: (e) => e.preventDefault(), 
+            onKeyDown: (e) => e.preventDefault(),
+            onPaste: (e) => e.preventDefault(),
           }}
           onClick={(e) => (e.target as HTMLInputElement).showPicker()}
           style={{ userSelect: 'none' }}

@@ -7,6 +7,7 @@ import Title from "../../uitils/Title";
 import "react-quill/dist/quill.snow.css";
 import { Option, toastMsg } from "../../App";
 import MyEditor from "../../TipTap";
+import slugify from "slugify";
 
 const BlogEdit: React.FC = () => {
 
@@ -19,6 +20,9 @@ const BlogEdit: React.FC = () => {
   const [title_az, setTitleAz] = useState("");
   const [title_en, setTitleEn] = useState("");
   const [title_ru, setTitleRu] = useState("");
+  const [slugAz, setSlugAz] = useState("");
+  const [slugEn, setSlugEn] = useState("");
+  const [slugRu, setSlugRu] = useState("");
   const [description_az, setDescriptionAz] = useState("");
   const [description_en, setDescriptionEn] = useState("");
   const [description_ru, setDescriptionRu] = useState("");
@@ -28,6 +32,22 @@ const BlogEdit: React.FC = () => {
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string>("");
   const [created_at, setCreatedAt] = useState("");
+
+  const generateNewSlug = (title: string) => {
+    return slugify(title, { replacement: '-', lower: true, strict: true });
+  }
+
+  React.useEffect(() => {
+    setSlugAz(generateNewSlug(title_az))
+  }, [title_az]);
+
+  React.useEffect(() => {
+    setSlugEn(generateNewSlug(title_en))
+  }, [title_en]);
+
+  React.useEffect(() => {
+    setSlugRu(generateNewSlug(title_ru))
+  }, [title_ru]);
 
   // Fetch data
   useEffect(() => {
@@ -49,6 +69,9 @@ const BlogEdit: React.FC = () => {
           setTitleAz(data.title.az || "");
           setTitleEn(data.title.en || "");
           setTitleRu(data.title.ru || "");
+          setSlugAz(data.slug.az || "");
+          setSlugEn(data.slug.en || "");
+          setSlugRu(data.slug.ru || "");
           setDescriptionAz(data.description.az || "");
           setDescriptionEn(data.description.en || "");
           setDescriptionRu(data.description.ru || "");
@@ -75,6 +98,9 @@ const BlogEdit: React.FC = () => {
     formData.append("title_az", title_az);
     formData.append("title_en", title_en);
     formData.append("title_ru", title_ru);
+    formData.append("slug_az", slugAz);
+    formData.append("slug_en", slugEn);
+    formData.append("slug_ru", slugRu);
     formData.append("description_az", description_az);
     formData.append("description_en", description_en);
     formData.append("description_ru", description_ru);
@@ -128,6 +154,15 @@ const BlogEdit: React.FC = () => {
           onChange={(e: ChangeEvent<HTMLInputElement>) => setTitleAz(e.target.value)}
           name="title_az"
         />
+        <TextField
+          label="Slug(AZ)"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={slugAz}
+          name="slug_az"
+          disabled
+        />
 
 
         <TextField
@@ -139,6 +174,15 @@ const BlogEdit: React.FC = () => {
           onChange={(e: ChangeEvent<HTMLInputElement>) => setTitleEn(e.target.value)}
           name="title_en"
         />
+        <TextField
+          label="Slug(EN)"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={slugEn}
+          name="slug_en"
+          disabled
+        />
 
         <TextField
           label="Başlıq(RU)"
@@ -148,6 +192,15 @@ const BlogEdit: React.FC = () => {
           value={title_ru}
           onChange={(e: ChangeEvent<HTMLInputElement>) => setTitleRu(e.target.value)}
           name="title_ru"
+        />
+        <TextField
+          label="Slug(RU)"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={slugRu}
+          name="slug_ru"
+          disabled
         />
 
         <TextField
