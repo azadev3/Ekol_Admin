@@ -17,7 +17,7 @@ const NewBlogShow: React.FC = () => {
 
   const navigate = useNavigate();
 
-  
+
   const [status, setStatus] = React.useState<{ [key: string]: boolean }>({});
 
   const toggleStatus = async (id: string | number) => {
