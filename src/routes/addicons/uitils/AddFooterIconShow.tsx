@@ -5,6 +5,7 @@ import { URL } from '../../../Base';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import ImageResizeInformation from '../../../ImageResizeInformation';
 
 const AddFooterIconShow: React.FC = () => {
 
@@ -86,6 +87,7 @@ const AddFooterIconShow: React.FC = () => {
 
     return (
         <div className='show-icons'>
+            <ImageResizeInformation routeTitle='Mini İkonlar' sizeTitle='16 x 16 vəya 24 x 24' />
             <div className="conta" style={containerStyles}>
                 <Title title='Icon FOOTER' to='/icon-add/create' description='Footerə aid olan ikonlar' />
                 {data?.map((icons: IconType, i: number) => (

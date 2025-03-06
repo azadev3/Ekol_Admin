@@ -5,6 +5,7 @@ import axios from "axios";
 import { URL } from "../../Base";
 import { useNavigate } from "react-router-dom";
 import { Option, toastMsg } from "../../App";
+import ImageResizeInformation from "../../ImageResizeInformation";
 
 const ImagespageShow: React.FC = () => {
   const [rows, setRows] = useState<any[]>([]);
@@ -75,6 +76,8 @@ const ImagespageShow: React.FC = () => {
 
   return (
     <div className="show-component">
+      <ImageResizeInformation routeTitle='Qalereya - Şəkillər və Kateqoriyalar' sizeTitle='376 x 272' />
+      <ImageResizeInformation routeTitle='Qalereya - Şəkillər və Kateqoriyalar DAXİLİ ŞƏKİLLƏR' sizeTitle='610 x 340' />
       <Title description="Əlavə et, dəyişdir, sil." title="Qalereya - Şəkillər və Kateqoriyalar" to="/imagespage/create" />
       <div style={{ height: "100%", width: "100%", marginTop: "24px" }}>
         <DataGrid columns={columns} rows={rows} />

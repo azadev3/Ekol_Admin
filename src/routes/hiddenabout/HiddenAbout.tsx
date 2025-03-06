@@ -53,7 +53,7 @@ const HiddenAbout: React.FC = () => {
     return (
         <div className="hidden-show-container">
             <ToastContainer />
-            <h2>Haqqımızda bölməsini gizlət və ya göstər</h2>
+            <h2>Haqqımızda bölməsini gizlət vəya göstər</h2>
             <div className="input-field-area">
                 <h1>Haqqımızda</h1>
                 <button className="show-hidden-btn" onClick={handleShow}>

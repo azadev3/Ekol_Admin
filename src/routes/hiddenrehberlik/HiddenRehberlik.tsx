@@ -53,7 +53,7 @@ const HiddenRehberlik: React.FC = () => {
   return (
     <div className="hidden-show-container">
       <ToastContainer />
-      <h2>Saytdakı Rəhbərlik bölməsini gizlət və ya göstər</h2>
+      <h2>Saytdakı Rəhbərlik bölməsini gizlət vəya göstər</h2>
       <div className="input-field-area">
         <h1>Rəhbərlik</h1>
         <button className="show-hidden-btn" onClick={handleShow}>

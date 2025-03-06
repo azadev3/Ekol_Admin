@@ -55,7 +55,7 @@ const Login: React.FC = () => {
         setAuth(true);
         navigate("/", { replace: true });
       } else if (response.status === 401) {
-        toast.error("Email və ya şifrə yanlışdır", {
+        toast.error("Email vəya şifrə yanlışdır", {
           position: "top-center",
         });
         console.log(response.data);
@@ -73,7 +73,7 @@ const Login: React.FC = () => {
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 402) {
-          toast.error("Email və ya şifrə yanlışdır", {
+          toast.error("Email vəya şifrə yanlışdır", {
             position: "top-center",
           });
         } else if (error.response?.status === 401) {

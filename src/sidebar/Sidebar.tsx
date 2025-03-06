@@ -84,11 +84,11 @@ const Sidebar: React.FC = () => {
             <SidebarLinkWithDropdown to="/seo-optimizations" linkTitle="SEO" linkIcon={<RiSeoLine />} />
             <SidebarLinkWithDropdown to="/hero" linkTitle="Hero" linkIcon={<SiApacherocketmq />} />
             <SidebarLinkWithDropdown to="/icon-add" linkTitle="İkon yerləşdir" linkIcon={<FaIcons />} />
-            {/* <SidebarLinkWithDropdown
+            <SidebarLinkWithDropdown
                 to="/ourworks"
                 linkTitle="Gördüyümüz işlər (Ana səhifə)"
                 linkIcon={<PiNewspaperClipping />}
-            /> */}
+            />
             <SidebarLinkWithDropdown to="/statistics" linkTitle="Statistikalar" linkIcon={<BiPulse />} />
             <SidebarLinkWithDropdown
                 to=""

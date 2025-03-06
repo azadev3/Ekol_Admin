@@ -9,6 +9,54 @@
   z-index: 10000000000 !important;
 }
 
+.image-resize-information {
+  width: 100%;
+  margin: 1rem 0;
+  padding: 8px 18px;
+  background-color: transparent;
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  user-select: none;
+  background-color: #ffc107;
+  .left {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+    .warn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: black;
+      font-size: 28px;
+    }
+    h6 {
+      max-width: 800px;
+      width: 100%;
+      text-align: left;
+      line-height: normal;
+      font-size: 15px;
+    }
+  }
+  .closeicon {
+    font-size: 28px;
+    color: #404040;
+    cursor: pointer;
+    position: relative;
+    right: 12px;
+    &:hover {
+      color: rgb(255, 82, 82);
+    }
+    &:active {
+      transform: scale(0.94);
+    }
+  }
+}
+
 .about-page .ourworks-section .works .container-works .grid-works .navigation-description-content .description-content p,
 .about-page .ourworks-section .works .container-works .grid-works .navigation-description-content .description-content h1,
 .about-page .ourworks-section .works .container-works .grid-works .navigation-description-content .description-content h2,

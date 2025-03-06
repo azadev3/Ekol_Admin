@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import Loader from '../../Loader';
 import { atom, useRecoilState } from 'recoil';
 import { Option, toastMsg } from '../../App';
+import ImageResizeInformation from '../../ImageResizeInformation';
 
 export const LoadingState = atom<boolean>({
  key: 'loadingStateKey',
@@ -126,6 +127,7 @@ const HeroShow: React.FC = () => {
 
  return (
   <div className="show-component">
+  <ImageResizeInformation routeTitle='Hero' sizeTitle='1440 x 600' />
    {loading ? (
     <Loader />
    ) : (

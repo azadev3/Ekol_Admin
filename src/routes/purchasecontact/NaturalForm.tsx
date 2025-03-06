@@ -186,7 +186,7 @@ const NaturalForm: React.FC = () => {
                         <input type="text" readOnly value={data?.enterprisename} />
                       </div>
                       <div className="input-field">
-                        <label>Müsabiqənin adı və ya nömrəsi</label>
+                        <label>Müsabiqənin adı vəya nömrəsi</label>
                         <input type="text" readOnly value={data?.enterpriseNameOrTel} />
                       </div>
                     </section>

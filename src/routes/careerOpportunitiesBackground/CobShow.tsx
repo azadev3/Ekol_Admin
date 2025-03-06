@@ -5,6 +5,7 @@ import axios from "axios";
 import { URL } from "../../Base";
 import { useNavigate } from "react-router-dom";
 import { Option, toastMsg } from "../../App";
+import ImageResizeInformation from "../../ImageResizeInformation";
 
 const CobShow: React.FC = () => {
   const [rows, setRows] = useState<any[]>([]);
@@ -75,6 +76,7 @@ const CobShow: React.FC = () => {
 
   return (
     <div className="show-component">
+      <ImageResizeInformation routeTitle='Kariyera İmkanları - Arxa fon və Başlıq' sizeTitle='1240 x 300' />
       <Title
         description="Əlavə et, dəyişdir, sil."
         title="Kariyera İmkanları - Arxa fon və Başlıq"

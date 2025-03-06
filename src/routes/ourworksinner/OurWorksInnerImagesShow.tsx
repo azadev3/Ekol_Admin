@@ -8,6 +8,7 @@ import { LoadingState } from "../hero/HeroShow";
 import { useRecoilState } from "recoil";
 import Loader from "../../Loader";
 import { Option, toastMsg } from "../../App";
+import ImageResizeInformation from "../../ImageResizeInformation";
 
 const OurWorksInnerImagesShow: React.FC = () => {
   const [loading, setLoading] = useRecoilState(LoadingState);
@@ -56,7 +57,7 @@ const OurWorksInnerImagesShow: React.FC = () => {
         const img: any = ourworks.find((img: any) => img._id === params.row.selected_ourworks);
         return <span>{img ? img.title : "Tapilmadi"}</span>;
       },
-      
+
     },
     {
       field: "actions",
@@ -121,6 +122,8 @@ const OurWorksInnerImagesShow: React.FC = () => {
 
   return (
     <div className="show-component">
+      <ImageResizeInformation routeTitle='Gördüyümüz işlər' sizeTitle='400 x 400' />
+
       {loading ? (
         <Loader />
       ) : (

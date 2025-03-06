@@ -214,7 +214,7 @@ const NewBlogCreate: React.FC = () => {
         />
 
         <TextField
-          label="İstəyə uyğun yenilənmə tarixini qeyd edə və ya boş saxlaya bilərsiniz"
+          label="İstəyə uyğun yenilənmə tarixini qeyd edə vəya boş saxlaya bilərsiniz"
           variant="outlined"
           fullWidth
           margin="normal"

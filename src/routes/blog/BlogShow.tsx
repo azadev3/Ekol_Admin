@@ -8,6 +8,7 @@ import { LoadingState } from "../hero/HeroShow";
 import { useRecoilState } from "recoil";
 import Loader from "../../Loader";
 import { Option, toastMsg } from "../../App";
+import ImageResizeInformation from "../../ImageResizeInformation";
 
 const BlogShow: React.FC = () => {
   const [loading, setLoading] = useRecoilState(LoadingState);
@@ -124,6 +125,7 @@ const BlogShow: React.FC = () => {
 
   return (
     <div className="show-component">
+      <ImageResizeInformation routeTitle='Xəbərlər' sizeTitle='854 x 450' />
       {loading ? (
         <Loader />
       ) : (

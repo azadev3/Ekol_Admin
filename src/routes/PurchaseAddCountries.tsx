@@ -97,13 +97,13 @@ const PurchaseAddCountries: React.FC = () => {
         setCountry("");
         getData();
       } else {
-        toast.error("Bir server xətası vəya başqa bir problem oldu. Lütfən yenidən yoxlayın və ya adminlərlə görüşün", {
+        toast.error("Bir server xətası vəya başqa bir problem oldu. Lütfən yenidən yoxlayın vəya adminlərlə görüşün", {
           position: "top-center",
         });
         console.log(response.status);
       }
     } catch (error) {
-      toast.error("Bir server xətası vəya başqa bir problem oldu. Lütfən yenidən yoxlayın və ya adminlərlə görüşün", {
+      toast.error("Bir server xətası vəya başqa bir problem oldu. Lütfən yenidən yoxlayın vəya adminlərlə görüşün", {
         position: "top-center",
       });
       console.log(error);

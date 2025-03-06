@@ -53,7 +53,7 @@ const HiddenActivity: React.FC = () => {
     return (
         <div className="hidden-show-container">
             <ToastContainer />
-            <h2>Saytdakı Fəaliyyət bölməsini gizlət və ya göstər</h2>
+            <h2>Saytdakı Fəaliyyət bölməsini gizlət vəya göstər</h2>
             <div className="input-field-area">
                 <h1>Fəaliyyət</h1>
                 <button className="show-hidden-btn" onClick={handleShow}>

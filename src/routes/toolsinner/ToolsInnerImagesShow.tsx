@@ -8,6 +8,7 @@ import { LoadingState } from "../hero/HeroShow";
 import { useRecoilState } from "recoil";
 import Loader from "../../Loader";
 import { Option, toastMsg } from "../../App";
+import ImageResizeInformation from "../../ImageResizeInformation";
 
 const ToolsInnerImagesShow: React.FC = () => {
   const [loading, setLoading] = useRecoilState(LoadingState);
@@ -80,8 +81,8 @@ const ToolsInnerImagesShow: React.FC = () => {
     try {
       const response = await axios.get(`${URL}/toolsinnerimages`, Option());
       const rowsWithId = response.data.map((item: any) => ({
-        ...item,  
-        id: item._id,  
+        ...item,
+        id: item._id,
       }));
       setRows(rowsWithId);
     } catch (error) {
@@ -98,13 +99,14 @@ const ToolsInnerImagesShow: React.FC = () => {
 
   return (
     <div className="show-component">
+      <ImageResizeInformation routeTitle='Avadanliqlar' sizeTitle='376 x 272' />
       {loading ? (
         <Loader />
       ) : (
         <>
           <Title
             description="Əlavə et, dəyişdir, sil."
-            title="Avadanliqlar şəkil yüklə"
+            title="Avadanlıqlar şəkil yüklə"
             to="/toolsinnerimages/create"
           />
           <div style={{ height: "100%", width: "100%", marginTop: "24px" }}>

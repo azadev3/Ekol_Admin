@@ -5,6 +5,7 @@ import axios from 'axios';
 import { URL } from '../../Base';
 import { useNavigate } from 'react-router-dom';
 import { Option, toastMsg } from '../../App';
+import ImageResizeInformation from '../../ImageResizeInformation';
 
 const OurworksShow: React.FC = () => {
  const [rows, setRows] = useState<any[]>([]);
@@ -109,6 +110,7 @@ const OurworksShow: React.FC = () => {
 
  return (
   <div className="show-component">
+    <ImageResizeInformation routeTitle='Gördüyümüz İşlər (Ana Səhifə)' sizeTitle='471 x 388' />
    <Title description="Əlavə et, dəyişdir, sil." title="Gördüyümüz İşlər (Ana Səhifə)" to="/ourworks/create" />
    <div style={{ height: '100%', width: '100%', marginTop: '24px' }}>
     <DataGrid columns={columns} rows={rows} />

@@ -397,7 +397,7 @@ const CreateUser: React.FC = () => {
                       </td>
                       <td className="editing">
                         <button type="button" onClick={() => openModal(user._id)}>
-                          İstifadəçini sil və ya rolunu dəyiş
+                          İstifadəçini sil vəya rolunu dəyiş
                         </button>
                       </td>
                     </tr>

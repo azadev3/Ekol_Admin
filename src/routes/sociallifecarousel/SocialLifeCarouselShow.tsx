@@ -5,6 +5,7 @@ import axios from "axios";
 import { URL } from "../../Base";
 import { useNavigate } from "react-router-dom";
 import { Option, toastMsg } from "../../App";
+import ImageResizeInformation from "../../ImageResizeInformation";
 
 const SocialLifeCarouselShow: React.FC = () => {
   const [rows, setRows] = useState<any[]>([]);
@@ -75,6 +76,7 @@ const SocialLifeCarouselShow: React.FC = () => {
 
   return (
     <div className="show-component">
+      <ImageResizeInformation routeTitle='Sosial Həyat (Karusel hissə)' sizeTitle='1240 x 500' />
       <Title description="Əlavə et, dəyişdir, sil." title="Sosial Həyat (Karusel hissə)" to="/sociallifecarousel/create" />
       <div style={{ height: "100%", width: "100%", marginTop: "24px" }}>
         <DataGrid columns={columns} rows={rows} />
