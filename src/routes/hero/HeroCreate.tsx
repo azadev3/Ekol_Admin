@@ -20,6 +20,8 @@ const HeroCreate: React.FC = () => {
   const [description_ru, setDescriptionRu] = useState("");
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string>("");
+  const [mobileImage, setMobileImage] = useState<File | null>(null);
+  const [mobileImagePreview, setMobileImagePreview] = useState<string>("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,6 +34,7 @@ const HeroCreate: React.FC = () => {
     formData.append("description_en", description_en);
     formData.append("description_ru", description_ru);
     formData.append("imgback", image ? image : "");
+    formData.append("mobileImage", mobileImage ? mobileImage : "");
 
     try {
       const response = await axios.post(`${URL}/hero`, formData, OptionWithFormData());
@@ -58,6 +61,18 @@ const HeroCreate: React.FC = () => {
       const reader = new FileReader();
       reader.onloadend = () => {
         setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleMobileImageChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0];
+      setMobileImage(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setMobileImagePreview(reader.result as string);
       };
       reader.readAsDataURL(file);
     }
@@ -148,8 +163,33 @@ const HeroCreate: React.FC = () => {
 
         {imagePreview && (
           <Box mt={2}>
-            <Typography variant="subtitle1">Resim Önizlemesi:</Typography>
+            <Typography variant="subtitle1">Desktop şəkil:</Typography>
             <img src={imagePreview} alt="Preview" style={{ width: "80%", maxHeight: "400px", objectFit: "cover" }} />
+          </Box>
+        )}
+
+        {/* upload mobile image area */}
+        <input
+          accept="image/*"
+          style={{ display: "none" }}
+          id="upload-mobile-image"
+          type="file"
+          name="mobileImage"
+          onChange={handleMobileImageChange}
+        />
+        <label htmlFor="upload-mobile-image">
+          <Button
+            variant="contained"
+            component="span"
+            style={{ marginTop: "16px", backgroundColor: "mediumslateblue" }}>
+            Mobil hero üçün şəkil əlavə et
+          </Button>
+        </label>
+
+        {mobileImagePreview && (
+          <Box mt={2}>
+            <Typography variant="subtitle1">Mobil şəkil:</Typography>
+            <img src={mobileImagePreview} alt="Preview" style={{ width: "auto", height: "auto", objectFit: "contain" }} />
           </Box>
         )}
 

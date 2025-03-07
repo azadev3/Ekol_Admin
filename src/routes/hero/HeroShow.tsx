@@ -128,6 +128,7 @@ const HeroShow: React.FC = () => {
  return (
   <div className="show-component">
   <ImageResizeInformation routeTitle='Hero' sizeTitle='1440 x 600' />
+  <ImageResizeInformation routeTitle='Mobil hero' sizeTitle='500 x 500 və ya 400 x 400' />
    {loading ? (
     <Loader />
    ) : (
