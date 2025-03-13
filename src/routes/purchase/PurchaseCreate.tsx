@@ -36,9 +36,7 @@ const PurchaseCreate: React.FC = () => {
     formData.append("description_az", description_az);
     formData.append("description_en", description_en);
     formData.append("description_ru", description_ru);
-    if (pdf) {
-      formData.append("pdf", pdf);
-    }
+    formData.append("pdf", pdf || "");
 
     try {
       const response = await axios.post(`${URL}/purchase`, formData, {

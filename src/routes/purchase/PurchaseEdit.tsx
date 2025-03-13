@@ -56,9 +56,7 @@ const PurchaseEdit: React.FC = () => {
     formData.append("description_az", description_az);
     formData.append("description_en", description_en);
     formData.append("description_ru", description_ru);
-    if (pdf) {
-      formData.append("pdf", pdf);
-    }
+    formData.append("pdf", pdf || "");
 
     try {
       const response = await axios.put(`${URL}/purchase/${editid}`, formData, {
@@ -82,16 +80,16 @@ const PurchaseEdit: React.FC = () => {
   };
 
   const handlePdfChange = (event: ChangeEvent<HTMLInputElement>) => {
-     if (event.target.files && event.target.files[0]) {
-       const file = event.target.files[0];
-       setPdf(file);
-       const reader = new FileReader();
-       reader.onloadend = () => {
-         setPdfPreview(reader.result as string);
-       };
-       reader.readAsDataURL(file);
-     }
-   };
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0];
+      setPdf(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPdfPreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   return (
     <div className="component-edit">
@@ -99,7 +97,6 @@ const PurchaseEdit: React.FC = () => {
 
       <form noValidate autoComplete="off" onSubmit={handleSubmit} style={{ marginTop: "16px" }}>
         <TextField
-          required
           label="Başlıq(AZ)"
           variant="outlined"
           fullWidth
@@ -110,7 +107,6 @@ const PurchaseEdit: React.FC = () => {
         />
 
         <TextField
-          required
           label="Başlıq(EN)"
           variant="outlined"
           fullWidth
@@ -121,7 +117,6 @@ const PurchaseEdit: React.FC = () => {
         />
 
         <TextField
-          required
           label="Başlıq(RU)"
           variant="outlined"
           fullWidth
@@ -132,7 +127,6 @@ const PurchaseEdit: React.FC = () => {
         />
 
         <TextField
-          required
           label="Açıqlama(AZ)"
           variant="outlined"
           fullWidth
@@ -143,7 +137,6 @@ const PurchaseEdit: React.FC = () => {
         />
 
         <TextField
-          required
           label="Açıqlama(EN)"
           variant="outlined"
           fullWidth
@@ -154,7 +147,6 @@ const PurchaseEdit: React.FC = () => {
         />
 
         <TextField
-          required
           label="Açıqlama(RU)"
           variant="outlined"
           fullWidth
@@ -164,8 +156,8 @@ const PurchaseEdit: React.FC = () => {
           name="description_ru"
         />
 
-         {/* upload PDF area */}
-         <input
+        {/* upload PDF area */}
+        <input
           accept=".pdf, .doc, .docx"
           style={{ display: "none" }}
           id="upload-pdf"

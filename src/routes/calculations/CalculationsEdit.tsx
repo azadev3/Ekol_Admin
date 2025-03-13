@@ -54,15 +54,10 @@ const CalculationsEdit: React.FC = () => {
     formData.append("title_az", title_az);
     formData.append("title_en", title_en);
     formData.append("title_ru", title_ru);
-    if (pdfaz) {
-      formData.append("pdfaz", pdfaz);
-    }
-    if (pdfen) {
-      formData.append("pdfen", pdfen);
-    }
-    if (pdfru) {
-      formData.append("pdfru", pdfru);
-    }
+    formData.append("pdfaz", pdfaz || "");
+    formData.append("pdfen", pdfen || "");
+    formData.append("pdfru", pdfru || "");
+    
     try {
       const response = await axios.put(`${URL}/calculations/${editid}`, formData, OptionWithFormData());
       console.log(response.data);
@@ -123,7 +118,6 @@ const CalculationsEdit: React.FC = () => {
 
       <form noValidate autoComplete="off" onSubmit={handleSubmit} style={{ marginTop: "16px" }}>
         <TextField
-          required
           label="Başlıq(AZ)"
           variant="outlined"
           fullWidth
@@ -134,7 +128,6 @@ const CalculationsEdit: React.FC = () => {
         />
 
         <TextField
-          required
           label="Başlıq(EN)"
           variant="outlined"
           fullWidth
@@ -145,7 +138,6 @@ const CalculationsEdit: React.FC = () => {
         />
 
         <TextField
-          required
           label="Başlıq(RU)"
           variant="outlined"
           fullWidth
